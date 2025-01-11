@@ -23,7 +23,7 @@ const LoginForm = () => {
       setError(error.message);
     } else {
       alert("Login exitoso");
-      router.push("/tablero"); // Redirigir al tablero
+      router.push("/"); // Redirigir al tablero
     }
   };
 

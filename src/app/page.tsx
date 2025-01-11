@@ -49,8 +49,8 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[auto_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] bg-gray-900 text-gray-200">
       {/* Barra Superior */}
-      <header className="w-full flex justify-between items-center px-8 py-4 bg-gray-800 shadow-md">
-        <h1 className="text-xl font-bold text-teal-400">Gestión Escolar</h1>
+      <header className="w-full flex justify-between items-center px-8 py-4 bg-gray-800 shadow-md rounded">
+        <h1 className="text-4xl font-bold text-teal-400">GE</h1>
         <div>
           {user ? (
             <div className="flex items-center gap-4">
