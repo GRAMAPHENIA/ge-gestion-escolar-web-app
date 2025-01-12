@@ -12,12 +12,13 @@ import {
   PiChair,
   PiChalkboardTeacher,
   PiChartBar,
+  PiHouseLine,
 } from "react-icons/pi";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false);
-  const [selectedSection, setSelectedSection] = useState("institucion"); // Estado para la sección seleccionada
-  const [user, setUser] = useState<User | null>(null); // Estado para el usuario
+  const [selectedSection, setSelectedSection] = useState("institucion");
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -65,7 +66,6 @@ const Dashboard = () => {
     );
   }
 
-  // Contenidos dinámicos
   const getPanelContent = () => {
     switch (selectedSection) {
       case "institucion":
@@ -94,13 +94,9 @@ const Dashboard = () => {
       case "calendario":
         return <p>Calendario interactivo y tareas.</p>;
       case "cursos":
-        return <p>Gestión completa de cursos. </p>;
+        return <p>Gestión completa de cursos.</p>;
       case "estudiantes":
-        return (
-          <p>
-            Sección para administrar estudiantes. <PiChair />
-          </p>
-        );
+        return <p>Sección para administrar estudiantes.</p>;
       case "clases":
         return <p>Vista principal de clases.</p>;
       case "evaluaciones":
@@ -118,8 +114,8 @@ const Dashboard = () => {
         {/* Aside Menu */}
         <aside
           className={`bg-gray-900 border-r border-gray-700 transition-all duration-200 z-30 absolute lg:relative ${
-            isAsideOpen ? "w-64" : "w-[53px]"
-          } flex flex-col justify-between`}
+            isAsideOpen ? "w-56" : "w-[50px]"
+          } flex flex-col justify-stretch`}
           onMouseEnter={() => setIsAsideOpen(true)}
           onMouseLeave={() => setIsAsideOpen(false)}
           style={{
@@ -130,12 +126,40 @@ const Dashboard = () => {
             zIndex: 30,
           }}
         >
+          {/* Logo de Gestión Escolar */}
+          <div className="flex items-center justify-left p-3 space-x-4">
+            <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 text-xs">
+              T
+            </div>
+            {isAsideOpen && (
+              <span className="ml-3 text-sm text-teal-400">Tablero</span>
+            )}
+          </div>
+
+          {/* Icono de casa */}
+          <div>
+            <div
+              onClick={() => router.push("/")} // Redirige a la página principal
+              className="flex items-center space-x-4 px-2 py-2 mx-2 cursor-pointer hover:bg-gray-700/50 rounded-md"
+            >
+              <span className="text-xl">
+                <PiHouseLine />
+              </span>
+              {isAsideOpen && (
+                <span className="text-sm font-medium">Volver</span>
+              )}
+            </div>
+            {/* Línea debajo del icono */}
+            <div className="border-b border-gray-700 mt-2"></div>
+          </div>
+
+          {/* Opciones del menú */}
           <div className="flex flex-col space-y-2 p-2">
             {menuItems.map((item) => (
               <div
                 key={item.route}
                 onClick={() => setSelectedSection(item.route)} // Cambia la sección seleccionada
-                className={`flex items-center space-x-4 p-2 rounded-md transition-colors cursor-pointer hover:bg-gray-700/50 ${
+                className={`flex items-center space-x-4 px-2 py-2 rounded-md transition-colors cursor-pointer hover:bg-gray-700/50 ${
                   selectedSection === item.route ? "bg-gray-700" : ""
                 }`}
               >
@@ -150,30 +174,31 @@ const Dashboard = () => {
 
         {/* Secondary Panel */}
         <aside
-          className="w-[20%] bg-gray-900/50 p-4 pl-20 z-20 relative flex-shrink-0 h-full border-r border-gray-700"
+          className="w-[20%] bg-gray-900/50 pl-auto z-20 h-full border-r border-gray-700"
           style={{ position: "relative" }}
         >
-          <h2 className="text-lg font-medium mb-4">
+          <h2 className="text-xl px-3 pl-16 border-b border-gray-700 flex items-center h-[50px]">
             {selectedSection.charAt(0).toUpperCase() + selectedSection.slice(1)}
-          </h2>{" "}
-          {/* Mostrar nombre de la sección */}
-          <div>{getPanelContent()}</div>
+          </h2>
+          {/* Mostrar contenido del panel */}
+          <div className="pl-16">{getPanelContent()}</div>
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col">
           {/* Top Bar */}
-          <header className="bg-gray-900/50 p-2 shadow-md flex justify-between">
-            <h1 className="text-lg ">Gestion Escolar</h1>
-            <div className="flex items-center space-x-4">
+          <header className="bg-gray-900/50 shadow-md flex justify-between border-b border-gray-600 h-[50px] items-center">
+            <h1 className="text-xl px-3 border-b border-transparent flex items-center h-full">
+              Gestión Escolar
+            </h1>
+            <div className="flex items-center space-x-4 px-3">
               {user ? (
                 <span>Hola, {user.email}</span>
               ) : (
                 <span>No estás logueado</span>
               )}
               <button
-                className="flex items-center px-2 py-2 text-left bg-rose-600/20 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition duration-100 rounded-md
-"
+                className="flex items-center px-2 py-2 text-left bg-rose-600/20 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition duration-100 rounded-md"
                 onClick={() => {
                   // Lógica para cerrar sesión
                   supabase.auth.signOut();
@@ -192,7 +217,7 @@ const Dashboard = () => {
             </h2>
             <div>{getMainContent()}</div>
           </section>
-        </main>
+        </div>
       </div>
     </ProtectedRoute>
   );
