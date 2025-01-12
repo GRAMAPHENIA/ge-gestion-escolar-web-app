@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/supabase/supabaseClient";
 import { User } from "@supabase/supabase-js";
 import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
-import { GoCalendar, GoOrganization, GoRepo, GoSignOut } from "react-icons/go";
+import { GoOrganization, GoRepo, GoSignOut } from "react-icons/go";
 import {
+  PiCalendarDots,
   PiCertificate,
   PiChair,
   PiChalkboardTeacher,
@@ -27,7 +28,7 @@ const Dashboard = () => {
     { name: "Estudiantes", route: "estudiantes", icon: <PiChair /> },
     { name: "Evaluaciones", route: "evaluaciones", icon: <PiChartBar /> },
     { name: "Notas", route: "notas", icon: <PiCertificate /> },
-    { name: "Calendario", route: "calendario", icon: <GoCalendar /> },
+    { name: "Calendario", route: "calendario", icon: <PiCalendarDots /> },
   ];
 
   useEffect(() => {
