@@ -12,7 +12,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getSession();
       if (!data.session?.user) {
-        router.push("/inicio-de-secion"); // Redirigir si no está autenticado
+        router.push("/inicio-de-sesion"); // Redirigir si no está autenticado
       }
       setLoading(false); // Finalizar la carga
     };

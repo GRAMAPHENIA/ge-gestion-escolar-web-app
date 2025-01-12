@@ -4,6 +4,8 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabase/supabaseClient";
 import { User } from "@supabase/supabase-js";
+import { GoSignOut } from "react-icons/go";
+import { PiFingerprint } from "react-icons/pi";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null); // Tipo explícito para el usuario
@@ -37,7 +39,7 @@ export default function Home() {
 
   // Funciones para redirigir al inicio de sesión y al tablero
   const handleLoginRedirect = () => {
-    window.location.href = "/inicio-de-secion"; // Redirige a la página de login
+    window.location.href = "/inicio-de-sesion"; // Redirige a la página de login
   };
 
   // Función para redirigir al tablero
@@ -57,18 +59,21 @@ export default function Home() {
               <span className="text-sm">Hola, {user.email}</span>
               <button
                 onClick={handleLogout}
-                className="flex items-center px-4 py-2 text-left bg-rose-600/20 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition duration-100 rounded-md"
+                className="flex items-center px-2 py-2 text-left bg-rose-600/20 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 transition duration-100 rounded-md"
               >
-                Cerrar Sesión
+                <GoSignOut />
               </button>
             </div>
           ) : (
-            <button
-              onClick={handleLoginRedirect}
-              className="flex items-center px-4 py-2 text-left bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
-            >
-              Iniciar Sesión
-            </button>
+            <div className="flex items-center space-x-6">
+              <p>Iniciar Sesión</p>
+              <button
+                onClick={handleLoginRedirect}
+                className="flex items-center px-2 py-2 text-left bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
+              >
+               <PiFingerprint />
+              </button>
+            </div>
           )}
         </div>
       </header>
@@ -81,7 +86,7 @@ export default function Home() {
             <p>Accede a tu tablero para gestionar tus actividades.</p>
             <button
               onClick={handleDashboardRedirect}
-              className="mt-4 px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded-md transition"
+              className="flex items-center mx-auto mt-8 px-4 py-2 text-left bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
             >
               Ir al Tablero
             </button>
@@ -94,7 +99,7 @@ export default function Home() {
             </p>
             <button
               onClick={handleLoginRedirect}
-              className=" px-4 py-2 text-left bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
+              className="flex items-center mx-auto mt-8 px-4 py-2 text-left bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
             >
               Iniciar Sesión
             </button>
