@@ -7,13 +7,13 @@ import { PiEye, PiEyeClosed } from "react-icons/pi";
 const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // Confirmación de contraseña
-  const [passwordVisible, setPasswordVisible] = useState(false); // Visibilidad de contraseña
-  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false); // Visibilidad de confirmar contraseña
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const [termsAccepted, setTermsAccepted] = useState(false); // Términos aceptados
-  const [isPasswordTyped, setIsPasswordTyped] = useState(false); // Nueva variable para saber si la contraseña fue escrita
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isPasswordTyped, setIsPasswordTyped] = useState(false);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,34 +30,50 @@ const SignupForm = () => {
       return;
     }
 
-    // Verificar si el correo ya está en uso antes de intentar crear el usuario
-    const { data: userCheck, error: userCheckError } = await supabase
-      .from("users")
-      .select("email")
-      .eq("email", email)
-      .single();
+    try {
+      // Intentar crear el usuario con Supabase Auth
+      const { data: authResponse, error: authError } =
+        await supabase.auth.signUp({
+          email,
+          password,
+        });
 
-    if (userCheckError && userCheckError.code !== "PGRST116") {
-      setError("Hubo un problema al verificar el correo.");
-      return;
+      if (authError) {
+        setError("Hubo un error al crear tu cuenta: " + authError.message);
+        return;
+      }
+
+      // Validar que el usuario se haya creado
+      if (authResponse.user) {
+        const { id: authId } = authResponse.user;
+
+        // Intentar guardar datos adicionales en la tabla `users`
+        const { error: userError } = await supabase.from("users").insert([
+          {
+            auth_id: authId, // ID del usuario autenticado
+            email, // Correo del usuario
+          },
+        ]);
+
+        if (userError) {
+          console.error(
+            "Error al guardar en la tabla 'users':",
+            userError.message
+          );
+          setError(
+            "El usuario se creó, pero hubo un problema al guardar los datos adicionales."
+          );
+          return;
+        }
+
+        setSuccess(
+          "Usuario creado correctamente. Por favor, verifica tu correo."
+        );
+      }
+    } catch (err) {
+      console.error("Error desconocido:", err);
+      setError("Hubo un problema inesperado. Intenta nuevamente.");
     }
-
-    if (userCheck) {
-      setError("Este correo ya está registrado.");
-      return;
-    }
-
-    const {  error: signupError } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (signupError) {
-      setError("Hubo un error al crear tu cuenta.");
-      return;
-    }
-
-    setSuccess("Usuario creado correctamente. Por favor, verifica tu correo.");
   };
 
   const getPasswordStrength = () => {
@@ -161,9 +177,7 @@ const SignupForm = () => {
               />
               <button
                 type="button"
-                onClick={() =>
-                  setConfirmPasswordVisible((prev) => !prev)
-                }
+                onClick={() => setConfirmPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-gray-700 border border-l border-teal-600/70 flex items-center justify-center text-gray-400 hover:text-teal-300 rounded-r-lg"
                 aria-label={
                   confirmPasswordVisible
