@@ -198,7 +198,7 @@ const Dashboard = () => {
             <div className="border-b border-gray-700 mt-2"></div>
           </div>
 
-           {/* Primary Panel */}
+          {/* Primary Panel */}
 
           {/* Opciones del menú */}
           <div className="flex flex-col space-y-2 p-2">
