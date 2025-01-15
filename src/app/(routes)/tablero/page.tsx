@@ -15,6 +15,8 @@ import {
   PiChartBar,
   PiHouseLine,
 } from "react-icons/pi";
+import InstitutionPanel from "@/components/Institutions/InstitutionPanel";
+import InstitutionMain from "@/components/Institutions/InstitutionMain";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false);
@@ -71,7 +73,7 @@ const Dashboard = () => {
   const getPanelContent = () => {
     switch (selectedSection) {
       case "institucion":
-        return <p>Información sobre las instituciones.</p>;
+        return <InstitutionPanel />;
       case "calendario":
         return <p>Detalles del calendario y las tareas.</p>;
       case "cursos":
@@ -92,7 +94,7 @@ const Dashboard = () => {
   const getMainContent = () => {
     switch (selectedSection) {
       case "institucion":
-        return <p>Vista principal de Instituciones.</p>;
+        return <InstitutionMain />;
       case "calendario":
         return <p>Calendario interactivo y tareas.</p>;
       case "cursos":
@@ -158,7 +160,7 @@ const Dashboard = () => {
       <div className="flex h-screen bg-gray-800 text-gray-200">
         {/* Aside Menu */}
         <aside
-          className={`bg-gray-800 border-r border-gray-700 transition-all duration-200 z-30 absolute lg:relative ${
+          className={`bg-gray-800  border-gray-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
             isAsideOpen ? "w-56" : "w-[50px]"
           } flex flex-col justify-stretch`}
           onMouseEnter={() => setIsAsideOpen(true)}
@@ -190,9 +192,7 @@ const Dashboard = () => {
               <span className="text-xl">
                 <PiHouseLine />
               </span>
-              {isAsideOpen && (
-                <span className="text-sm">Volver</span>
-              )}
+              {isAsideOpen && <span className="text-sm">Volver</span>}
             </div>
             {/* Línea debajo del icono */}
             <div className="border-b border-gray-700 mt-2"></div>
@@ -205,7 +205,9 @@ const Dashboard = () => {
                 key={item.route}
                 onClick={() => setSelectedSection(item.route)} // Cambia la sección seleccionada
                 className={`flex items-center space-x-4 px-2 py-2 rounded-md transition-colors cursor-pointer hover:bg-gray-700/50 ${
-                  selectedSection === item.route ? "bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100" : "text-gray-400/75 hover:text-cyan-300 hover:bg-cyan-300/5"
+                  selectedSection === item.route
+                    ? "bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100"
+                    : "text-gray-400/75 hover:text-cyan-300 hover:bg-cyan-300/5"
                 }`}
               >
                 <span className="text-xl ">{item.icon}</span>
@@ -219,7 +221,7 @@ const Dashboard = () => {
 
         {/* Secondary Panel */}
         <aside
-          className="w-[20%] bg-gray-900 pl-auto z-20 h-full border-r border-gray-700"
+          className="w-[20%] bg-slate-950/30 pl-auto z-20 h-full border-r border-gray-700"
           style={{ position: "relative" }}
         >
           <h2 className="text-xl px-3 pl-16 border-b border-gray-700 flex items-center h-[50px] bg-gray-800">
@@ -248,7 +250,7 @@ const Dashboard = () => {
           </header>
 
           {/* Content */}
-          <section className="flex-1 bg-gray-900 p-8">
+          <section className="flex-1 bg-slate-950/30 p-8">
             <h2 className="text-3xl font-bold mb-4 capitalize">
               {selectedSection}
             </h2>
