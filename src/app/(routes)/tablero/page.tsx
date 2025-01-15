@@ -198,6 +198,8 @@ const Dashboard = () => {
             <div className="border-b border-gray-700 mt-2"></div>
           </div>
 
+           {/* Primary Panel */}
+
           {/* Opciones del menú */}
           <div className="flex flex-col space-y-2 p-2">
             {menuItems.map((item) => (
@@ -221,7 +223,7 @@ const Dashboard = () => {
 
         {/* Secondary Panel */}
         <aside
-          className="w-[20%] bg-slate-950/30 pl-auto z-20 h-full border-r border-gray-700"
+          className="w-[20%] bg-slate-950/30 pl-auto h-full border-r border-gray-700"
           style={{ position: "relative" }}
         >
           <h2 className="text-xl px-3 pl-16 border-b border-gray-700 flex items-center h-[50px] bg-gray-800">
