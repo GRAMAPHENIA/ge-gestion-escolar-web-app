@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [selectedSection, setSelectedSection] = useState("institucion");
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Para el menú del avatar
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
   const menuItems = [
@@ -64,7 +64,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="text-gray-200 bg-gray-900 h-screen flex justify-center items-center">
+      <div className="text-zinc-200 bg-zinc-900 h-screen flex justify-center items-center">
         Cargando...
       </div>
     );
@@ -113,7 +113,7 @@ const Dashboard = () => {
   };
 
   const AvatarMenu = () => (
-    <div className="relative">
+    <div className="relative ">
       {/* Botón Avatar */}
       <button
         className="w-9 h-9 bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
@@ -139,7 +139,7 @@ const Dashboard = () => {
             className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700"
             onClick={() => {
               supabase.auth.signOut();
-              router.push("/");
+              router.push("/"); // Redirige al inicio después de cerrar sesión
             }}
           >
             <GoSignOut className="mr-2 text-xl" /> Cerrar sesión
@@ -157,107 +157,83 @@ const Dashboard = () => {
 
   return (
     <ProtectedRoute>
-      <div className="flex h-screen bg-gray-800 text-gray-200">
-        {/* Aside Menu */}
-        <aside
-          className={`bg-gray-800  border-gray-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
-            isAsideOpen ? "w-56" : "w-[50px]"
-          } flex flex-col justify-stretch`}
-          onMouseEnter={() => setIsAsideOpen(true)}
-          onMouseLeave={() => setIsAsideOpen(false)}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: "100%",
-            zIndex: 30,
-          }}
-        >
-          {/* Logo de Gestión Escolar */}
-          <div className="flex items-center justify-left p-3 space-x-4">
-            <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 text-xs">
-              T
-            </div>
-            {isAsideOpen && (
-              <span className="ml-3 text-sm text-cyan-400">Tablero</span>
-            )}
-          </div>
+      <div className="flex h-screen flex-col">
+        {/* Barra superior con avatar */}
+        <div className="w-full bg-zinc-800 pl-20 pr-4 py-2 flex justify-between items-center border-b border-zinc-700">
+          <h1 className="text-xl font-semibold">Bienvenido al Tablero</h1>
+          <AvatarMenu /> {/* Aquí insertamos AvatarMenu */}
+        </div>
 
-          {/* Icono de casa */}
-          <div>
-            <div
-              onClick={() => router.push("/")} // Redirige a la página principal
-              className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-gray-400/75 hover:text-cyan-300 hover:bg-cyan-300/5"
-            >
-              <span className="text-xl">
-                <PiHouseLine />
-              </span>
-              {isAsideOpen && <span className="text-sm">Volver</span>}
-            </div>
-            {/* Línea debajo del icono */}
-            <div className="border-b border-gray-700 mt-2"></div>
-          </div>
-
-          {/* Primary Panel */}
-
-          {/* Opciones del menú */}
-          <div className="flex flex-col space-y-2 p-2">
-            {menuItems.map((item) => (
-              <div
-                key={item.route}
-                onClick={() => setSelectedSection(item.route)} // Cambia la sección seleccionada
-                className={`flex items-center space-x-4 px-2 py-2 rounded-md transition-colors cursor-pointer hover:bg-gray-700/50 ${
-                  selectedSection === item.route
-                    ? "bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100"
-                    : "text-gray-400/75 hover:text-cyan-300 hover:bg-cyan-300/5"
-                }`}
-              >
-                <span className="text-xl ">{item.icon}</span>
-                {isAsideOpen && (
-                  <span className="text-sm font-medium ">{item.name}</span>
-                )}
+        <div className="flex flex-1">
+          {/* Barra lateral */}
+          <aside
+            className={`bg-zinc-800 border-zinc-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
+              isAsideOpen ? "w-56" : "w-[50px]"
+            } flex flex-col justify-stretch`}
+            onMouseEnter={() => setIsAsideOpen(true)}
+            onMouseLeave={() => setIsAsideOpen(false)}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              height: "100%",
+              zIndex: 30,
+            }}
+          >
+            <div className="flex items-center justify-left p-3 space-x-4">
+              <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-emerald-600/20 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 transition duration-100 text-xs">
+                T
               </div>
-            ))}
-          </div>
-        </aside>
-
-        {/* Secondary Panel */}
-        <aside
-          className="w-[20%] bg-slate-950/30 pl-auto h-full border-r border-gray-700"
-          style={{ position: "relative" }}
-        >
-          <h2 className="text-xl px-3 pl-16 border-b border-gray-700 flex items-center h-[50px] bg-gray-800">
-            {selectedSection.charAt(0).toUpperCase() + selectedSection.slice(1)}
-          </h2>
-          {/* Mostrar contenido del panel */}
-          <div className="pl-16 mt-10">{getPanelContent()}</div>
-        </aside>
-
-        {/* Main Content */}
-        <div className="flex-1 flex flex-col ">
-          {/* Top Bar */}
-          <header className="bg-gray-800/50 shadow-md flex justify-between border-b border-gray-600 h-[50px] items-center">
-            <h1 className="text-xl px-3 border-b border-transparent flex items-center h-full bg-gray-800">
-              Gestión Escolar
-            </h1>
-            <div className="flex items-center space-x-4 px-3">
-              {user ? (
-                <div></div>
-              ) : (
-                // <span>Hola, {user.email}</span> que deviera de ir en el div de arriba.
-                <span>No estás logueado</span>
+              {isAsideOpen && (
+                <span className="ml-3 text-sm text-emerald-400">Tablero</span>
               )}
-              <AvatarMenu /> {/* Aquí agregamos el componente AvatarMenu */}
             </div>
-          </header>
 
-          {/* Content */}
-          <section className="flex-1 bg-slate-950/30 p-8">
-            <h2 className="text-3xl font-bold mb-4 capitalize">
-              {selectedSection}
+            <div>
+              <div
+                onClick={() => router.push("/")}
+                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-emerald-300 hover:bg-emerald-300/5"
+              >
+                <span className="text-xl">
+                  <PiHouseLine />
+                </span>
+                {isAsideOpen && <span className="text-sm">Volver</span>}
+              </div>
+              <div className="border-b border-zinc-700 mt-2"></div>
+            </div>
+
+            <div className="flex flex-col space-y-2 p-2">
+              {menuItems.map((item) => (
+                <div
+                  key={item.route}
+                  onClick={() => setSelectedSection(item.route)}
+                  className={`flex items-center space-x-4 px-2 py-2 rounded-md transition-colors cursor-pointer hover:bg-zinc-700/50 ${
+                    selectedSection === item.route
+                      ? "bg-emerald-600/20 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 transition duration-100"
+                      : "text-zinc-400/75 hover:text-emerald-300 hover:bg-emerald-300/5"
+                  }`}
+                >
+                  <span className="text-xl ">{item.icon}</span>
+                  {isAsideOpen && (
+                    <span className="text-sm font-medium ">{item.name}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </aside>
+
+          <aside
+            className="w-[20%] bg-zinc-900 pl-auto h-full border-r border-zinc-700"
+            style={{ position: "relative" }}
+          >
+            <h2 className="text-xl px-3 pl-16 border-b border-zinc-700 flex items-center ">
+              {getPanelContent()}
             </h2>
-            <div>{getMainContent()}</div>
-          </section>
+          </aside>
+
+          <main className="flex-1 bg-zinc-900  p-6 overflow-auto">
+            {getMainContent()}
+          </main>
         </div>
       </div>
     </ProtectedRoute>
