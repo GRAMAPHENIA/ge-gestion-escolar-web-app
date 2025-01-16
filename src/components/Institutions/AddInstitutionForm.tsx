@@ -19,7 +19,7 @@ const AddInstitutionForm: React.FC = () => {
           className="text-green-400 p-[4px] rounded-[4px] h-[25px] w-auto bg-cyan-300/5"
           size={20}
         />
-        <span className="ml-2">Agregar institución</span>
+        <span className="ml-2 text-sm">Agregar institución</span>
       </button>
 
       {isOpen && (

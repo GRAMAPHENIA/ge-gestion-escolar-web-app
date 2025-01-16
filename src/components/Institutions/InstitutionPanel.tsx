@@ -10,7 +10,7 @@ import AddInstitutionForm from "./AddInstitutionForm";
 const InstitutionPanel = () => {
   return (
     <div className="">
-      <h3 className="text-2xl font-bold mb-4">Panel de Instituciones</h3>
+      <h3 className="text-2xl font-bold my-4">Panel de Instituciones</h3>
       <p className="text-sm text-gray-400 mb-6">
         Aquí podés encontrar información breve o herramientas rápidas para
         gestionar tus instituciones.

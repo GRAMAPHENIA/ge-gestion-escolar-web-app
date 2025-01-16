@@ -184,6 +184,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* Mission Section */}
+          
           <div className="bg-zinc-900/50 rounded-lg border border-zinc-800 p-8">
             <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 text-center">
               Nuestra Misión

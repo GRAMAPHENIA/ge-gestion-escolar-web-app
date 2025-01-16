@@ -64,7 +64,7 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="text-zinc-200 bg-zinc-900 h-screen flex justify-center items-center">
+      <div className="text-zinc-200 bg-zinc-950 h-screen flex justify-center items-center">
         Cargando...
       </div>
     );
@@ -116,7 +116,7 @@ const Dashboard = () => {
     <div className="relative ">
       {/* Botón Avatar */}
       <button
-        className="w-9 h-9 bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
+        className="w-9 h-9 bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
         onClick={() => setIsMenuOpen((prev) => !prev)}
       >
         {user ? user.email?.charAt(0).toUpperCase() : "?"}{" "}
@@ -125,7 +125,7 @@ const Dashboard = () => {
 
       {/* Menú Desplegable */}
       {isMenuOpen && (
-        <div className="absolute right-0 top-10 p-4 mt-2 w-72 bg-gray-800 text-gray-100 rounded-md shadow-lg z-20">
+        <div className="absolute right-0 top-10 p-4 mt-2 w-72 bg-zinc-900 text-gray-100 rounded-md shadow-lg z-20">
           {/* Información del Usuario */}
           {user && (
             <div className="px-4 py-2 border-b border-gray-600">
@@ -159,7 +159,7 @@ const Dashboard = () => {
     <ProtectedRoute>
       <div className="flex h-screen flex-col">
         {/* Barra superior con avatar */}
-        <div className="w-full bg-zinc-800 pl-20 pr-4 py-2 flex justify-between items-center border-b border-zinc-700">
+        <div className="w-full bg-zinc-900/50 pl-20 pr-4 py-2 flex justify-between items-center border-b border-zinc-700">
           <h1 className="text-xl font-semibold">Bienvenido al Tablero</h1>
           <AvatarMenu /> {/* Aquí insertamos AvatarMenu */}
         </div>
@@ -167,7 +167,7 @@ const Dashboard = () => {
         <div className="flex flex-1">
           {/* Barra lateral */}
           <aside
-            className={`bg-zinc-800 border-zinc-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
+            className={`bg-zinc-900/80 backdrop-blur-3xl border-zinc-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
               isAsideOpen ? "w-56" : "w-[50px]"
             } flex flex-col justify-stretch`}
             onMouseEnter={() => setIsAsideOpen(true)}
@@ -181,25 +181,25 @@ const Dashboard = () => {
             }}
           >
             <div className="flex items-center justify-left p-3 space-x-4">
-              <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-emerald-600/20 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 transition duration-100 text-xs">
+              <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 text-xs">
                 T
               </div>
               {isAsideOpen && (
-                <span className="ml-3 text-sm text-emerald-400">Tablero</span>
+                <span className="ml-3 text-sm text-cyan-400"></span>
               )}
             </div>
 
             <div>
               <div
                 onClick={() => router.push("/")}
-                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-emerald-300 hover:bg-emerald-300/5"
+                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-cyan-300 hover:bg-zonc-300/5"
               >
                 <span className="text-xl">
                   <PiHouseLine />
                 </span>
                 {isAsideOpen && <span className="text-sm">Volver</span>}
               </div>
-              <div className="border-b border-zinc-700 mt-2"></div>
+              <div className="border-b border-zinc-700 mt-2 mx-2"></div>
             </div>
 
             <div className="flex flex-col space-y-2 p-2">
@@ -207,10 +207,10 @@ const Dashboard = () => {
                 <div
                   key={item.route}
                   onClick={() => setSelectedSection(item.route)}
-                  className={`flex items-center space-x-4 px-2 py-2 rounded-md transition-colors cursor-pointer hover:bg-zinc-700/50 ${
+                  className={`flex items-center space-x-4 pl-[6px] py-2 rounded-[3px] transition-colors cursor-pointer hover:bg-zinc-700/50 ${
                     selectedSection === item.route
-                      ? "bg-emerald-600/20 hover:bg-emerald-500/20 text-emerald-400 hover:text-emerald-300 transition duration-100"
-                      : "text-zinc-400/75 hover:text-emerald-300 hover:bg-emerald-300/5"
+                      ? "bg-zinc-600/40 hover:bg-zinc-500/20 text-zinc-300 hover:text-zinc-300 transition duration-100"
+                      : "text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5"
                   }`}
                 >
                   <span className="text-xl ">{item.icon}</span>
@@ -220,10 +220,11 @@ const Dashboard = () => {
                 </div>
               ))}
             </div>
+            <div className="border-b border-zinc-700  mx-2"></div>
           </aside>
 
           <aside
-            className="w-[20%] bg-zinc-900 pl-auto h-full border-r border-zinc-700"
+            className="w-[20%] bg-zinc-950 pl-auto h-full border-r border-zinc-700"
             style={{ position: "relative" }}
           >
             <h2 className="text-xl px-3 pl-16 border-b border-zinc-700 flex items-center ">
@@ -231,7 +232,7 @@ const Dashboard = () => {
             </h2>
           </aside>
 
-          <main className="flex-1 bg-zinc-900  p-6 overflow-auto">
+          <main className="flex-1 bg-zinc-950  p-6 overflow-auto">
             {getMainContent()}
           </main>
         </div>
