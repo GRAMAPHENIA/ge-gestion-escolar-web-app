@@ -71,8 +71,8 @@ const InstitutionCard = () => {
                 <span
                   className={`text-4xl p-4 border border-zinc-700/50 rounded-md ${
                     institution.is_active
-                      ? "bg-cyan-500/20 text-cyan-400"
-                      : "bg-zinc-900 text-zinc-500"
+                      ? "bg-cyan-500/5 text-cyan-400"
+                      : "bg-zinc-900 text-zinc-500/20"
                   }`}
                 >
                   <BsBuildingGear />
@@ -86,12 +86,12 @@ const InstitutionCard = () => {
                       prev === institution.id ? null : institution.id
                     )
                   }
-                  className="text-gray-400 hover:text-gray-200 p-2 rounded-full focus:outline-none"
+                  className="text-gray-400 hover:text-gray-200 bg-zinc-900 hover:bg-zinc-800/70 p-2 rounded-full focus:outline-none border border-zinc-700/50"
                 >
                   <BsThreeDotsVertical size={20} />
                 </button>
                 {openMenu === institution.id && (
-                  <ul className="absolute right-0 mt-2 w-40 bg-zinc-800 rounded-md shadow-lg border border-zinc-700 text-sm">
+                  <ul className="absolute right-0 mt-2 w-40 bg-zinc-900/50 rounded-md shadow-lg border border-zinc-700 text-sm">
                     <li>
                       <button
                         onClick={() =>

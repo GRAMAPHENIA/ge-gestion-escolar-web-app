@@ -7,7 +7,7 @@ import InstitutionCard from "./InstitutionCard/InstitutionCard";
 const InstitutionMain = () => {
   return (
     <div className="text-gray-200  ">
-      <h2 className="text-2xl font-bold">Gestión de Instituciones</h2>
+      <h2 className="text-2xl font-bold mb-10">Gestión de Instituciones</h2>
 
       {/* Grid para mostrar instituciones */}
       <InstitutionCard />
