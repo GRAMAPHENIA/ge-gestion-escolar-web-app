@@ -224,10 +224,10 @@ const Dashboard = () => {
           </aside>
 
           <aside
-            className="w-1/4 bg-zinc-950/80 pl-auto border-r border-zinc-700 "
+            className="w-1/4 bg-zinc-950/70 pl-auto border-r border-zinc-700/50 "
             style={{ position: "relative" }}
           >
-            <h2 className="text-xl px-3 pl-16 border-b pb-4 border-zinc-700 flex items-center">
+            <h2 className="text-xl px-3 pl-16 border-b pb-4 border-zinc-700/50 flex items-center">
               {getPanelContent()}
             </h2>
           </aside>
