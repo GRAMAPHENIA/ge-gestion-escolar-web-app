@@ -1,10 +1,11 @@
-import { supabase } from '@/supabase/supabaseClient';
-import { Institution } from '@/types/institutions/types';
-import React, { useEffect, useState } from 'react';
-import { BsBuildingGear } from 'react-icons/bs';
+import { supabase } from "@/supabase/supabaseClient";
+import { Institution } from "@/types/institutions/types";
+import React, { useEffect, useState } from "react";
+import { BsThreeDotsVertical, BsBuildingGear } from "react-icons/bs";
 
 const InstitutionCard = () => {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
+  const [openMenu, setOpenMenu] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchInstitutions = async () => {
@@ -19,7 +20,6 @@ const InstitutionCard = () => {
     fetchInstitutions();
   }, []);
 
-  // Toggle active status
   const handleToggleActive = async (id: number, isActive: boolean) => {
     const { error } = await supabase
       .from("institutions")
@@ -34,10 +34,10 @@ const InstitutionCard = () => {
           inst.id === id ? { ...inst, is_active: !isActive } : inst
         )
       );
+      setOpenMenu(null); // Cierra el menú contextual
     }
   };
 
-  // Handle delete
   const handleDelete = async (id: number) => {
     const { error } = await supabase.from("institutions").delete().eq("id", id);
 
@@ -45,12 +45,13 @@ const InstitutionCard = () => {
       console.error("Error deleting institution:", error);
     } else {
       setInstitutions((prev) => prev.filter((inst) => inst.id !== id));
+      setOpenMenu(null); // Cierra el menú contextual
     }
   };
 
-  // Handle edit (to be implemented, e.g., open a modal)
   const handleEdit = (institution: Institution) => {
     console.log("Editing institution:", institution);
+    setOpenMenu(null); // Cierra el menú contextual
   };
 
   return (
@@ -63,12 +64,12 @@ const InstitutionCard = () => {
         institutions.map((institution) => (
           <div
             key={institution.id}
-            className="bg-zinc-900/50 border border-zinc-700/50 p-4 rounded-md shadow-md"
+            className="relative bg-zinc-900/50 border border-zinc-700/50 p-4 rounded-md shadow-md"
           >
             <div className="flex justify-between items-start mb-4">
               <p className="flex text-xl font-bold">
                 <span
-                  className={`text-4xl p-4 border rounded-md ${
+                  className={`text-4xl p-4 border border-zinc-700/50 rounded-md ${
                     institution.is_active
                       ? "bg-cyan-500/20 text-cyan-400"
                       : "bg-zinc-900 text-zinc-500"
@@ -78,18 +79,48 @@ const InstitutionCard = () => {
                 </span>
                 <span className="ml-4">{institution.name}</span>
               </p>
-              <button
-                onClick={() =>
-                  handleToggleActive(institution.id, institution.is_active)
-                }
-                className={`px-3 py-1 rounded-md transition ${
-                  institution.is_active
-                    ? "bg-cyan-600/20 text-cyan-400 hover:bg-cyan-500/20"
-                    : "bg-zinc-700/50 text-zinc-400 hover:bg-zinc-600/50"
-                }`}
-              >
-                {institution.is_active ? "Activo" : "Inactivo"}
-              </button>
+              <div className="relative">
+                <button
+                  onClick={() =>
+                    setOpenMenu((prev) =>
+                      prev === institution.id ? null : institution.id
+                    )
+                  }
+                  className="text-gray-400 hover:text-gray-200 p-2 rounded-full focus:outline-none"
+                >
+                  <BsThreeDotsVertical size={20} />
+                </button>
+                {openMenu === institution.id && (
+                  <ul className="absolute right-0 mt-2 w-40 bg-zinc-800 rounded-md shadow-lg border border-zinc-700 text-sm">
+                    <li>
+                      <button
+                        onClick={() =>
+                          handleToggleActive(institution.id, institution.is_active)
+                        }
+                        className="block w-full text-left px-4 py-2 hover:bg-zinc-700 text-gray-300"
+                      >
+                        {institution.is_active ? "Desactivar" : "Activar"}
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleEdit(institution)}
+                        className="block w-full text-left px-4 py-2 hover:bg-zinc-700 text-gray-300"
+                      >
+                        Editar
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleDelete(institution.id)}
+                        className="block w-full text-left px-4 py-2 hover:bg-zinc-700 text-red-400"
+                      >
+                        Eliminar
+                      </button>
+                    </li>
+                  </ul>
+                )}
+              </div>
             </div>
             <p>
               <strong>Email:</strong> {institution.email}
@@ -106,20 +137,6 @@ const InstitutionCard = () => {
             <p>
               <strong>País:</strong> {institution.country}
             </p>
-            <div className="flex mt-4 space-x-2">
-              <button
-                onClick={() => handleEdit(institution)}
-                className="flex items-center px-4 py-2 text-left bg-sky-600/5 hover:bg-sky-500/10 text-sky-400 hover:text-sky-300 border border-zinc-700/50 transition duration-100 rounded-md"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => handleDelete(institution.id)}
-                className="flex items-center px-4 py-2 text-left bg-rose-600/5 hover:bg-rose-500/10 text-rose-400 hover:text-rose-300 border border-zinc-700/50 transition duration-100 rounded-md"
-              >
-                Eliminar
-              </button>
-            </div>
           </div>
         ))
       )}
