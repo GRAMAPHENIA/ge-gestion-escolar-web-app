@@ -1,16 +1,16 @@
-// src/components/InstitutionMain/InstitutionMain.tsx
+// src/components/Instituciones.tsx
 "use client";
 
 import React from "react";
+import InstitutionCard from "./InstitutionCard/InstitutionCard";
 
 const InstitutionMain = () => {
   return (
-    <div className="p-8 text-gray-400 bg-slate-800/60  rounded-lg">
-      <h2 className="text-3xl font-bold mb-6">Gestión de Instituciones</h2>
-      <p className="text-sm text-gray-400 mb-4">
-        En esta sección podés gestionar las instituciones, agregar nuevas o
-        editar las existentes.
-      </p>
+    <div className="text-gray-200  ">
+      <h2 className="text-2xl font-bold">Gestión de Instituciones</h2>
+
+      {/* Grid para mostrar instituciones */}
+      <InstitutionCard />
     </div>
   );
 };

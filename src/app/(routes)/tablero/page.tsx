@@ -164,10 +164,10 @@ const Dashboard = () => {
           <AvatarMenu /> {/* Aquí insertamos AvatarMenu */}
         </div>
 
-        <div className="flex flex-1">
+        <div className="flex flex-1 overflow-hidden">
           {/* Barra lateral */}
           <aside
-            className={`bg-zinc-900/80 backdrop-blur-3xl border-zinc-700 border-r transition-all duration-200 z-30 absolute lg:relative ${
+            className={`bg-zinc-900/80 backdrop-blur-3xl border-zinc-700/50 border-r transition-all duration-100 z-30 absolute lg:relative  ${
               isAsideOpen ? "w-56" : "w-[50px]"
             } flex flex-col justify-stretch`}
             onMouseEnter={() => setIsAsideOpen(true)}
@@ -224,15 +224,15 @@ const Dashboard = () => {
           </aside>
 
           <aside
-            className="w-[20%] bg-zinc-950 pl-auto h-full border-r border-zinc-700"
+            className="w-1/4 bg-zinc-950/80 pl-auto border-r border-zinc-700 "
             style={{ position: "relative" }}
           >
-            <h2 className="text-xl px-3 pl-16 border-b border-zinc-700 flex items-center ">
+            <h2 className="text-xl px-3 pl-16 border-b pb-4 border-zinc-700 flex items-center">
               {getPanelContent()}
             </h2>
           </aside>
 
-          <main className="flex-1 bg-zinc-950  p-6 overflow-auto">
+          <main className="flex-1 bg-zinc-950  p-6 overflow-y-auto max-h-screen">
             {getMainContent()}
           </main>
         </div>

@@ -20,3 +20,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Personalización del scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Ancho del scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #27272a; /* Fondo del track (zinc-800) */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* Color del thumb (zinc-700) */
+  border-radius: 0px; /* Bordes redondeados */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b; /* Hover más claro (zinc-600) */
+}
+
+
