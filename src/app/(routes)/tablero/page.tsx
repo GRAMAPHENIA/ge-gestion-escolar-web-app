@@ -16,7 +16,8 @@ import {
   PiHouseLine,
 } from "react-icons/pi";
 import InstitutionPanel from "@/components/Institutions/InstitutionPanel";
-import InstitutionMain from "@/components/Institutions/InstitutionMain";
+// import InstitutionMain from "@/components/Institutions/InstitutionMain";
+import MainContent from "@/components/Dashboard/MainContent";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false);
@@ -91,26 +92,26 @@ const Dashboard = () => {
     }
   };
 
-  const getMainContent = () => {
-    switch (selectedSection) {
-      case "institucion":
-        return <InstitutionMain />;
-      case "calendario":
-        return <p>Calendario interactivo y tareas.</p>;
-      case "cursos":
-        return <p>Gestión completa de cursos.</p>;
-      case "estudiantes":
-        return <p>Sección para administrar estudiantes.</p>;
-      case "clases":
-        return <p>Vista principal de clases.</p>;
-      case "evaluaciones":
-        return <p>Resultados y gestión de evaluaciones.</p>;
-      case "notas":
-        return <p>Gestión de calificaciones y reportes.</p>;
-      default:
-        return <p>Selecciona una sección desde el menú.</p>;
-    }
-  };
+  // const getMainContent = () => {
+  //   switch (selectedSection) {
+  //     case "institucion":
+  //       return <InstitutionMain />;
+  //     case "calendario":
+  //       return <p>Calendario interactivo y tareas.</p>;
+  //     case "cursos":
+  //       return <p>Gestión completa de cursos.</p>;
+  //     case "estudiantes":
+  //       return <p>Sección para administrar estudiantes.</p>;
+  //     case "clases":
+  //       return <p>Vista principal de clases.</p>;
+  //     case "evaluaciones":
+  //       return <p>Resultados y gestión de evaluaciones.</p>;
+  //     case "notas":
+  //       return <p>Gestión de calificaciones y reportes.</p>;
+  //     default:
+  //       return <p>Selecciona una sección desde el menú.</p>;
+  //   }
+  // };
 
   const AvatarMenu = () => (
     <div className="relative ">
@@ -233,7 +234,8 @@ const Dashboard = () => {
           </aside>
 
           <main className="flex-1 bg-zinc-950  p-6 overflow-y-auto max-h-screen">
-            {getMainContent()}
+            {/* {getMainContent()} */}
+            <MainContent selectedSection={selectedSection} />
           </main>
         </div>
       </div>

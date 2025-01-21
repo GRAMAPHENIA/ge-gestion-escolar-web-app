@@ -86,9 +86,9 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-1/3 bg-gray-900 text-gray-200">
-      <div className="w-full max-w-lg p-6 bg-gray-800 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-teal-400 mb-6">
+    <div className="flex items-center justify-center w-1/3 bg-zinc-900/50 text-gray-200 rounded-lg">
+      <div className="w-full max-w-lg p-6 bg-zinc-900/50 border-2 border-zinc-950/20 rounded-lg ">
+        <h1 className="text-3xl font-bold text-center text-cyan-400 mb-6">
           Crear Cuenta
         </h1>
         <form onSubmit={handleSignup} className="space-y-6">
@@ -104,7 +104,7 @@ const SignupForm = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 block w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition focus:outline-none focus:ring-0"
+              className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
               placeholder="Ingresa tu correo"
               required
             />
@@ -125,14 +125,14 @@ const SignupForm = () => {
                   setPassword(e.target.value);
                   setIsPasswordTyped(true);
                 }}
-                className="mt-2 block w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition focus:outline-none focus:ring-0"
+                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
                 placeholder="Crea una contraseña"
                 required
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-gray-700 border border-l border-teal-600/70 flex items-center justify-center text-gray-400 hover:text-teal-300 rounded-r-lg"
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-cyan-600/70 flex items-center justify-center text-gray-400 hover:text-cyan-300 rounded-r-lg"
                 aria-label={
                   passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
                 }
@@ -171,14 +171,14 @@ const SignupForm = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-2 block w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition focus:outline-none focus:ring-0"
+                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
                 placeholder="Repite tu contraseña"
                 required
               />
               <button
                 type="button"
                 onClick={() => setConfirmPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-gray-700 border border-l border-teal-600/70 flex items-center justify-center text-gray-400 hover:text-teal-300 rounded-r-lg"
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-cyan-600/70 flex items-center justify-center text-gray-400 hover:text-cyan-300 rounded-r-lg"
                 aria-label={
                   confirmPasswordVisible
                     ? "Ocultar contraseña"
@@ -199,7 +199,7 @@ const SignupForm = () => {
               id="terms"
               checked={termsAccepted}
               onChange={() => setTermsAccepted((prev) => !prev)}
-              className="appearance-none w-5 h-5 border border-l border-teal-600/70 rounded-sm bg-gray-700 checked:bg-teal-500/50 checked:border-none mr-2"
+              className="appearance-none w-5 h-5 border border-l border-cyan-600/70 rounded-sm bg-zinc-900/50 checked:bg-cyan-500/50 checked:border-none mr-2"
             />
             <label
               htmlFor="terms"
@@ -226,7 +226,7 @@ const SignupForm = () => {
               Acepta los{" "}
               <a
                 href="/terminos-y-condiciones"
-                className="text-teal-400 hover:underline"
+                className="text-cyan-400 hover:underline"
               >
                 términos y condiciones.
               </a>
@@ -244,7 +244,7 @@ const SignupForm = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-center bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md "
+            className="w-full px-4 py-2 text-center bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-md "
           >
             Crear Cuenta
           </button>
@@ -253,7 +253,7 @@ const SignupForm = () => {
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
-            className="text-teal-400 hover:underline hover:text-teal-300"
+            className="text-cyan-400 hover:underline hover:text-cyan-300"
           >
             Inicia sesión aquí
           </a>
