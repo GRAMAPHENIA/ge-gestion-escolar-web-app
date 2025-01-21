@@ -38,4 +38,13 @@ body {
   background: #52525b; /* Hover más claro (zinc-600) */
 }
 
+::selection {
+  background-color: #00ccff78;
+  color: #ffffff;
+}
+
+html.dark ::selection {
+  background-color: #00ccff28;
+  color: #000000;
+}
 

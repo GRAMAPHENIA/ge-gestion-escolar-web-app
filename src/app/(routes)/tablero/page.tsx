@@ -125,7 +125,7 @@ const Dashboard = () => {
 
       {/* Menú Desplegable */}
       {isMenuOpen && (
-        <div className="absolute right-0 top-10 p-4 mt-2 w-72 bg-zinc-900 text-gray-100 rounded-md shadow-lg z-20">
+        <div className="absolute right-0 top-8 p-4 mt-2 w-72 bg-zinc-900 text-gray-100 rounded-md shadow-lg z-20 border border-zinc-800">
           {/* Información del Usuario */}
           {user && (
             <div className="px-4 py-2 border-b border-gray-600">
@@ -136,7 +136,7 @@ const Dashboard = () => {
 
           {/* Opciones */}
           <button
-            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700"
+            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700 p-2 mt-4 rounded-full bg-zinc-800/70 hover:bg-zinc-700/40"
             onClick={() => {
               supabase.auth.signOut();
               router.push("/"); // Redirige al inicio después de cerrar sesión
@@ -145,7 +145,7 @@ const Dashboard = () => {
             <GoSignOut className="mr-2 text-xl" /> Cerrar sesión
           </button>
           <button
-            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700"
+            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700 p-2 mt-2 rounded-full bg-zinc-800/70 hover:bg-zinc-700/40"
             onClick={() => alert("Configuración aún no implementada")}
           >
             <AiOutlineSetting className="mr-2 text-xl" /> Configuración

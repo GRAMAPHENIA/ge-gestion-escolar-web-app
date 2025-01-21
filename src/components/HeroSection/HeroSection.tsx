@@ -13,26 +13,27 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   handleScrollToForm,
 }) => {
   return (
-    <section className="relative flex items-center justify-center bg-zinc-900/50 rounded-lg border border-zinc-800 text-center p-16">
+    <section className="relative flex items-center justify-center bg-zinc-900/50 rounded-3xl border border-zinc-800 text-center p-16">
       <div>
-        <h2 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6">
-          Simplifica la Gestión Escolar
+        <h2 className="flex flex-col text-4xl md:text-5xl font-bold mb-6">
+          Organizate en minutos <span className="text-cyan-400">Crecé sin límites</span>
         </h2>
         <p className="text-zinc-400 text-lg mb-8">
-          Optimiza las operaciones y mejora la experiencia educativa con nuestra solución completa.
+          Optimiza las operaciones y mejora la experiencia educativa con nuestra
+          solución completa.
         </p>
         <div className="flex justify-center gap-4">
           {user ? (
             <button
               onClick={handleDashboardRedirect}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors"
+              className="px-4 py-2 bg-zinc-500/10 text-white rounded-full hover:bg-zinc-400/10 transition-colors border border-zinc-700/50"
             >
-              Ir al Dashboard
+              Administrar instituciones
             </button>
           ) : (
             <button
               onClick={handleScrollToForm}
-              className="px-6 py-3 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors"
+              className="px-4 py-2 bg-zinc-500/10 text-white rounded-full hover:bg-zinc-400/10 transition-colors border border-zinc-700/50"
             >
               Contáctanos
             </button>
