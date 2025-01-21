@@ -13,4 +13,5 @@ export type Institution = {
   description: string;
   is_active: boolean;
   user_id: string;
+  image?: File;
 };

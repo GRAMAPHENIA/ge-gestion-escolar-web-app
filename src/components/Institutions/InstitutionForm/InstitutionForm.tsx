@@ -1,21 +1,34 @@
 import { supabase } from "@/supabase/supabaseClient";
 import { Institution } from "@/types/institutions/types";
+import Image from "next/image";
 import React, { useState } from "react";
+import { FiUpload } from "react-icons/fi"; // Importa el ícono de React Icons
 
-const InstitutionForm = () => {
+// Definimos el tipo adecuado para los datos del formulario
+type InstitutionFormData = Partial<Institution> & {
+  image?: File | null; // 'image' puede ser un archivo o null
+};
+
+const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (institution: Institution) => void }) => {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<Partial<Institution>>({});
+  const [formData, setFormData] = useState<InstitutionFormData>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, files } = e.target;
+
+    if (type === "file" && files) {
+      setFormData((prev) => ({ ...prev, image: files[0] })); // Para el campo de la imagen
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true); // Activar el estado de carga
     setErrorMessage(null); // Resetear el mensaje de error
+
     try {
       console.log("Enviando datos a Supabase:", formData);
 
@@ -52,9 +65,17 @@ const InstitutionForm = () => {
 
       if (error) {
         console.error("Error al agregar la institución:", error.message);
-        setErrorMessage("Hubo un problema al agregar la institución. Inténtalo nuevamente.");
+        setErrorMessage(
+          "Hubo un problema al agregar la institución. Inténtalo nuevamente."
+        );
       } else {
         console.log("Institución agregada con éxito:", data);
+        // Llamamos a la función `onInstitutionCreated` para pasar la nueva institución
+        if (data) {
+          onInstitutionCreated(data[0]); // Pasamos la primera institución creada
+        }
+        // Limpiar el formulario
+        setFormData({});
       }
     } catch (err) {
       console.error("Error inesperado:", err);
@@ -65,68 +86,96 @@ const InstitutionForm = () => {
   };
 
   return (
-    <div className="">
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input
-            type="text"
-            name="name"
-            placeholder="Nombre"
-            value={formData.name || ""}
-            onChange={handleChange}
-            required
-            className="p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email || ""}
-            onChange={handleChange}
-            required
-            className="p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
-          />
-          <input
-            type="tel"
-            name="phone_number"
-            placeholder="Teléfono"
-            value={formData.phone_number || ""}
-            onChange={handleChange}
-            required
-            className="p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Dirección"
-            value={formData.address || ""}
-            onChange={handleChange}
-            required
-            className="p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
-          />
-        </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          value={formData.name || ""}
+          onChange={handleChange}
+          required
+          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email || ""}
+          onChange={handleChange}
+          required
+          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+        />
+        <input
+          type="tel"
+          name="phone_number"
+          placeholder="Teléfono"
+          value={formData.phone_number || ""}
+          onChange={handleChange}
+          required
+          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Dirección"
+          value={formData.address || ""}
+          onChange={handleChange}
+          required
+          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+        />
 
-        {/* Mostrar mensaje de error si existe */}
-        {errorMessage && (
-          <div className="text-rose-400 mt-2 text-sm">{errorMessage}</div>
-        )}
-
-        {/* Botón con texto "Cargando..." o spinner */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-cyan-600/20 hover:bg-cyan-500/20 text-sm text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-md px-4 py-2 mt-4 flex justify-center items-center"
+        {/* Icono de carga de archivo */}
+        <label
+          htmlFor="file-upload"
+          className="flex items-end justify-left cursor-pointer p-2 mb-2 text-sm w-full bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
         >
-          {loading ? (
-            <>
-              <span className="animate-pulse text-cyan-400">Cargando...</span>
-            </>
-          ) : (
-            "Agregar Institución"
-          )}
-        </button>
-      </form>
-    </div>
+          {/* Ícono de React Icons (FiUpload) */}
+          <FiUpload className="w-5 h-5 text-zinc-400 flex items-end" />
+          <span className="text-zinc-600 text-sm ml-2">subir foto</span>
+        </label>
+
+        {/* Input para cargar el archivo (oculto) */}
+        <input
+          id="file-upload"
+          type="file"
+          name="image"
+          onChange={handleChange}
+          className="hidden"
+        />
+
+        {/* Mostrar miniatura del archivo si se seleccionó */}
+        {formData.image && (
+          <div className="mt-2">
+            <Image
+              height={10}
+              width={10}
+              src={URL.createObjectURL(formData.image)}
+              alt="Miniatura"
+              className="w-full h-20 object-cover rounded-md border border-zinc-700"
+            />
+          </div>
+        )}
+      </div>
+
+      {/* Mostrar mensaje de error si existe */}
+      {errorMessage && (
+        <div className="text-rose-400 mt-2 text-sm">{errorMessage}</div>
+      )}
+
+      {/* Botón con texto "Cargando..." o spinner */}
+      <button
+        type="submit"
+        disabled={loading}
+        className="bg-cyan-600/20 hover:bg-cyan-500/20 text-sm text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-md px-4 py-2 mt-4 flex justify-center items-center"
+      >
+        {loading ? (
+          <span className="animate-pulse text-cyan-400">Cargando...</span>
+        ) : (
+          "Agregar Institución"
+        )}
+      </button>
+    </form>
   );
 };
 
