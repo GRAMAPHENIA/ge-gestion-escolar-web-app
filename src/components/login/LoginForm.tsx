@@ -30,8 +30,8 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-1/3 bg-gray-900 text-gray-200">
-      <div className="w-full max-w-lg p-6 bg-gray-800 rounded-lg shadow-lg">
+    <div className="flex items-center justify-center w-1/3 bg-zinc-950 text-gray-200">
+      <div className="w-full max-w-lg p-6 bg-zinc-900/50 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold text-center text-teal-400 mb-6">
           Iniciar Sesión
         </h1>

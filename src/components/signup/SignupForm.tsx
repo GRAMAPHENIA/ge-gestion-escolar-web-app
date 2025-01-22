@@ -86,12 +86,11 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-1/3 bg-zinc-900/50 text-gray-200 rounded-lg">
-      <div className="w-full max-w-lg p-6 bg-zinc-900/50 border-2 border-zinc-950/20 rounded-lg ">
-        <h1 className="text-3xl font-bold text-center text-cyan-400 mb-6">
-          Crear Cuenta
-        </h1>
-        <form onSubmit={handleSignup} className="space-y-6">
+    <div className="grid grid-cols-2 w-full h-screen bg-zinc-900/50 ">
+      <div className="flex flex-col justify-center max-w-xl p-6 bg-zinc-900/50 border-2 border-zinc-950/20 px-20">
+        <h1 className="text-3xl font-bold text-zinc-200">Empezar</h1>
+        <h2 className="text-zinc-500">Crea una nueva cuenta</h2>
+        <form onSubmit={handleSignup} className="space-y-6 mt-10">
           <div>
             <label
               htmlFor="email"
@@ -104,7 +103,7 @@ const SignupForm = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
+              className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-zinc-200 placeholder:text-zinc-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
               placeholder="Ingresa tu correo"
               required
             />
@@ -125,7 +124,7 @@ const SignupForm = () => {
                   setPassword(e.target.value);
                   setIsPasswordTyped(true);
                 }}
-                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
+                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-zinc-200 placeholder:text-zinc-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
                 placeholder="Crea una contraseña"
                 required
               />
@@ -171,7 +170,7 @@ const SignupForm = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-gray-200 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
+                className="mt-2 block w-full px-4 py-2 bg-zinc-900/50 text-zinc-200 placeholder:text-zinc-700 border border-gray-600 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 transition focus:outline-none focus:ring-0"
                 placeholder="Repite tu contraseña"
                 required
               />
@@ -253,12 +252,31 @@ const SignupForm = () => {
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
-            className="text-cyan-400 hover:underline hover:text-cyan-300"
+            className="text-zinc-400 hover:underline hover:text-zinc-300 underline underline-offset-1
+             decoration-cyan-500"
           >
             Inicia sesión aquí
           </a>
         </p>
+        <p className="text-center mt-4 text-xs text-zinc-500">
+          Al continuar, aceptas los{" "}
+          <span className="text-zinc-400 underline underline-offset-1 hover:cursor-pointer hover:text-zinc-300">
+            Términos de Servicios
+          </span>{" "}
+          y la{" "}
+          <span className="text-zinc-400 underline underline-offset-1 hover:cursor-pointer hover:text-zinc-300">
+            Política de Privacidad
+          </span>{" "}
+          de Gestión Escolar, y consientes recibir correos electrónicos
+          periódicos con actualizaciones.
+        </p>
       </div>
+
+      {/* Seccion de Anuncios del servicio */}
+      {/* TODO: crear seccion  de acoplamiento a formulario de registro */}
+      <section>
+        <h1 className="flex justify-center items-center h-screen">Propos</h1>
+      </section>
     </div>
   );
 };

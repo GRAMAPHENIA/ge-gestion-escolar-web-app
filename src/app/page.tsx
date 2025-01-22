@@ -55,7 +55,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 relative overflow-hidden px-40">
+    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-40">
       {/* Grid Pattern Background */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
@@ -71,9 +71,9 @@ const Home: React.FC = () => {
             <div className="flex items-center gap-4">
               {user ? (
                 <div className="flex items-center gap-4">
-                  <span className="text-sm text-cyan-50">
+                  {/* <span className="text-sm text-cyan-50">
                     Bienvenido, {user.email}
-                  </span>
+                  </span> */}
                   <div className="relative z-50">
                     <button
                       onClick={() => setIsMenuOpen(!isMenuOpen)}

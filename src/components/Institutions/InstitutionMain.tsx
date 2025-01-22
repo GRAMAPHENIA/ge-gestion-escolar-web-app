@@ -10,8 +10,8 @@ const InstitutionMain = () => {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
 
   return (
-    <div className="text-gray-200  ">
-      <h2 className="text-2xl font-bold mb-10">Gestión de Instituciones</h2>
+    <div className="text-gray-200  p-10">
+      {/* <h2 className="text-2xl font-bold mb-10">Gestión de Instituciones</h2> */}
 
       {/* Grid para mostrar instituciones */}
       <InstitutionCard />

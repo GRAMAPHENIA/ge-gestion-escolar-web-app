@@ -64,15 +64,15 @@ const InstitutionCard = () => {
         institutions.map((institution) => (
           <div
             key={institution.id}
-            className="relative bg-zinc-900/50 border border-zinc-700/50 p-4 rounded-md shadow-md"
+            className="relative bg-[#212327] p-4 rounded-md"
           >
             <div className="flex justify-between items-start mb-4">
-              <p className="flex text-xl font-bold">
+              <p className="flex justify-center items-center text-xl font-bold">
                 <span
-                  className={`text-4xl p-4 border border-zinc-700/50 rounded-md ${
+                  className={`text-xl p-4 rounded-md ${
                     institution.is_active
-                      ? "bg-cyan-500/5 text-cyan-400"
-                      : "bg-zinc-900 text-zinc-500/20"
+                      ? "bg-[#292b30] text-zinc-200"
+                      : "bg-[#212327] text-zinc-500/50"
                   }`}
                 >
                   <BsBuildingGear />
@@ -95,7 +95,10 @@ const InstitutionCard = () => {
                     <li>
                       <button
                         onClick={() =>
-                          handleToggleActive(institution.id, institution.is_active)
+                          handleToggleActive(
+                            institution.id,
+                            institution.is_active
+                          )
                         }
                         className="block w-full text-left px-4 py-2 hover:bg-zinc-700 text-gray-300"
                       >
@@ -122,21 +125,39 @@ const InstitutionCard = () => {
                 )}
               </div>
             </div>
-            <p>
-              <strong>Email:</strong> {institution.email}
-            </p>
-            <p>
-              <strong>Teléfono:</strong> {institution.phone_number}
-            </p>
-            <p>
-              <strong>Dirección:</strong> {institution.address}
-            </p>
-            <p>
-              <strong>Ciudad:</strong> {institution.city}
-            </p>
-            <p>
-              <strong>País:</strong> {institution.country}
-            </p>
+
+            <section className="p-4">
+              <p>
+                <strong>Email:</strong>{" "}
+                <span className="font-extralight text-neutral-400">
+                  {institution.email}
+                </span>
+              </p>
+              <p>
+                <strong>Teléfono:</strong>{" "}
+                <span className="font-extralight text-neutral-400">
+                  {institution.phone_number}
+                </span>
+              </p>
+              <p>
+                <strong>Dirección:</strong>{" "}
+                <span className="font-extralight text-neutral-400">
+                  {institution.address}
+                </span>
+              </p>
+              <p>
+                <strong>Ciudad:</strong>{" "}
+                <span className="font-extralight text-neutral-400">
+                  {institution.city}
+                </span>
+              </p>
+              <p>
+                <strong>País:</strong>{" "}
+                <span className="font-extralight text-neutral-400">
+                  {institution.country}
+                </span>
+              </p>
+            </section>
           </div>
         ))
       )}

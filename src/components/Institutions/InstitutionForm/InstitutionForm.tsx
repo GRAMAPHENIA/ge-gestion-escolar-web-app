@@ -95,7 +95,7 @@ const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (inst
           value={formData.name || ""}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+          className="w-full p-2 mb-2 text-sm bg-[#404045]  rounded-md text-zinc-400 placeholder:text-neutral-400/50"
         />
         <input
           type="email"
@@ -104,7 +104,7 @@ const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (inst
           value={formData.email || ""}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+          className="w-full p-2 mb-2 text-sm bg-[#404045]  rounded-md text-zinc-400 placeholder:text-neutral-400/50"
         />
         <input
           type="tel"
@@ -113,7 +113,7 @@ const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (inst
           value={formData.phone_number || ""}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+          className="w-full p-2 mb-2 text-sm bg-[#404045]  rounded-md text-zinc-400 placeholder:text-neutral-400/50"
         />
         <input
           type="text"
@@ -122,7 +122,7 @@ const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (inst
           value={formData.address || ""}
           onChange={handleChange}
           required
-          className="w-full p-2 mb-2 text-sm bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+          className="w-full p-2 mb-2 text-sm bg-[#404045]  rounded-md text-zinc-400 placeholder:text-neutral-400/50"
         />
 
         {/* Icono de carga de archivo */}

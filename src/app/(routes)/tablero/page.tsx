@@ -1,3 +1,5 @@
+// src/app/dashboard/page.tsx
+
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -15,16 +17,17 @@ import {
   PiChartBar,
   PiHouseLine,
 } from "react-icons/pi";
-import InstitutionPanel from "@/components/Institutions/InstitutionPanel";
-// import InstitutionMain from "@/components/Institutions/InstitutionMain";
 import MainContent from "@/components/Dashboard/MainContent";
+import PanelContent from "@/components/Dashboard/PanelContent";
+import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
 
 const Dashboard = () => {
-  const [isAsideOpen, setIsAsideOpen] = useState(false);
-  const [selectedSection, setSelectedSection] = useState("institucion");
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAsideOpen, setIsAsideOpen] = useState(false); // Estado para abrir/cerrar el primer aside
+  const [isSecondAsideOpen, setIsSecondAsideOpen] = useState(true); // Estado para abrir/cerrar el segundo aside
+  const [selectedSection, setSelectedSection] = useState("institucion"); // Sección seleccionada
+  const [user, setUser] = useState<User | null>(null); // Información del usuario
+  const [loading, setLoading] = useState(true); // Estado de carga
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú desplegable del avatar
   const router = useRouter();
 
   const menuItems = [
@@ -71,63 +74,20 @@ const Dashboard = () => {
     );
   }
 
-  const getPanelContent = () => {
-    switch (selectedSection) {
-      case "institucion":
-        return <InstitutionPanel />;
-      case "calendario":
-        return <p>Detalles del calendario y las tareas.</p>;
-      case "cursos":
-        return <p>Lista de cursos disponibles.</p>;
-      case "estudiantes":
-        return <p>Datos y gestión de estudiantes.</p>;
-      case "clases":
-        return <p>Información sobre clases y horarios.</p>;
-      case "evaluaciones":
-        return <p>Gestión de evaluaciones y resultados.</p>;
-      case "notas":
-        return <p>Notas y promedios de los estudiantes.</p>;
-      default:
-        return <p>Selecciona una sección para ver más información.</p>;
-    }
-  };
-
-  // const getMainContent = () => {
-  //   switch (selectedSection) {
-  //     case "institucion":
-  //       return <InstitutionMain />;
-  //     case "calendario":
-  //       return <p>Calendario interactivo y tareas.</p>;
-  //     case "cursos":
-  //       return <p>Gestión completa de cursos.</p>;
-  //     case "estudiantes":
-  //       return <p>Sección para administrar estudiantes.</p>;
-  //     case "clases":
-  //       return <p>Vista principal de clases.</p>;
-  //     case "evaluaciones":
-  //       return <p>Resultados y gestión de evaluaciones.</p>;
-  //     case "notas":
-  //       return <p>Gestión de calificaciones y reportes.</p>;
-  //     default:
-  //       return <p>Selecciona una sección desde el menú.</p>;
-  //   }
-  // };
-
   const AvatarMenu = () => (
-    <div className="relative ">
-      {/* Botón Avatar */}
+    <div className="relative">
+      {/* Botón del avatar para desplegar el menú */}
       <button
         className="w-9 h-9 bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
         onClick={() => setIsMenuOpen((prev) => !prev)}
       >
-        {user ? user.email?.charAt(0).toUpperCase() : "?"}{" "}
-        {/* Comprobación de null/undefined */}
+        {user ? user.email?.charAt(0).toUpperCase() : "?"}
       </button>
 
-      {/* Menú Desplegable */}
+      {/* Menú desplegable */}
       {isMenuOpen && (
-        <div className="absolute right-0 top-8 p-4 mt-2 w-72 bg-zinc-900 text-gray-100 rounded-md shadow-lg z-20 border border-zinc-800">
-          {/* Información del Usuario */}
+        <div className="absolute right-0 top-8 p-4 mt-2 w-72 bg-zinc-800 text-gray-100 rounded-md shadow-lg z-20 border border-zinc-800">
+          {/* Información del usuario */}
           {user && (
             <div className="px-4 py-2 border-b border-gray-600">
               <p className="text-sm font-medium">Hola,</p>
@@ -135,12 +95,12 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Opciones */}
+          {/* Opciones del menú */}
           <button
             className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700 p-2 mt-4 rounded-full bg-zinc-800/70 hover:bg-zinc-700/40"
             onClick={() => {
               supabase.auth.signOut();
-              router.push("/"); // Redirige al inicio después de cerrar sesión
+              router.push("/");
             }}
           >
             <GoSignOut className="mr-2 text-xl" /> Cerrar sesión
@@ -160,16 +120,15 @@ const Dashboard = () => {
     <ProtectedRoute>
       <div className="flex h-screen flex-col">
         {/* Barra superior con avatar */}
-        <div className="w-full bg-zinc-900/50 pl-20 pr-4 py-2 flex justify-between items-center border-b border-zinc-700">
-          <h1 className="text-xl font-semibold">Bienvenido al Tablero</h1>
-          <AvatarMenu /> {/* Aquí insertamos AvatarMenu */}
+        <div className="w-full  pl-20 pr-4 py-2 flex justify-end items-center">
+          <AvatarMenu />
         </div>
 
         <div className="flex flex-1 overflow-hidden">
-          {/* Barra lateral */}
+          {/* Primer aside: Menú lateral */}
           <aside
-            className={`bg-zinc-900/80 backdrop-blur-3xl border-zinc-700/50 border-r transition-all duration-100 z-30 absolute lg:relative  ${
-              isAsideOpen ? "w-56" : "w-[50px]"
+            className={`bg-[#212327] transition-all duration-200 z-30 absolute lg:relative  ${
+              isAsideOpen ? "w-56" : "w-[60px]"
             } flex flex-col justify-stretch`}
             onMouseEnter={() => setIsAsideOpen(true)}
             onMouseLeave={() => setIsAsideOpen(false)}
@@ -182,7 +141,7 @@ const Dashboard = () => {
             }}
           >
             <div className="flex items-center justify-left p-3 space-x-4">
-              <div className="w-6 h-6 p-2 flex items-center justify-center rounded-full bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 text-xs">
+              <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 text-xs">
                 T
               </div>
               {isAsideOpen && (
@@ -193,24 +152,24 @@ const Dashboard = () => {
             <div>
               <div
                 onClick={() => router.push("/")}
-                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-cyan-300 hover:bg-zonc-300/5"
+                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5"
               >
                 <span className="text-xl">
-                  <PiHouseLine />
+                  <PiHouseLine className="w-6 h-6" />
                 </span>
                 {isAsideOpen && <span className="text-sm">Volver</span>}
               </div>
               <div className="border-b border-zinc-700 mt-2 mx-2"></div>
             </div>
 
-            <div className="flex flex-col space-y-2 p-2">
+            <div className="flex flex-col space-y-4 p-3">
               {menuItems.map((item) => (
                 <div
                   key={item.route}
                   onClick={() => setSelectedSection(item.route)}
-                  className={`flex items-center space-x-4 pl-[6px] py-2 rounded-[3px] transition-colors cursor-pointer hover:bg-zinc-700/50 ${
+                  className={`flex items-center space-x-4 px-[6px] py-2 rounded-[3px] transition-colors cursor-pointer hover:bg-zinc-700/50 ${
                     selectedSection === item.route
-                      ? "bg-zinc-600/40 hover:bg-zinc-500/20 text-zinc-300 hover:text-zinc-300 transition duration-100"
+                      ? "bg-neutral-600/40 hover:bg-neutral-500/20 text-zinc-300 hover:text-zinc-300 transition duration-200"
                       : "text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5"
                   }`}
                 >
@@ -224,17 +183,39 @@ const Dashboard = () => {
             <div className="border-b border-zinc-700  mx-2"></div>
           </aside>
 
+          {/* Segundo aside: Panel lateral derecho */}
           <aside
-            className="w-1/4 bg-zinc-950/70 pl-auto border-r border-zinc-700/50 "
-            style={{ position: "relative" }}
+            className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
+              isSecondAsideOpen ? "w-1/5" : "w-10"
+            }`}
           >
-            <h2 className="text-xl px-3 pl-16 border-b pb-4 border-zinc-700/50 flex items-center">
-              {getPanelContent()}
-            </h2>
+            <div className="relative flex items-center justify-start mt-4">
+              <div className="group relative pl-4">
+                <button
+                  className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
+                  onClick={() => setIsSecondAsideOpen((prev) => !prev)}
+                >
+                  {isSecondAsideOpen ? (
+                    <LuPanelLeftClose className="h-6 w-6" />
+                  ) : (
+                    <LuPanelRightClose className="h-6 w-6" />
+                  )}
+                </button>
+                {/* Tool Tip */}
+                <span className="absolute left-4 top-12 -translate-y-1/3 bg-zinc-900 text-zinc-200 text-xs rounded-md px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 before:content-[''] before:absolute before:top-[-14px] before:left-1/4 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-zinc-900 w-fit before:z-10 select-none whitespace-nowrap">
+                  {isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"}
+                </span>
+              </div>
+            </div>
+            {isSecondAsideOpen && (
+              <div className="p-4">
+                <PanelContent selectedSection={selectedSection} />
+              </div>
+            )}
           </aside>
 
-          <main className="flex-1 bg-zinc-950  p-6 overflow-y-auto max-h-screen">
-            {/* {getMainContent()} */}
+          {/* Contenido principal */}
+          <main className="flex-1 bg-[#292a2d]  p-6 overflow-y-auto max-h-screen">
             <MainContent selectedSection={selectedSection} />
           </main>
         </div>

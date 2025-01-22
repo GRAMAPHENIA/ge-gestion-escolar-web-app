@@ -13,7 +13,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   handleScrollToForm,
 }) => {
   return (
-    <section className="relative flex items-center justify-center bg-zinc-900/50 rounded-3xl border border-zinc-800 text-center p-16">
+    <section className="relative flex items-center justify-center bg-[#212327] rounded-3xl text-center p-16">
       <div>
         <h2 className="flex flex-col text-4xl md:text-5xl font-bold mb-6">
           Organizate en minutos <span className="text-cyan-400">Crecé sin límites</span>
