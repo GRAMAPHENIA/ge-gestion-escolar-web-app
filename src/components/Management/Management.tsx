@@ -1,46 +1,66 @@
+import Image from "next/image";
 import React from "react";
-import { FaChalkboardTeacher, FaClipboardCheck, FaUsers } from "react-icons/fa";
 
-const Management = () => {
+interface NewsCardProps {
+  image: string;
+  title: string;
+  description: string;
+  category: string;
+}
+
+const NewsCard: React.FC<NewsCardProps> = ({ image, title, description, category }) => (
+  <div className="flex bg-[#212327] rounded-lg shadow-md overflow-hidden p-4">
+    <Image width={100} height={100} src={image} alt={title} className="w-auto h-40 object-cover hover:scale-110 transition-all ease-in-out " />
+    <div className="p-4 flex flex-col justify-between h-full">
+      <h3 className="text-lg font-bold text-white">{title}</h3>
+      <p className="text-sm text-zinc-400 mt-2">{description}</p>
+      <span className="mt-4 w-fit text-xs bg-zinc-700/50 text-zinc-300 py-1 px-3 rounded-md">
+        {category}
+      </span>
+    </div>
+  </div>
+);
+
+const Management: React.FC = () => {
+  const news = [
+    {
+      image: "/file.svg", // Imagen de ejemplo
+      title: "ejemplo uno",
+      description: "Find out what's new and download the update today.",
+      category: "noticia",
+    },
+    {
+      image: "/file.svg", // Imagen de ejemplo
+      title: "ejemplo dos",
+      description: "Today, Epic launches Fab, a one-stop destination where you can...",
+      category: "noticia",
+    },
+    {
+      image: "/file.svg", // Imagen de ejemplo
+      title: "ejemplo tres",
+      description: "Dive into Epic Games' announcements from Unreal Fest...",
+      category: "noticia",
+    },
+  ];
+
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {/* Gestión de Estudiantes */}
-      <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-        <div className="flex items-center gap-6">
-          <FaUsers className="w-12 h-12 text-emerald-400" />
-          <div>
-            <h3 className="text-xl font-semibold text-white">Gestión de Estudiantes</h3>
-            <p className="text-zinc-400 text-sm sm:text-base">
-              Registra y organiza información de estudiantes, asistencia y notas.
-            </p>
-          </div>
-        </div>
+    <section className="">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Caracteristicas</h2>
+        <button className="text-sm text-white bg-none hover:bg-zinc-700 py-2 px-4 rounded-full transition">
+          verlas todas
+        </button>
       </div>
-
-      {/* Gestión de Clases */}
-      <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-        <div className="flex items-center gap-6">
-          <FaChalkboardTeacher className="w-12 h-12 text-emerald-400" />
-          <div>
-            <h3 className="text-xl font-semibold text-white">Gestión de Clases</h3>
-            <p className="text-zinc-400 text-sm sm:text-base">
-              Planifica y organiza tus clases de manera eficiente y moderna.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Gestión de Evaluaciones */}
-      <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-        <div className="flex items-center gap-6">
-          <FaClipboardCheck className="w-12 h-12 text-emerald-400" />
-          <div>
-            <h3 className="text-xl font-semibold text-white">Gestión de Evaluaciones</h3>
-            <p className="text-zinc-400 text-sm sm:text-base">
-              Lleva un control de los resultados de los exámenes y actividades evaluativas.
-            </p>
-          </div>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-left gap-4">
+        {news.map((item, index) => (
+          <NewsCard
+            key={index}
+            image={item.image}
+            title={item.title}
+            description={item.description}
+            category={item.category}
+          />
+        ))}
       </div>
     </section>
   );

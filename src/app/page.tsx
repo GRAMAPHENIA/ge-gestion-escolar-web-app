@@ -55,23 +55,17 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-40">
-      {/* Grid Pattern Background */}
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-
-      {/* Radial Gradient Overlay */}
-      <div className="absolute inset-0 radial-gradient" />
-
+    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-4 md:px-10 lg:px-40">
       <div className="relative">
         {/* Header */}
         <header className="max-w-7xl mx-auto px-4 py-6">
           <nav className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-cyan-400">GE</h1>
+            <h1 className="text-2xl font-bold text-zinc-400">GE</h1>
 
             <div className="flex items-center gap-4">
               {user ? (
                 <div className="flex items-center gap-4">
-                  {/* <span className="text-sm text-cyan-50">
+                  {/* <span className="text-sm text-zinc-50">
                     Bienvenido, {user.email}
                   </span> */}
                   <div className="relative z-50">
@@ -79,7 +73,7 @@ const Home: React.FC = () => {
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
                       className="flex px-4 py-2 bg-zinc-500/10 text-white rounded-lg hover:bg-zinc-400/10 transition-colors border border-zinc-700/50"
                     >
-                      <LuCircleUserRound className="w-5 h-5 text-cyan-400" />
+                      <LuCircleUserRound className="w-5 h-5 text-zinc-400" />
                       <BiChevronDown
                         className={`w-4 h-4 text-zinc-400 transition-transform duration-200 ml-2 ${
                           isMenuOpen ? "-rotate-180" : "rotate-0"
@@ -133,13 +127,13 @@ const Home: React.FC = () => {
         />
 
         {/* Features Section */}
-        <section className="max-w-7xl mx-auto px-4 py-20 space-y-20">
+        <section className="max-w-7xl mx-auto py-4 mt-4 space-y-4">
           <Management />
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-              <BsDatabase className="w-12 h-12 text-emerald-400 mb-6" />
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
+              <BsDatabase className="w-12 h-12 text-zinc-400 mb-6" />
               <h3 className="text-xl font-semibold text-white mb-4">
                 Gestión Integral
               </h3>
@@ -148,8 +142,8 @@ const Home: React.FC = () => {
                 plataforma intuitiva.
               </p>
             </div>
-            <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-              <BiShield className="w-12 h-12 text-emerald-400 mb-6" />
+            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
+              <BiShield className="w-12 h-12 text-zinc-400 mb-6" />
               <h3 className="text-xl font-semibold text-white mb-4">
                 Seguridad Avanzada
               </h3>
@@ -158,8 +152,8 @@ const Home: React.FC = () => {
                 normativas educativas.
               </p>
             </div>
-            <div className="p-8 bg-zinc-900/50 rounded-lg border border-zinc-800">
-              <FiZap className="w-12 h-12 text-emerald-400 mb-6" />
+            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
+              <FiZap className="w-12 h-12 text-zinc-400 mb-6" />
               <h3 className="text-xl font-semibold text-white mb-4">
                 Alto Rendimiento
               </h3>
@@ -171,12 +165,12 @@ const Home: React.FC = () => {
           </div>
 
           {/* About Us Section */}
-          <div className="bg-zinc-900/50 rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 text-center">
+          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
               ¿Quiénes Somos?
             </h3>
             <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <FaUsers className="w-16 h-16 text-emerald-400" />
+              <FaUsers className="w-16 h-16 text-zinc-400" />
               <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
                 Somos un equipo diverso de profesionales con pasión por la
                 educación y la tecnología. Nuestro propósito es ofrecer
@@ -189,12 +183,12 @@ const Home: React.FC = () => {
 
           {/* Mission Section */}
 
-          <div className="bg-zinc-900/50 rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 text-center">
+          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
               Nuestra Misión
             </h3>
             <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <FaHands className="w-16 h-16 text-emerald-400" />
+              <FaHands className="w-16 h-16 text-zinc-400" />
               <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
                 Nos dedicamos a crear plataformas digitales que ayuden a las
                 instituciones educativas a organizar y gestionar sus actividades
@@ -206,12 +200,12 @@ const Home: React.FC = () => {
           </div>
 
           {/* Testimonials Section */}
-          <div className="bg-zinc-900/50 rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mb-6 text-center">
+          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
               ¿Quién Nos Recomienda?
             </h3>
             <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <LuMessageSquareQuote className="w-16 h-16 text-emerald-400" />
+              <LuMessageSquareQuote className="w-16 h-16 text-zinc-400" />
               <blockquote className="text-lg text-zinc-400 max-w-2xl text-center md:text-left italic">
                 Gestioné mi institución de manera más eficiente desde que
                 utilizamos la plataforma GE. El equipo de soporte es increíble y
@@ -222,30 +216,30 @@ const Home: React.FC = () => {
         </section>
 
         {/* Contact Section */}
-        <section className="max-w-3xl mx-auto px-4 py-20" id="contact-form">
-          <div className="bg-zinc-900/50 rounded-lg border border-zinc-800 p-8">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 text-center mb-8">
+        <section className="max-w-7xl mx-auto  mb-4" id="contact-form">
+          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 text-center mb-8">
               ¿Listo para transformar tu institución?
             </h2>
             <form className="space-y-4">
               <input
                 type="text"
                 placeholder="Tu Nombre"
-                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
               />
               <input
                 type="email"
                 placeholder="Tu Email"
-                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
               />
               <textarea
                 placeholder="Tu Mensaje"
                 rows={4}
-                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
               />
               <button
                 type="submit"
-                className="w-full px-6 py-3 bg-emerald-500 text-white rounded-md hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2"
+                className="w-full px-6 py-3 bg-zinc-500 text-white rounded-md hover:bg-zinc-600 transition-colors flex items-center justify-center gap-2"
               >
                 <BiSend className="w-4 h-4" />
                 Enviar Mensaje
