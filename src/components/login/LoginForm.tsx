@@ -30,12 +30,11 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-1/3 bg-zinc-950 text-gray-200">
-      <div className="w-full max-w-lg p-6 bg-zinc-900/50 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-teal-400 mb-6">
-          Iniciar Sesión
-        </h1>
-        <form onSubmit={handleLogin} className="space-y-6">
+    <div className="w-full flex flex-col justify-center items-stretch bg-[#292a2d]">
+      <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
+        <h1 className="text-3xl font-bold text-zinc-200">Iniciar Sesión</h1>
+        <h2 className="text-zinc-500">Accede a tu cuenta</h2>
+        <form onSubmit={handleLogin} className="space-y-6 mt-10">
           <div>
             <label
               htmlFor="email"
@@ -48,7 +47,7 @@ const LoginForm = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-2 block w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition focus:outline-none focus:ring-0"
+              className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
               placeholder="Ingresa tu correo"
               required
             />
@@ -66,23 +65,17 @@ const LoginForm = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-2 block w-full px-4 py-2 bg-gray-700 text-gray-200 border border-gray-600 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition focus:outline-none focus:ring-0"
+                className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
                 placeholder="Ingresa tu contraseña"
                 required
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-gray-700 border border-l border-teal-600/70 flex items-center justify-center text-gray-400 hover:text-teal-300 rounded-r-lg"
-                aria-label={
-                  passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
-                }
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
+                aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
-                {passwordVisible ? (
-                  <PiEyeClosed className="w-5 h-5" />
-                ) : (
-                  <PiEye className="w-5 h-5" />
-                )}
+                {passwordVisible ? <PiEyeClosed className="w-5 h-5" /> : <PiEye className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -95,7 +88,7 @@ const LoginForm = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-center bg-teal-600/20 hover:bg-teal-500/20 text-teal-400 hover:text-teal-300 transition duration-100 rounded-md"
+            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md"
           >
             Iniciar Sesión
           </button>
@@ -104,18 +97,18 @@ const LoginForm = () => {
           ¿No tienes una cuenta?{" "}
           <a
             href="/registro"
-            className="text-teal-400 hover:underline hover:text-teal-300"
+            className="text-orange-400 hover:underline hover:text-orange-300"
           >
             Regístrate aquí
           </a>
         </p>
-        <p className="mt-2 text-sm text-center text-gray-400">
-          ¿Olvidaste tu contraseña?{" "}
+        <p className="text-center mt-4 text-xs text-zinc-500">
+          Al continuar, aceptas los{" "}
           <a
-            href="/recuperar"
-            className="text-teal-400 hover:underline hover:text-teal-300"
+            href="/terminos-y-condiciones"
+            className="text-orange-400 hover:underline"
           >
-            Recuperar contraseña
+            términos y condiciones
           </a>
         </p>
       </div>
