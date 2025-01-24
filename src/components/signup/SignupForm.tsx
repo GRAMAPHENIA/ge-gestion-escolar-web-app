@@ -92,7 +92,7 @@ const SignupForm = () => {
 
   return (
     <div className="flex flex-col justify-center items-stretch bg-[#292a2d] ">
-      <div className="flex flex-col justify-center p-6 bg-[#212327] px-4 lg:px-20 h-screen">
+      <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
         {/* Botón de volver en la parte superior izquierda */}
         <button
           onClick={() => router.push("/")} // Navega hacia la página anterior
