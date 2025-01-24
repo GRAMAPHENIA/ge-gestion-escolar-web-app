@@ -54,7 +54,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-4 md:px-10 lg:px-40">
+    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="relative">
         {/* Header */}
         <header className="max-w-7xl mx-auto py-6 ">
@@ -64,10 +64,7 @@ const Home: React.FC = () => {
             {/* NavBar */}
             <div className="flex items-center gap-4">
               {user ? (
-                <div className="flex items-center gap-4"> 
-                  {/* <span className="text-sm text-zinc-50">
-                    Bienvenido, {user.email}
-                  </span> */}
+                <div className="flex items-center gap-4">
                   <div className="relative z-50">
                     <button
                       onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -133,6 +130,7 @@ const Home: React.FC = () => {
           {/* Features Grid */}
           <FeaturesGrid />
         </section>
+
         {/* About Us Section */}
         <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
           <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
@@ -150,7 +148,6 @@ const Home: React.FC = () => {
         </div>
 
         {/* Mission Section */}
-
         <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
           <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
             Nuestra Misión
@@ -182,7 +179,7 @@ const Home: React.FC = () => {
         </div>
 
         {/* Contact Section */}
-        <section className="max-w-7xl mx-auto  mb-4" id="contact-form">
+        <section className="max-w-7xl mx-auto mb-4" id="contact-form">
           <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
             <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 text-center mb-8">
               ¿Listo para transformar tu institución?

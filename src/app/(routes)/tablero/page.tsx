@@ -78,7 +78,7 @@ const Dashboard = () => {
     <div className="relative">
       {/* Botón del avatar para desplegar el menú */}
       <button
-        className="w-9 h-9 bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
+        className="w-9 h-9 bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
         onClick={() => setIsMenuOpen((prev) => !prev)}
       >
         {user ? user.email?.charAt(0).toUpperCase() : "?"}
@@ -141,11 +141,11 @@ const Dashboard = () => {
             }}
           >
             <div className="flex items-center justify-left p-3 space-x-4">
-              <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-cyan-600/20 hover:bg-cyan-500/20 text-cyan-400 hover:text-cyan-300 transition duration-100 text-xs">
+              <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 text-xs">
                 T
               </div>
               {isAsideOpen && (
-                <span className="ml-3 text-sm text-cyan-400"></span>
+                <span className="ml-3 text-sm text-orange-400"></span>
               )}
             </div>
 

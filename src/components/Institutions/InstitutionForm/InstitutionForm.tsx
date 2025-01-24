@@ -2,14 +2,18 @@ import { supabase } from "@/supabase/supabaseClient";
 import { Institution } from "@/types/institutions/types";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FiUpload } from "react-icons/fi"; // Importa el ícono de React Icons
+import { FiUpload } from "react-icons/fi";
 
 // Definimos el tipo adecuado para los datos del formulario
 type InstitutionFormData = Partial<Institution> & {
   image?: File | null; // 'image' puede ser un archivo o null
 };
 
-const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (institution: Institution) => void }) => {
+const InstitutionForm = ({
+  onInstitutionCreated,
+}: {
+  onInstitutionCreated: (institution: Institution) => void;
+}) => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<InstitutionFormData>({});
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -160,17 +164,19 @@ const InstitutionForm = ({ onInstitutionCreated }: { onInstitutionCreated: (inst
 
       {/* Mostrar mensaje de error si existe */}
       {errorMessage && (
-        <div className="text-rose-400 mt-2 text-sm">{errorMessage}</div>
+        <div className="absolute bottom-4 left-1/2 text-rose-400 mt-2 text-sm border border-rose-500/20 bg-rose-500/20 py-2 px-4 rounded-lg">
+          {errorMessage}
+        </div>
       )}
 
       {/* Botón con texto "Cargando..." o spinner */}
       <button
         type="submit"
         disabled={loading}
-        className="bg-cyan-600/20 hover:bg-cyan-500/20 text-sm text-cyan-400 hover:text-cyan-300 transition duration-100 rounded-md px-4 py-2 mt-4 flex justify-center items-center"
+        className="bg-orange-600/20 hover:bg-orange-500/20 text-sm text-orange-400 hover:text-orange-300 transition duration-100 rounded-md px-4 py-2 mt-4 flex justify-center items-center "
       >
         {loading ? (
-          <span className="animate-pulse text-cyan-400">Cargando...</span>
+          <span className="animate-pulse text-orange-400">Cargando...</span>
         ) : (
           "Agregar Institución"
         )}
