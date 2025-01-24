@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { supabase } from "@/supabase/supabaseClient";
 import { PiEye, PiEyeClosed } from "react-icons/pi";
+// import ServiceFeaturesForm from "./ServiceFeaturesForm";
+// import Image from "next/image";
 
 const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -86,9 +88,9 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 w-full h-screen  ">
-      <div className="flex flex-col justify-center max-w-xl p-6 bg-[#212327]  px-20">
-        <h1 className="text-3xl font-bold text-zinc-200">Empezar</h1>
+    <div className="flex flex-col justify-center items-stretch bg-[#292a2d] ">
+      <div className="flex flex-col justify-center p-6 bg-[#212327] px-20 h-screen">
+        <h1 className="text-3xl font-bold text-zinc-200">Empezá</h1>
         <h2 className="text-zinc-500">Crea una nueva cuenta</h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
           <div>
@@ -273,10 +275,6 @@ const SignupForm = () => {
       </div>
 
       {/* Seccion de Anuncios del servicio */}
-      {/* TODO: crear seccion  de acoplamiento a formulario de registro */}
-      <section>
-        <h1 className="flex justify-center items-center h-screen">Propos</h1>
-      </section>
     </div>
   );
 };
