@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 interface NewsCardProps {
   image: string;
@@ -44,14 +45,14 @@ const Management: React.FC = () => {
   ];
 
   return (
-    <section className="">
+    <section className="my-40 pt-40">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-white">Caracteristicas</h2>
-        <button className="text-sm text-white bg-none hover:bg-zinc-700 py-2 px-4 rounded-full transition">
-          verlas todas
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Ultimas Noticias</h2>
+        <button className="text-sm text-white bg-none hover:bg-zinc-700 py-2 px-8 border border-neutral-700 rounded-full transition">
+          Ver todas las noticias <FaArrowRightLong className="inline h-3 w-3 ml-2" />
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-left gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 text-left gap-12">
         {news.map((item, index) => (
           <NewsCard
             key={index}

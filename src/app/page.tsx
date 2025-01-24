@@ -8,10 +8,9 @@ import { supabase } from "@/supabase/supabaseClient";
 import Management from "@/components/Management/Management";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import { LuCircleUserRound, LuMessageSquareQuote } from "react-icons/lu";
-import { BiChevronDown, BiSend, BiShield } from "react-icons/bi";
-import { BsDatabase } from "react-icons/bs";
-import { FiZap } from "react-icons/fi";
+import { BiChevronDown, BiSend } from "react-icons/bi";
 import { FaHands, FaUsers } from "react-icons/fa";
+import FeaturesGrid from "@/components/Features/FeaturesGrid";
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -58,10 +57,11 @@ const Home: React.FC = () => {
     <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-4 md:px-10 lg:px-40">
       <div className="relative">
         {/* Header */}
-        <header className="max-w-7xl mx-auto px-4 py-6">
+        <header className="max-w-7xl mx-auto py-6 ">
           <nav className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-zinc-400">GE</h1>
 
+            {/* NavBar */}
             <div className="flex items-center gap-4">
               {user ? (
                 <div className="flex items-center gap-4">
@@ -127,93 +127,59 @@ const Home: React.FC = () => {
         />
 
         {/* Features Section */}
-        <section className="max-w-7xl mx-auto py-4 mt-4 space-y-4">
+        <section className="max-w-7xl mx-auto space-y-4">
           <Management />
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-4">
-            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
-              <BsDatabase className="w-12 h-12 text-zinc-400 mb-6" />
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Gestión Integral
-              </h3>
-              <p className="text-zinc-400">
-                Administra todos los aspectos de tu institución desde una única
-                plataforma intuitiva.
-              </p>
-            </div>
-            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
-              <BiShield className="w-12 h-12 text-zinc-400 mb-6" />
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Seguridad Avanzada
-              </h3>
-              <p className="text-zinc-400">
-                Protección de datos de última generación y cumplimiento con
-                normativas educativas.
-              </p>
-            </div>
-            <div className="p-8 bg-[#212327] rounded-lg border border-zinc-800">
-              <FiZap className="w-12 h-12 text-zinc-400 mb-6" />
-              <h3 className="text-xl font-semibold text-white mb-4">
-                Alto Rendimiento
-              </h3>
-              <p className="text-zinc-400">
-                Optimizado para manejar grandes volúmenes de datos sin
-                sacrificar velocidad.
-              </p>
-            </div>
-          </div>
-
-          {/* About Us Section */}
-          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
-              ¿Quiénes Somos?
-            </h3>
-            <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <FaUsers className="w-16 h-16 text-zinc-400" />
-              <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
-                Somos un equipo diverso de profesionales con pasión por la
-                educación y la tecnología. Nuestro propósito es ofrecer
-                soluciones innovadoras para optimizar la gestión escolar y
-                mejorar la experiencia tanto para educadores como para
-                estudiantes.
-              </p>
-            </div>
-          </div>
-
-          {/* Mission Section */}
-
-          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
-              Nuestra Misión
-            </h3>
-            <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <FaHands className="w-16 h-16 text-zinc-400" />
-              <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
-                Nos dedicamos a crear plataformas digitales que ayuden a las
-                instituciones educativas a organizar y gestionar sus actividades
-                de manera más efectiva. Buscamos mejorar la comunicación, el
-                seguimiento académico y la administración dentro de las
-                escuelas.
-              </p>
-            </div>
-          </div>
-
-          {/* Testimonials Section */}
-          <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
-            <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
-              ¿Quién Nos Recomienda?
-            </h3>
-            <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
-              <LuMessageSquareQuote className="w-16 h-16 text-zinc-400" />
-              <blockquote className="text-lg text-zinc-400 max-w-2xl text-center md:text-left italic">
-                Gestioné mi institución de manera más eficiente desde que
-                utilizamos la plataforma GE. El equipo de soporte es increíble y
-                siempre está disponible.
-              </blockquote>
-            </div>
-          </div>
+          <FeaturesGrid />
         </section>
+        {/* About Us Section */}
+        <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+          <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
+            ¿Quiénes Somos?
+          </h3>
+          <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
+            <FaUsers className="w-16 h-16 text-zinc-400" />
+            <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
+              Somos un equipo diverso de profesionales con pasión por la
+              educación y la tecnología. Nuestro propósito es ofrecer soluciones
+              innovadoras para optimizar la gestión escolar y mejorar la
+              experiencia tanto para educadores como para estudiantes.
+            </p>
+          </div>
+        </div>
+
+        {/* Mission Section */}
+
+        <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+          <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
+            Nuestra Misión
+          </h3>
+          <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
+            <FaHands className="w-16 h-16 text-zinc-400" />
+            <p className="text-lg text-zinc-400 max-w-2xl text-center md:text-left">
+              Nos dedicamos a crear plataformas digitales que ayuden a las
+              instituciones educativas a organizar y gestionar sus actividades
+              de manera más efectiva. Buscamos mejorar la comunicación, el
+              seguimiento académico y la administración dentro de las escuelas.
+            </p>
+          </div>
+        </div>
+
+        {/* Testimonials Section */}
+        <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+          <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
+            ¿Quién Nos Recomienda?
+          </h3>
+          <div className="flex flex-col md:flex-row items-center gap-6 justify-center">
+            <LuMessageSquareQuote className="w-16 h-16 text-zinc-400" />
+            <blockquote className="text-lg text-zinc-400 max-w-2xl text-center md:text-left italic">
+              Gestioné mi institución de manera más eficiente desde que
+              utilizamos la plataforma GE. El equipo de soporte es increíble y
+              siempre está disponible.
+            </blockquote>
+          </div>
+        </div>
 
         {/* Contact Section */}
         <section className="max-w-7xl mx-auto  mb-4" id="contact-form">
