@@ -28,7 +28,7 @@ const FeaturesGrid: React.FC = () => {
       title: "Alto Rendimiento",
       description:
         "Optimizado para manejar grandes volúmenes de datos sin sacrificar velocidad.",
-      image: "/path/to/alto-rendimiento-image.jpg",
+      image: "/rendimiento.jpg",
       reference: "Gestión Integral",
     },
   ];
@@ -50,7 +50,7 @@ const FeaturesGrid: React.FC = () => {
       </div>
 
       {/* Botón para más contenido */}
-      <div className="mt-8 text-center">
+      <div className="my-40 text-center">
         <button className="px-6 py-3 text-white bg-zinc-600 rounded-md hover:bg-zinc-500 transition duration-200">
           Ver más características
         </button>

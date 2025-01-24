@@ -1,4 +1,3 @@
-// components/FeatureCard.tsx
 import Image from "next/image";
 import React from "react";
 import { IconType } from "react-icons";
@@ -16,15 +15,19 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   title,
   description,
   image,
-  reference
+  reference,
 }) => {
   return (
     <section className="flex justify-between rounded-lg py-20">
       {/* Columna con el Icono, Título y Descripción */}
-      <section className="flex flex-col justify-center sm:justify-start p-4">
-        <Icon className="w-16 h-16 text-orange-400 mb-4 transition duration-300 transform hover:scale-110" />
-        <small>{reference}</small>
-        <h3 className="text-6xl font-semibold text-white w-[500px]">{title}</h3>
+      <section className="flex flex-col justify-center sm:justify-start p-4 relative z-20">
+        {/* Fondo naranja detrás del ícono */}
+        <div className="absolute top-9 left-9 w-10 h-10 bg-orange-500 blur-md rounded-full -z-10"></div>
+
+        {/* Ícono y texto */}
+        <Icon className="w-20 h-20 p-4 rounded-xl text-orange-400 transition duration-300 transform bg-neutral-500/10 backdrop-blur-md z-10" />
+        <small className="mt-2">{reference}</small>
+        <h3 className="text-6xl mt-4 font-semibold text-white w-[500px]">{title}</h3>
         <article className="mt-4 sm:mt-0 flex-1">
           <p className="text-zinc-400 text-center sm:text-left w-[300px] mt-4">
             {description}
@@ -42,7 +45,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       {/* Columna con la Imagen */}
       <section className="relative flex justify-center items-center z-10">
         {/* Luz detrás del fondo del section */}
-        <div className="absolute right-12 bottom-22 blur-3xl w-[300px] h-[250px] bg-orange-300 rounded-full -z-10"></div>
+        <div className="absolute right-14 bottom-22 blur-3xl w-[125px] h-[250px] bg-orange-400 rounded-full -z-10"></div>
 
         {/* Fondo del section */}
         <div className="">
