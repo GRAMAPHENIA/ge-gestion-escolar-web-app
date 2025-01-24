@@ -93,7 +93,7 @@ const LoginForm = () => {
               </button>
             </div>
           </div>
-          
+
           {error && (
             <div className="flex justify-center items-center fixed bottom-8 left-0 w-full">
               <p className="px-4 py-2 text-left bg-rose-600/10 text-rose-400 rounded-md border border-rose-300/10">
@@ -117,7 +117,6 @@ const LoginForm = () => {
             Regístrate aquí
           </a>
         </p>
-        
       </div>
     </div>
   );
