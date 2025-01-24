@@ -34,9 +34,9 @@ const NewsCard: React.FC<NewsCardProps> = ({ image, title, description, category
 const Management: React.FC = () => {
   const news = [
     {
-      image: "/seguridad.jpg",
-      title: "Ejemplo Uno",
-      description: "Find out what's new and download the update today.",
+      image: "/lanzamiento.jpg",
+      title: "Lanzamiento de la versión 1.0",
+      description: "Hoy, Hexágono lanza Gestion escolar, un destino único donde puedes...",
       category: "Noticia",
     },
     {
@@ -56,8 +56,8 @@ const Management: React.FC = () => {
   return (
     <section className="my-20 pt-40">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-white">Últimas Noticias</h2>
-        <button className="text-sm text-white bg-none hover:bg-zinc-700 py-2 px-8 border border-neutral-700 rounded-full transition">
+        <h2 className="text-2xl md:text-3xl font-bold text-white">Noticias</h2>
+        <button className="text-sm text-white bg-none hover:bg-zinc-700 py-2 px-8 border border-neutral-700 rounded-full transition duration-200">
           Ver todas las noticias <FaArrowRightLong className="inline h-3 w-3 ml-2" />
         </button>
       </div>

@@ -64,7 +64,7 @@ const Home: React.FC = () => {
             {/* NavBar */}
             <div className="flex items-center gap-4">
               {user ? (
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4"> 
                   {/* <span className="text-sm text-zinc-50">
                     Bienvenido, {user.email}
                   </span> */}

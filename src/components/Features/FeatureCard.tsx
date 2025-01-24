@@ -36,7 +36,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
         {/* Botón de llamada a la acción */}
         <div className="mt-6">
-          <button className="px-6 py-3 bg-white/5 backdrop-blur-md hover:bg-zinc-400/20 text-white rounded-full transition-colors">
+          <button className="px-6 py-3 bg-white/5 backdrop-blur-md hover:bg-orange-400/70 text-white rounded-full transition-colors duration-200">
             Más detalles
           </button>
         </div>

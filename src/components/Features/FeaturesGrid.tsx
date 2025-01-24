@@ -51,7 +51,7 @@ const FeaturesGrid: React.FC = () => {
 
       {/* Botón para más contenido */}
       <div className="my-40 text-center">
-        <button className="px-6 py-3 text-white bg-zinc-600 rounded-md hover:bg-zinc-500 transition duration-200">
+        <button className="px-6 py-3 bg-white/5 backdrop-blur-md hover:bg-orange-400/70 text-white rounded-full transition-colors ease-in-out ">
           Ver más características
         </button>
       </div>
