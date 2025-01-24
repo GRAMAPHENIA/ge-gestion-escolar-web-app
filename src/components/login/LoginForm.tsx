@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/supabase/supabaseClient";
-import { PiEye, PiEyeClosed } from "react-icons/pi";
+import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -32,6 +32,14 @@ const LoginForm = () => {
   return (
     <div className="w-full flex flex-col justify-center items-stretch bg-[#292a2d]">
       <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
+        {/* Botón de volver en la parte superior izquierda */}
+        <button
+          onClick={() => router.push("/")} // Navega hacia la página anterior
+          className="absolute top-4 right-4 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100 bg-neutral-700/50"
+          aria-label="Volver"
+        >
+          <PiArrowLeft className="w-4 h-4" />
+        </button>
         <h1 className="text-3xl font-bold text-zinc-200">Iniciar Sesión</h1>
         <h2 className="text-zinc-500">Accede a tu cuenta</h2>
         <form onSubmit={handleLogin} className="space-y-6 mt-10">
@@ -73,12 +81,19 @@ const LoginForm = () => {
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-label={
+                  passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
               >
-                {passwordVisible ? <PiEyeClosed className="w-5 h-5" /> : <PiEye className="w-5 h-5" />}
+                {passwordVisible ? (
+                  <PiEyeClosed className="w-5 h-5" />
+                ) : (
+                  <PiEye className="w-5 h-5" />
+                )}
               </button>
             </div>
           </div>
+          
           {error && (
             <div className="flex justify-center items-center fixed bottom-8 left-0 w-full">
               <p className="px-4 py-2 text-left bg-rose-600/10 text-rose-400 rounded-md border border-rose-300/10">
@@ -102,15 +117,7 @@ const LoginForm = () => {
             Regístrate aquí
           </a>
         </p>
-        <p className="text-center mt-4 text-xs text-zinc-500">
-          Al continuar, aceptas los{" "}
-          <a
-            href="/terminos-y-condiciones"
-            className="text-orange-400 hover:underline"
-          >
-            términos y condiciones
-          </a>
-        </p>
+        
       </div>
     </div>
   );

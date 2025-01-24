@@ -96,10 +96,10 @@ const SignupForm = () => {
         {/* Botón de volver en la parte superior izquierda */}
         <button
           onClick={() => router.push("/")} // Navega hacia la página anterior
-          className="absolute top-6 right-6 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100"
+          className="absolute top-4 right-4 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100 bg-neutral-700/50"
           aria-label="Volver"
         >
-          <PiArrowLeft className="w-6 h-6" />
+          <PiArrowLeft className="w-4 h-4" />
         </button>
         <h1 className="text-3xl font-bold text-zinc-200">Empezá</h1>
         <h2 className="text-zinc-500">Crea una nueva cuenta</h2>
