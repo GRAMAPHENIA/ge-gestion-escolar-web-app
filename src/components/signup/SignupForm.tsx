@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { supabase } from "@/supabase/supabaseClient";
-import { PiEye, PiEyeClosed } from "react-icons/pi";
+import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
+import { useRouter } from "next/navigation";
 // import ServiceFeaturesForm from "./ServiceFeaturesForm";
 // import Image from "next/image";
 
@@ -16,6 +17,8 @@ const SignupForm = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
+
+  const router = useRouter(); // Hook para navegar
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +93,14 @@ const SignupForm = () => {
   return (
     <div className="flex flex-col justify-center items-stretch bg-[#292a2d] ">
       <div className="flex flex-col justify-center p-6 bg-[#212327] px-20 h-screen">
+        {/* Botón de volver en la parte superior izquierda */}
+        <button
+          onClick={() => router.push("/")} // Navega hacia la página anterior
+          className="absolute top-6 right-6 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100"
+          aria-label="Volver"
+        >
+          <PiArrowLeft className="w-6 h-6" />
+        </button>
         <h1 className="text-3xl font-bold text-zinc-200">Empezá</h1>
         <h2 className="text-zinc-500">Crea una nueva cuenta</h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
