@@ -11,3 +11,5 @@ Web App
 `npm install axios`
 
 `npm install uuid`
+
+`npm install react-hot-toast`
