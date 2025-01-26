@@ -13,3 +13,7 @@ Web App
 `npm install uuid`
 
 `npm install react-hot-toast`
+
+`npm install react-tooltip`
+
+`npm install clsx`

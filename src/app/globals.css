@@ -48,3 +48,10 @@ html.dark ::selection {
   color: #000000;
 }
 
+.custom-tooltip {
+  background-color: #000000 !important; 
+  color: #ecf0f1 !important; 
+  font-size: 12px !important; 
+  border-radius: 8px !important;
+}
+

@@ -20,6 +20,7 @@ import {
 import MainContent from "@/components/Dashboard/MainContent";
 import PanelContent from "@/components/Dashboard/PanelContent";
 import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
+import { Tooltip } from "react-tooltip";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false); // Estado para abrir/cerrar el primer aside
@@ -184,35 +185,41 @@ const Dashboard = () => {
           </aside>
 
           {/* Segundo aside: Panel lateral derecho */}
-          <aside
-            className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
-              isSecondAsideOpen ? "w-1/5" : "w-10"
-            }`}
-          >
-            <div className="relative flex items-center justify-start mt-4">
-              <div className="group relative pl-4">
-                <button
-                  className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
-                  onClick={() => setIsSecondAsideOpen((prev) => !prev)}
-                >
-                  {isSecondAsideOpen ? (
-                    <LuPanelLeftClose className="h-6 w-6" />
-                  ) : (
-                    <LuPanelRightClose className="h-6 w-6" />
-                  )}
-                </button>
-                {/* Tool Tip */}
-                <span className="absolute left-4 top-12 -translate-y-1/3 bg-zinc-900 text-zinc-200 text-xs rounded-md px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-10 before:content-[''] before:absolute before:top-[-14px] before:left-1/4 before:-translate-x-1/2 before:border-8 before:border-transparent before:border-b-zinc-900 w-fit before:z-10 select-none whitespace-nowrap">
-                  {isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"}
-                </span>
-              </div>
+        <aside
+          className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
+            isSecondAsideOpen ? "w-1/5" : "w-10"
+          }`}
+        >
+          <div className="relative flex items-center justify-start mt-4">
+            <div className="group relative pl-4">
+              <button
+                data-tooltip-id="panel-tooltip"
+                className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
+                onClick={() => setIsSecondAsideOpen((prev) => !prev)}
+              >
+                {isSecondAsideOpen ? (
+                  <LuPanelLeftClose className="h-6 w-6" />
+                ) : (
+                  <LuPanelRightClose className="h-6 w-6" />
+                )}
+              </button>
+
+              {/* Tooltip de configuración */}
+              <Tooltip
+                id="panel-tooltip"
+                place="right-end"
+                content={isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"} // El contenido cambia dinámicamente
+                className="custom-tooltip" // Si deseas personalizar el estilo
+              />
             </div>
-            {isSecondAsideOpen && (
-              <div className="p-4">
-                <PanelContent selectedSection={selectedSection} />
-              </div>
-            )}
-          </aside>
+          </div>
+
+          {isSecondAsideOpen && (
+            <div className="p-4">
+              <PanelContent selectedSection={selectedSection} />
+            </div>
+          )}
+        </aside>
 
           {/* Contenido principal */}
           <main className="flex-1 bg-[#292a2d]  p-6 overflow-y-auto max-h-screen">
