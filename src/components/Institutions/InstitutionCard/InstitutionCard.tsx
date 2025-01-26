@@ -53,7 +53,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
           {color === "cyan-400" ? (
             <LuLightbulbOff className="text-neutral-500 text-xl" /> // Ícono cuando está activado
           ) : (
-            <LuLightbulb className="text-emerald-400/50 text-xl" /> // Ícono cuando está desactivado
+            <LuLightbulb className="text-emerald-400 text-xl" /> // Ícono cuando está desactivado
           )}
 
           {/* Círculo desenfocado detrás del botón */}
