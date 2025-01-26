@@ -200,7 +200,7 @@ const Dashboard = () => {
                 {isSecondAsideOpen ? (
                   <LuPanelLeftClose className="h-6 w-6" />
                 ) : (
-                  <LuPanelRightClose className="h-6 w-6" />
+                  <LuPanelRightClose className="h-6 w-6" /> 
                 )}
               </button>
 
