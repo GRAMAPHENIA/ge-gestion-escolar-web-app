@@ -19,6 +19,7 @@ export default function RegistrationConfirmation() {
             If you dont see the email, please check your spam folder.
           </p>
         </article>
+        <button>Ir al inicio</button>
       </section>
     </main>
   );
