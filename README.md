@@ -23,3 +23,5 @@ Web App
 `npm install @hookform/resolvers`
 
 `npm install @radix-ui/react-toast`
+
+`npm install tailwind-merge`
