@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/supabase/supabaseClient";
 import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
 import { useRouter } from "next/navigation";
-// import ServiceFeaturesForm from "./ServiceFeaturesForm";
-// import Image from "next/image";
 
 const SignupForm = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +16,22 @@ const SignupForm = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
 
-  const router = useRouter(); // Hook para navegar
+  const router = useRouter(); 
+
+  // Verificar si el usuario ya está autenticado
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (session) {
+          router.push("/tablero"); // Redirige a una página segura si ya está logueado
+        }
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [router]);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +49,6 @@ const SignupForm = () => {
     }
 
     try {
-      // Intentar crear el usuario con Supabase Auth
       const { data: authResponse, error: authError } =
         await supabase.auth.signUp({
           email,
@@ -48,32 +60,23 @@ const SignupForm = () => {
         return;
       }
 
-      // Validar que el usuario se haya creado
       if (authResponse.user) {
         const { id: authId } = authResponse.user;
 
-        // Intentar guardar datos adicionales en la tabla `users`
-        const { error: userError } = await supabase.from("users").insert([
-          {
-            auth_id: authId, // ID del usuario autenticado
-            email, // Correo del usuario
-          },
+        const { error: userError } = await supabase.from("users").insert([ 
+          { 
+            auth_id: authId,
+            email,
+          } 
         ]);
 
         if (userError) {
-          console.error(
-            "Error al guardar en la tabla 'users':",
-            userError.message
-          );
-          setError(
-            "El usuario se creó, pero hubo un problema al guardar los datos adicionales."
-          );
+          console.error("Error al guardar en la tabla 'users':", userError.message);
+          setError("El usuario se creó, pero hubo un problema al guardar los datos adicionales.");
           return;
         }
 
-        setSuccess(
-          "Usuario creado correctamente. Por favor, verifica tu correo."
-        );
+        setSuccess("Usuario creado correctamente. Por favor, verifica tu correo.");
       }
     } catch (err) {
       console.error("Error desconocido:", err);
@@ -91,11 +94,10 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-stretch bg-[#292a2d] ">
+    <div className="w-full flex flex-col justify-center items-stretch bg-[#292a2d]">
       <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
-        {/* Botón de volver en la parte superior izquierda */}
         <button
-          onClick={() => router.push("/")} // Navega hacia la página anterior
+          onClick={() => router.push("/tablero")}
           className="absolute top-4 right-4 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100 bg-neutral-700/50"
           aria-label="Volver"
         >
@@ -119,7 +121,11 @@ const SignupForm = () => {
               className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
               placeholder="Ingresa tu correo"
               required
+              aria-describedby="email-helper"
             />
+            <p id="email-helper" className="text-xs text-gray-500">
+              Necesitas un correo válido para crear una cuenta.
+            </p>
           </div>
           <div>
             <label
@@ -140,14 +146,13 @@ const SignupForm = () => {
                 className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
                 placeholder="Crea una contraseña"
                 required
+                aria-describedby="password-helper"
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={
-                  passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
-                }
+                aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
                 {passwordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -165,6 +170,7 @@ const SignupForm = () => {
                     ? "text-amber-400"
                     : "text-rose-400"
                 }`}
+                id="password-strength-helper"
               >
                 Contraseña: {getPasswordStrength()}
               </p>
@@ -186,16 +192,13 @@ const SignupForm = () => {
                 className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
                 placeholder="Repite tu contraseña"
                 required
+                aria-describedby="confirm-password-helper"
               />
               <button
                 type="button"
                 onClick={() => setConfirmPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={
-                  confirmPasswordVisible
-                    ? "Ocultar contraseña"
-                    : "Mostrar contraseña"
-                }
+                aria-label={confirmPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
               >
                 {confirmPasswordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -246,7 +249,7 @@ const SignupForm = () => {
           </div>
           {error && (
             <div className="flex justify-center items-center fixed bottom-8 left-0 w-full">
-              <p className="px-4 py-2 text-left bg-rose-600/10 text-rose-400 rounded-md border border-rose-300/10">
+              <p className="px-4 py-2 text-left bg-rose-600/10 backdrop-blur-lg text-rose-400 rounded-md border border-rose-300/10">
                 {error}
               </p>
             </div>
@@ -256,7 +259,7 @@ const SignupForm = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md "
+            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md"
           >
             Crear Cuenta
           </button>
@@ -265,27 +268,12 @@ const SignupForm = () => {
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
-            className="text-zinc-400 hover:underline hover:text-zinc-300 underline underline-offset-1
-             decoration-orange-500"
+            className="text-zinc-400 hover:underline hover:text-zinc-300 underline underline-offset-1 decoration-orange-500"
           >
             Inicia sesión aquí
           </a>
         </p>
-        <p className="text-center mt-4 text-xs text-zinc-500">
-          Al continuar, aceptas los{" "}
-          <span className="text-zinc-400 underline underline-offset-1 hover:cursor-pointer hover:text-zinc-300">
-            Términos de Servicios
-          </span>{" "}
-          y la{" "}
-          <span className="text-zinc-400 underline underline-offset-1 hover:cursor-pointer hover:text-zinc-300">
-            Política de Privacidad
-          </span>{" "}
-          de Gestión Escolar, y consientes recibir correos electrónicos
-          periódicos con actualizaciones.
-        </p>
       </div>
-
-      {/* Seccion de Anuncios del servicio */}
     </div>
   );
 };

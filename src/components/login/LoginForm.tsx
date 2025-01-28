@@ -25,7 +25,7 @@ const LoginForm = () => {
     if (error) {
       setError("Correo o contraseña incorrectos.");
     } else {
-      router.push("/"); // Redirigir al dashboard
+      router.push("/tablero"); // Redirigir al dashboard
     }
   };
 
@@ -34,7 +34,7 @@ const LoginForm = () => {
       <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
         {/* Botón de volver en la parte superior izquierda */}
         <button
-          onClick={() => router.push("/")} // Navega hacia la página anterior
+          onClick={() => router.push("/")} // Navega hacia la Home
           className="absolute top-4 right-4 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100 bg-neutral-700/50"
           aria-label="Volver"
         >

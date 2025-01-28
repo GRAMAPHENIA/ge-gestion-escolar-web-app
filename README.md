@@ -17,3 +17,9 @@ Web App
 `npm install react-tooltip`
 
 `npm install clsx`
+
+`npm install zod`
+
+`npm install @hookform/resolvers`
+
+`npm install @radix-ui/react-toast`
