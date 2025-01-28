@@ -1,10 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { forgotPassword } from "./action";
@@ -14,12 +13,22 @@ const formSchema = z.object({
   email: z.string().email(),
 });
 
-export default function ForgotPassword() {
+// Componente principal envuelto en Suspense
+export default function ForgotPasswordPage() {
+  return (
+    <Suspense fallback={<div>Cargando...</div>}>
+      <ForgotPassword />
+    </Suspense>
+  );
+}
+
+// Componente que usa useSearchParams
+function ForgotPassword() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [serverError, setServerError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -30,7 +39,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (data: z.infer<typeof formSchema>) => {
     setServerError(null);
-    setIsLoading(true); // Set loading to true when submission starts
+    setIsLoading(true);
 
     try {
       const response = await forgotPassword({
@@ -39,17 +48,16 @@ export default function ForgotPassword() {
 
       if (response.error) {
         setServerError(response.message);
-        // }
       } else {
-        // Redirect to the dashboard page
         router.push("/forgot-password/confirmation");
       }
     } catch {
       setServerError("An unexpected error occurred. Please try again.");
     } finally {
-      setIsLoading(false); // Set loading to false when submission ends
+      setIsLoading(false);
     }
   };
+
   return (
     <main className="flex justify-center items-center min-h-screen">
       <section className="w-[380px]">
@@ -58,33 +66,26 @@ export default function ForgotPassword() {
           <p>Enter your email address to reset your password</p>
         </header>
         <article>
-          <form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="flex flex-col gap-2"
-            >
-              {" "}
-              <label>Email</label>
-              <input
-                type="email"
-                className="input"
-                {...form.register("email")}
-              />
-              {serverError && (
-                <p className="text-red-500 text-sm mt-2">{serverError}</p>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col gap-2">
+            <label>Email</label>
+            <input
+              type="email"
+              className="input"
+              {...form.register("email")}
+            />
+            {serverError && (
+              <p className="text-red-500 text-sm mt-2">{serverError}</p>
+            )}
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <TbLoader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </>
+              ) : (
+                "Forget password"
               )}
-              {/* <Button type="submit">Register</Button> */}
-              <button type="submit" disabled={isLoading}>
-                {isLoading ? (
-                  <>
-                    <TbLoader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Please wait
-                  </>
-                ) : (
-                  "Forget password"
-                )}
-              </button>
-            </form>
+            </button>
           </form>
         </article>
         <footer className="flex flex-col gap-2">
