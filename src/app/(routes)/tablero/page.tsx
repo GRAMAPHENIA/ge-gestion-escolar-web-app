@@ -49,7 +49,7 @@ const Dashboard = () => {
       } else {
         router.push("/inicio-de-sesion");
       }
-      setLoading(false);
+      setLoading(false);  
     };
 
     checkUser();
