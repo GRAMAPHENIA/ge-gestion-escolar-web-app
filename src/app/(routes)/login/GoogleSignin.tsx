@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
-
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import Image from "next/image";
@@ -12,41 +10,30 @@ export default function GoogleSignin() {
   const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
   const supabase = createClient();
 
-  const searchParams = useSearchParams();
-
-  const next = searchParams.get("next");
-
   async function signInWithGoogle() {
     setIsGoogleLoading(true);
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback${
-            next ? `?next=${encodeURIComponent(next)}` : ""
-          }`,
+          redirectTo: "https://fpajlkdagwlguqmbmyxb.supabase.co/auth/v1/callback",
         },
       });
 
       if (error) {
         throw error;
       }
-    } catch  {
+    } catch {
       toast({
-        title: "Please try again.",
-        description: "There was an error logging in with Google.",
-        
+        title: "Por favor, intenta de nuevo.",
+        description: "Hubo un error al iniciar sesión con Google.",
       });
       setIsGoogleLoading(false);
     }
   }
 
   return (
-    <button
-      type="button"
-      onClick={signInWithGoogle}
-      disabled={isGoogleLoading}
-    >
+    <button type="button" onClick={signInWithGoogle} disabled={isGoogleLoading}>
       {isGoogleLoading ? (
         <LuLoader className="mr-2 size-4 animate-spin" />
       ) : (
@@ -58,7 +45,7 @@ export default function GoogleSignin() {
           className="mr-2"
         />
       )}{" "}
-      Sign in with Google
+      Iniciar sesión con Google
     </button>
   );
 }
