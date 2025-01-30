@@ -20,8 +20,9 @@ import {
 import MainContent from "@/components/Dashboard/MainContent";
 import PanelContent from "@/components/Dashboard/PanelContent";
 import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
-import { Tooltip } from "react-tooltip";
+
 import AvatarMenu from "./customs/AvatarMenu";
+import { Tooltip } from "react-tooltip";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false); // Estado para abrir/cerrar el primer aside
@@ -166,9 +167,10 @@ const Dashboard = () => {
                 {/* Tooltip de configuración */}
                 <Tooltip
                   id="panel-tooltip"
+                  border="1px solid #434343"
                   place="right-end"
-                  content={isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"} // El contenido cambia dinámicamente
-                  className="custom-tooltip z-50" // Asegura que el tooltip esté sobre otros elementos
+                  content={isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"}
+                  className="custom-tooltip z-50"
                 />
               </div>
             </div>

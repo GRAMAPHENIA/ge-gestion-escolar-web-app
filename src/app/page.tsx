@@ -7,15 +7,14 @@ import { supabase } from "@/supabase/supabaseClient";
 
 import Management from "@/components/Management/Management";
 import HeroSection from "@/components/HeroSection/HeroSection";
-import { LuCircleUserRound, LuMessageSquareQuote } from "react-icons/lu";
-import { BiChevronDown, BiSend } from "react-icons/bi";
+import { LuMessageSquareQuote } from "react-icons/lu";
+import { BiSend } from "react-icons/bi";
 import { FaHands, FaUsers } from "react-icons/fa";
 import FeaturesGrid from "@/components/Features/FeaturesGrid";
 import Header from "@/components/Header/Header";
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,21 +36,19 @@ const Home: React.FC = () => {
     };
   }, []);
 
-  const handleLoginRedirect = () => router.push("/inicio-de-sesion");
-  const handleRegisterRedirect = () => router.push("/registro");
   const handleDashboardRedirect = () => router.push("/tablero");
 
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) alert("Error al cerrar sesión");
-    setUser(null);
-  };
 
   const handleScrollToForm = () => {
     const formSection = document.getElementById("contact-form");
     if (formSection) {
       formSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Aquí puedes agregar la lógica para manejar el formulario
   };
 
   return (
@@ -128,7 +125,7 @@ const Home: React.FC = () => {
             <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 text-center mb-8">
               ¿Listo para transformar tu institución?
             </h2>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Tu Nombre"

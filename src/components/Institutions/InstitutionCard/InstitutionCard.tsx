@@ -38,7 +38,8 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
             "relative flex items-center justify-center w-8 h-8 rounded-full cursor-pointer p-1 ",
             "bg-zinc-500/5 border border-zinc-700/50",
             {
-              "bg-emerald-400/10 border border-emerald-400/10": color === "teal-400",
+              "bg-emerald-400/10 border border-emerald-400/10":
+                color === "teal-400",
               "bg-zinc-400": color === "zinc-400",
             }
           )}
@@ -65,7 +66,12 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
           />
         </div>
 
-        <Tooltip id="color-tooltip" place="top" className="custom-tooltip" />
+        <Tooltip
+          id="color-tooltip"
+          border="1px solid #434343"
+          place="top"
+          className="custom-tooltip"
+        />
 
         <h2 className="flex justify-between-2">{institution.name}</h2>
 
@@ -77,9 +83,10 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
         >
           <GoGear className="text-xl" />
         </span>
-        <Tooltip id="config-tooltip" place="top" className="custom-tooltip" />
+        <Tooltip id="config-tooltip"  border="1px solid #434343" place="top" className="custom-tooltip" />
       </header>
 
+      {/* Línea divisoria */}
       <div className="border-b border-zinc-700/50 " />
       <div className="w-full h-48">
         {typeof imageUrl === "string" ? (
@@ -96,6 +103,7 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
         )}
       </div>
 
+      {/* Contenido de la tarjeta */}
       <div className="mt-4 px-4">
         <h3 className="text-xl font-semibold">{institution.name}</h3>
         <p className="text-sm text-gray-400">
