@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import { supabase } from "@/supabase/supabaseClient";
 import { User } from "@supabase/supabase-js";
 import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute";
-import { GoOrganization, GoRepo, GoSignOut } from "react-icons/go";
-import { AiOutlineSetting } from "react-icons/ai";
+import { GoOrganization, GoRepo } from "react-icons/go";
+
 import {
   PiCalendarDots,
   PiCertificate,
@@ -21,6 +21,7 @@ import MainContent from "@/components/Dashboard/MainContent";
 import PanelContent from "@/components/Dashboard/PanelContent";
 import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
 import { Tooltip } from "react-tooltip";
+import AvatarMenu from "./customs/AvatarMenu";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false); // Estado para abrir/cerrar el primer aside
@@ -28,7 +29,7 @@ const Dashboard = () => {
   const [selectedSection, setSelectedSection] = useState("institucion"); // Sección seleccionada
   const [user, setUser] = useState<User | null>(null); // Información del usuario
   const [loading, setLoading] = useState(true); // Estado de carga
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú desplegable del avatar
+  // const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para el menú desplegable del avatar
   const router = useRouter();
 
   const menuItems = [
@@ -49,7 +50,7 @@ const Dashboard = () => {
       } else {
         router.push("/inicio-de-sesion");
       }
-      setLoading(false);  
+      setLoading(false);
     };
 
     checkUser();
@@ -75,54 +76,12 @@ const Dashboard = () => {
     );
   }
 
-  const AvatarMenu = () => (
-    <div className="relative">
-      {/* Botón del avatar para desplegar el menú */}
-      <button
-        className="w-9 h-9 bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-full flex items-center justify-center cursor-pointer text-xs"
-        onClick={() => setIsMenuOpen((prev) => !prev)}
-      >
-        {user ? user.email?.charAt(0).toUpperCase() : "?"}
-      </button>
-
-      {/* Menú desplegable */}
-      {isMenuOpen && (
-        <div className="absolute right-0 top-8 p-4 mt-2 w-72 bg-zinc-800 text-gray-100 rounded-md shadow-lg z-20 border border-zinc-800">
-          {/* Información del usuario */}
-          {user && (
-            <div className="px-4 py-2 border-b border-gray-600">
-              <p className="text-sm font-medium">Hola,</p>
-              <p className="text-sm font-semibold truncate">{user.email}</p>
-            </div>
-          )}
-
-          {/* Opciones del menú */}
-          <button
-            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700 p-2 mt-4 rounded-full bg-zinc-800/70 hover:bg-zinc-700/40"
-            onClick={() => {
-              supabase.auth.signOut();
-              router.push("/");
-            }}
-          >
-            <GoSignOut className="mr-2 text-xl" /> Cerrar sesión
-          </button>
-          <button
-            className="flex items-center px-4 py-2 w-full text-left hover:bg-gray-700 p-2 mt-2 rounded-full bg-zinc-800/70 hover:bg-zinc-700/40"
-            onClick={() => alert("Configuración aún no implementada")}
-          >
-            <AiOutlineSetting className="mr-2 text-xl" /> Configuración
-          </button>
-        </div>
-      )}
-    </div>
-  );
-
   return (
     <ProtectedRoute>
       <div className="flex h-screen flex-col">
         {/* Barra superior con avatar */}
         <div className="w-full  pl-20 pr-4 py-2 flex justify-end items-center">
-          <AvatarMenu />
+          <AvatarMenu user={user} />
         </div>
 
         <div className="flex flex-1 overflow-hidden">
@@ -185,41 +144,41 @@ const Dashboard = () => {
           </aside>
 
           {/* Segundo aside: Panel lateral derecho */}
-        <aside
-          className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
-            isSecondAsideOpen ? "w-1/5" : "w-10"
-          }`}
-        >
-          <div className="relative flex items-center justify-start mt-4">
-            <div className="group relative pl-4">
-              <button
-                data-tooltip-id="panel-tooltip"
-                className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
-                onClick={() => setIsSecondAsideOpen((prev) => !prev)}
-              >
-                {isSecondAsideOpen ? (
-                  <LuPanelLeftClose className="h-6 w-6" />
-                ) : (
-                  <LuPanelRightClose className="h-6 w-6" /> 
-                )}
-              </button>
+          <aside
+            className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
+              isSecondAsideOpen ? "w-1/5" : "w-10"
+            }`}
+          >
+            <div className="relative flex items-center justify-start mt-4">
+              <div className="group relative pl-4">
+                <button
+                  data-tooltip-id="panel-tooltip"
+                  className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
+                  onClick={() => setIsSecondAsideOpen((prev) => !prev)}
+                >
+                  {isSecondAsideOpen ? (
+                    <LuPanelLeftClose className="h-6 w-6" />
+                  ) : (
+                    <LuPanelRightClose className="h-6 w-6" />
+                  )}
+                </button>
 
-              {/* Tooltip de configuración */}
-              <Tooltip
-                id="panel-tooltip"
-                place="right-end"
-                content={isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"} // El contenido cambia dinámicamente
-                className="custom-tooltip" // Si deseas personalizar el estilo
-              />
+                {/* Tooltip de configuración */}
+                <Tooltip
+                  id="panel-tooltip"
+                  place="right-end"
+                  content={isSecondAsideOpen ? "Cerrar panel" : "Abrir panel"} // El contenido cambia dinámicamente
+                  className="custom-tooltip z-50" // Asegura que el tooltip esté sobre otros elementos
+                />
+              </div>
             </div>
-          </div>
 
-          {isSecondAsideOpen && (
-            <div className="p-4">
-              <PanelContent selectedSection={selectedSection} />
-            </div>
-          )}
-        </aside>
+            {isSecondAsideOpen && (
+              <div className="p-4">
+                <PanelContent selectedSection={selectedSection} />
+              </div>
+            )}
+          </aside>
 
           {/* Contenido principal */}
           <main className="flex-1 bg-[#292a2d]  p-6 overflow-y-auto max-h-screen">

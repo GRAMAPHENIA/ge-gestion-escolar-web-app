@@ -9,6 +9,7 @@ interface MainContentProps {
 
 const MainContent: React.FC<MainContentProps> = ({ selectedSection }) => {
   const renderMainContent = () => {
+    console.log("Renderizando sección:", selectedSection);
     switch (selectedSection) {
       case "institucion":
         return <InstitutionMain />;
