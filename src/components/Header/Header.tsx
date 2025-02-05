@@ -44,8 +44,8 @@ const Header = () => {
     <div>
       <header className="max-w-7xl mx-auto py-6">
         <nav className="flex items-center justify-between">
-          <div className="text-2xl font-bold text-zinc-400">
-            <Image src={"/logo/view-kanbab.svg"} alt={""} width={60} height={60} />
+          <div className="font-bold text-zinc-400">
+            <Image src={"/logo/view-kanbab.svg"} alt={""} width={70} height={70} className="opacity-90" />
           </div>
 
           <div className="flex items-center gap-4">

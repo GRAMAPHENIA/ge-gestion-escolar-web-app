@@ -23,6 +23,7 @@ import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
 
 import AvatarMenu from "./customs/AvatarMenu";
 import { Tooltip } from "react-tooltip";
+import Image from "next/image";
 
 const Dashboard = () => {
   const [isAsideOpen, setIsAsideOpen] = useState(false); // Estado para abrir/cerrar el primer aside
@@ -102,12 +103,20 @@ const Dashboard = () => {
             }}
           >
             <div className="flex items-center justify-left p-3 space-x-4">
-              <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 text-xs">
+              {/* <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 text-xs">
                 T
+              </div> */}
+
+              <div className="text-2xl font-bold text-zinc-400  transition-all duration-400 easy-in-out">
+                <Image
+                  src={"/logo/view-kanbab.svg"}
+                  alt={""}
+                  width={70}
+                  height={70}
+                  className="opacity-90"
+                />
               </div>
-              {isAsideOpen && (
-                <span className="ml-3 text-sm text-orange-400"></span>
-              )}
+             
             </div>
 
             <div>
