@@ -89,9 +89,9 @@ const Dashboard = () => {
         <div className="flex flex-1 overflow-hidden">
           {/* Primer aside: Menú lateral */}
           <aside
-            className={`bg-[#212327] transition-all duration-200 z-30 absolute lg:relative  ${
-              isAsideOpen ? "w-56" : "w-[60px]"
-            } flex flex-col justify-stretch`}
+            className={`bg-[#212327] transition-all duration-100 ease-in-out z-30 absolute lg:relative flex flex-col justify-stretch overflow-hidden ${
+              isAsideOpen ? "w-56" : "w-[53px]"
+            }`}
             onMouseEnter={() => setIsAsideOpen(true)}
             onMouseLeave={() => setIsAsideOpen(false)}
             style={{
@@ -100,57 +100,66 @@ const Dashboard = () => {
               left: 0,
               height: "100%",
               zIndex: 30,
+              transition: "width 0.125s ease-in-out",
             }}
           >
-            <div className="flex items-center justify-left p-3 space-x-4">
-              {/* <div className="w-6 h-6 p-2 mt-2 flex items-center justify-center rounded-full bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 text-xs">
-                T
-              </div> */}
-
-              <div className="text-2xl font-bold text-zinc-400  transition-all duration-400 easy-in-out">
-                <Image
-                  src={"/logo/view-kanbab.svg"}
-                  alt={""}
-                  width={70}
-                  height={70}
-                  className="opacity-90"
-                />
-              </div>
-             
+            {/* Logo */}
+            <div className="flex items-center justify-start m-[6px]">
+              <Image
+                src={"/logo/view-kanbab.svg"}
+                alt=""
+                width={40}
+                height={40}
+                className=" w-10 h-10 opacity-90 transition-all duration-200"
+              />
             </div>
 
+            {/* Menú */}
             <div>
               <div
                 onClick={() => router.push("/")}
-                className="flex items-center space-x-4 px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5"
+                className="flex items-center px-2 py-2 mx-2 my-2 cursor-pointer rounded-md text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5 transition-all duration-200 "
               >
-                <span className="text-xl">
-                  <PiHouseLine className="w-6 h-6" />
+                <span className="text-xl flex-shrink-0">
+                  <PiHouseLine className="w-5 h-5" />
                 </span>
-                {isAsideOpen && <span className="text-sm">Volver</span>}
+                <span
+                  className={`text-sm whitespace-nowrap transition-all duration-200 ease-in-out absolute ${
+                    isAsideOpen ? "opacity-100 ml-8 relative" : "opacity-0 w-0"
+                  }`}
+                >
+                  Volver
+                </span>
               </div>
-              <div className="border-b border-zinc-700 mt-2 mx-2"></div>
+              <div className="border-b-2 border-dashed border-zinc-700 mt-2 mx-2"></div>
             </div>
 
-            <div className="flex flex-col space-y-4 p-3">
+            {/* Opciones del menú */}
+            <div className="flex flex-col space-y-4 p-2">
               {menuItems.map((item) => (
                 <div
                   key={item.route}
                   onClick={() => setSelectedSection(item.route)}
-                  className={`flex items-center space-x-4 px-[6px] py-2 rounded-[3px] transition-colors cursor-pointer hover:bg-zinc-700/50 ${
+                  className={`flex items-center px-2 py-2 rounded-[3px] transition-all cursor-pointer hover:bg-zinc-700/50 ${
                     selectedSection === item.route
-                      ? "bg-neutral-600/40 hover:bg-neutral-500/20 text-zinc-300 hover:text-zinc-300 transition duration-200"
+                      ? "bg-neutral-600/40 hover:bg-neutral-500/20 text-zinc-300"
                       : "text-zinc-400/75 hover:text-zinc-300 hover:bg-zinc-300/5"
                   }`}
                 >
-                  <span className="text-xl ">{item.icon}</span>
-                  {isAsideOpen && (
-                    <span className="text-sm font-medium ">{item.name}</span>
-                  )}
+                  <span className="text-xl flex-shrink-0">{item.icon}</span>
+                  <span
+                    className={`text-sm font-medium whitespace-nowrap transition-all duration-200 ease-in-out absolute ${
+                      isAsideOpen
+                        ? "opacity-100 ml-8 relative"
+                        : "opacity-0 w-0"
+                    }`}
+                  >
+                    {item.name}
+                  </span>
                 </div>
               ))}
             </div>
-            <div className="border-b border-zinc-700  mx-2"></div>
+            <div className="border-b-2 border-dashed border-zinc-700 mx-2"></div>
           </aside>
 
           {/* Segundo aside: Panel lateral derecho */}
