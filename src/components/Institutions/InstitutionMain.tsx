@@ -58,7 +58,7 @@ const InstitutionMain = () => {
             : null;
 
           return (
-            <InstitutionCard
+            <InstitutionCard 
               key={institution.id}
               institution={institution}
               imageUrl={imageUrl || <SkeletonImage />} // Pasar la URL de la imagen o un esqueleto

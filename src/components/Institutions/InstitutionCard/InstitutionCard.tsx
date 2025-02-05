@@ -6,7 +6,7 @@ import clsx from "clsx"; // Importar clsx
 
 import "react-tooltip/dist/react-tooltip.css"; // Asegúrate de importar el CSS
 import { GoGear } from "react-icons/go";
-import { LuLightbulb, LuLightbulbOff } from "react-icons/lu";
+import { LuLightbulb, LuLightbulbOff, LuMail, LuPhone } from "react-icons/lu";
 
 interface InstitutionCardProps {
   institution: Institution;
@@ -83,7 +83,12 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
         >
           <GoGear className="text-xl" />
         </span>
-        <Tooltip id="config-tooltip"  border="1px solid #434343" place="top" className="custom-tooltip" />
+        <Tooltip
+          id="config-tooltip"
+          border="1px solid #434343"
+          place="top"
+          className="custom-tooltip"
+        />
       </header>
 
       {/* Línea divisoria */}
@@ -105,12 +110,16 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
 
       {/* Contenido de la tarjeta */}
       <div className="mt-4 px-4">
-        <h3 className="text-xl font-semibold">{institution.name}</h3>
+        <h3 className="text-xl font-semibold mb-2">{institution.name}</h3>
         <p className="text-sm text-gray-400">
           {institution.city} {institution.province}
         </p>
-        <p className="text-sm text-gray-400">{institution.phone_number}</p>
-        <p className="text-sm text-gray-400">{institution.email}</p>
+        <p className="flex items-baseline text-sm text-gray-400">
+          <LuPhone className="mr-2" /> {institution.phone_number}
+        </p>
+        <p className="flex items-baseline text-sm text-gray-400">
+          <LuMail className="mr-2" /> {institution.email}
+        </p>
         <p className="mt-2 text-gray-300 text-sm">{institution.description}</p>
       </div>
     </div>
