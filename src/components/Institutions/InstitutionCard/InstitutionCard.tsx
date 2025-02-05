@@ -29,8 +29,8 @@ const InstitutionCard: React.FC<InstitutionCardProps> = ({
   const imageFilter = color === "cyan-400" ? "saturate(0.1)" : "saturate(1)";
 
   return (
-    <div className="border border-zinc-700/50 rounded-lg bg-zinc-800 overflow-hidden">
-      <header className="flex justify-between items-center px-2 py-2 bg-zinc-900/50 text-sm text-white">
+    <div className="border border-zinc-700/50 rounded-lg bg-orange-950/5 overflow-hidden">
+      <header className="flex justify-between items-center px-2 py-2  text-sm text-white">
         {/* Círculo con efecto de glasmorfismo y un ícono dinámico */}
         <div
           onClick={handleColorChange}
