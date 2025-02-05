@@ -13,13 +13,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   handleScrollToForm,
 }) => {
   return (
-    <section className="max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-10 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
+    <section className="max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-5 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
       {/* Contenido del lado izquierdo */}
       <div className="absolute flex flex-col justify-center text-center z-10 w-full md:w-1/2 md:text-left md:mb-0">
         <p className="text-xl sm:text-2xl mb-6">
           GE <small className="text-lg">Gestión escolar</small>
         </p>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 leading-tight">
           Organizate en minutos{" "}
           <span className="bg-clip-text bg-gradient-to-r text-orange-400">
             Crecé sin límites
@@ -67,14 +67,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Luz y video en pantallas más grandes */}
-      <div className="hidden md:flex relative w-full md:w-1/2 justify-center items-center">
+      <div className="hidden md:flex relative w-full md:w-full justify-center items-center">
         {/* Luz de fondo */}
-        <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl translate-x-36"></div>
+        <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl"></div>
 
         {/* Card del lado derecho */}
-        <div className="relative translate-x-36 w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] bg-[#303344aa] rounded-3xl overflow-hidden">
+        <div className="relative translate-x-44 w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] bg-[#303344aa] rounded-3xl overflow-hidden">
           <video
-            className="relative inset-0 w-full h-full object-cover brightness-75 contrast-100 saturate-125 rounded-3xl"
+            className="relative inset-0 w-full h-full object-cover brightness-75 contrast-100 saturate-125 rounded-3xl max-w-none"
             src="/video-hero/video-hero.mp4"
             autoPlay
             muted

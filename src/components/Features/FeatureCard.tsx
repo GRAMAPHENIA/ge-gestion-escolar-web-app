@@ -45,7 +45,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       {/* Columna con la Imagen */}
       <section className="relative flex justify-center items-center z-10">
         {/* Luz detrás del fondo del section */}
-        <div className="absolute right-14 bottom-22 blur-3xl w-[125px] h-[250px] bg-orange-400 rounded-full -z-10"></div>
+        <div className="absolute blur-3xl w-[400px] h-[200px] bg-orange-400 -z-10"></div>
 
         {/* Fondo del section */}
         <div className="">
@@ -54,7 +54,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             height={1080}
             src={image}
             alt={title}
-            className="object-cover rounded-2xl h-[350px] w-[550px]"
+            className="object-cover rounded-2xl h-[350px] w-[550px] border-4 border-white/5 shadow-xl"
           />
         </div>
       </section>

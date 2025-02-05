@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase/supabaseClient";
 import { User } from "@supabase/supabase-js";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import React, { useEffect, useState } from "react";
@@ -43,7 +44,9 @@ const Header = () => {
     <div>
       <header className="max-w-7xl mx-auto py-6">
         <nav className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-zinc-400">GE</h1>
+          <div className="text-2xl font-bold text-zinc-400">
+            <Image src={"/logo/view-kanbab.svg"} alt={""} width={60} height={60} />
+          </div>
 
           <div className="flex items-center gap-4">
             {user ? (
