@@ -9,7 +9,7 @@ const FeaturesGrid: React.FC = () => {
   const features = [
     {
       Icon: BsDatabase,
-      title: "Admisnistra con herramientas simples e integrales.",
+      title: "Herramientas simples",
       description:
         "Todos los aspectos de tu institución desde una única plataforma intuitiva.",
       image: "/volumen-de-datos.jpg",
@@ -25,7 +25,7 @@ const FeaturesGrid: React.FC = () => {
     },
     {
       Icon: FiZap,
-      title: "Alto Rendimiento",
+      title: "Buen Rendimiento",
       description:
         "Optimizado para manejar grandes volúmenes de datos sin sacrificar velocidad.",
       image: "/rendimiento.jpg",
@@ -50,7 +50,7 @@ const FeaturesGrid: React.FC = () => {
       </div>
 
       {/* Botón para más contenido */}
-      <div className="my-40 text-center">
+      <div className="my-20 text-center">
         <button className="px-6 py-3 bg-white/5 backdrop-blur-md hover:bg-orange-400/70 text-white rounded-full transition-colors ease-in-out ">
           Ver más características
         </button>

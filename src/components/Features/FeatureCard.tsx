@@ -18,7 +18,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   reference,
 }) => {
   return (
-    <section className="flex justify-between rounded-lg py-20">
+    <section className="flex flex-col md:flex-row justify-between md:justify-around rounded-lg py-10 md:py-20">
       {/* Columna con el Icono, Título y Descripción */}
       <section className="flex flex-col justify-center sm:justify-start p-4 relative z-20">
         {/* Fondo naranja detrás del ícono */}
@@ -27,9 +27,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         {/* Ícono y texto */}
         <Icon className="w-20 h-20 p-4 rounded-xl text-orange-400 transition duration-300 transform bg-neutral-500/10 backdrop-blur-md z-10" />
         <small className="mt-2">{reference}</small>
-        <h3 className="text-6xl mt-4 font-semibold text-white w-[500px]">{title}</h3>
+        <h3 className="text-4xl md:text-6xl mt-4 font-semibold text-white md:w-[500px]">{title}</h3>
         <article className="mt-4 sm:mt-0 flex-1">
-          <p className="text-zinc-400 text-center sm:text-left w-[300px] mt-4">
+          <p className="text-zinc-400 px-2 md:px-0 md:text-center sm:text-left w-[300px] mt-4">
             {description}
           </p>
         </article>
@@ -43,12 +43,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       </section>
 
       {/* Columna con la Imagen */}
-      <section className="relative flex justify-center items-center z-10">
+      <section className="relative flex justify-center items-center z-10 mt-6 md:mt-0">
         {/* Luz detrás del fondo del section */}
-        <div className="absolute blur-3xl w-[400px] h-[200px] bg-orange-400 -z-10"></div>
+        <div className="absolute blur-3xl w-[180px] h-[230px] md:w-[400px] md:h-[200px] bg-orange-400 -z-10"></div>
 
         {/* Fondo del section */}
-        <div className="">
+        <div className="w-full flex justify-center p-2 md:p-0">
           <Image
             width={1080} // Ajusta el tamaño de la imagen según sea necesario
             height={1080}
