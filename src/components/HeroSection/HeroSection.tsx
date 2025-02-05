@@ -13,9 +13,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   handleScrollToForm,
 }) => {
   return (
-    <section className="relative max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-10 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
+    <section className="max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-10 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
       {/* Contenido del lado izquierdo */}
-      <div className="relative flex flex-col justify-center text-center z-10 w-full md:w-1/2 md:text-left md:mb-0">
+      <div className="absolute flex flex-col justify-center text-center z-10 w-full md:w-1/2 md:text-left md:mb-0">
         <p className="text-xl sm:text-2xl mb-6">
           GE <small className="text-lg">Gestión escolar</small>
         </p>
@@ -52,7 +52,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Video de fondo para móviles */}
-      <div className="absolute inset-0 -z-10 w-full h-full md:hidden">
+      <div className="inset-0 -z-10 w-full h-full md:hidden">
         <video
           className="w-full h-full object-cover brightness-75 contrast-100 saturate-125"
           src="/video-hero/video-hero.mp4"
@@ -63,18 +63,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           aria-hidden="true"
           tabIndex={-1}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#303344aa] to-transparent"></div>
+        <div className="inset-0 bg-gradient-to-t from-[#303344aa] to-transparent"></div>
       </div>
 
       {/* Luz y video en pantallas más grandes */}
       <div className="hidden md:flex relative w-full md:w-1/2 justify-center items-center">
         {/* Luz de fondo */}
-        <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl"></div>
+        <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl translate-x-36"></div>
 
         {/* Card del lado derecho */}
-        <div className="relative w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] bg-[#303344aa] rounded-3xl overflow-hidden">
+        <div className="relative translate-x-36 w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] bg-[#303344aa] rounded-3xl overflow-hidden">
           <video
-            className="absolute inset-0 w-full h-full object-cover brightness-75 contrast-100 saturate-125 rounded-3xl"
+            className="relative inset-0 w-full h-full object-cover brightness-75 contrast-100 saturate-125 rounded-3xl"
             src="/video-hero/video-hero.mp4"
             autoPlay
             muted

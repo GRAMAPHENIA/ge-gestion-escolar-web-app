@@ -41,7 +41,7 @@ const Header = () => {
 
   return (
     <div>
-      <header className="max-w-7xl mx-auto py-6 ">
+      <header className="max-w-7xl mx-auto py-6">
         <nav className="flex items-center justify-between">
           <h1 className="text-2xl font-bold text-zinc-400">GE</h1>
 

@@ -52,7 +52,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#292a2d] relative overflow-hidden px-4 sm:px-6 md:px-10 lg:px-20">
+    <div className="bg-[#292a2d] relative overflow-hidden px-4 sm:px-6 md:px-10 lg:px-20">
       <div className="relative">
         {/* Header */}
         <Header />
