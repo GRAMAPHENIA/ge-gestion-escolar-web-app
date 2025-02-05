@@ -36,7 +36,7 @@ const FeaturesGrid: React.FC = () => {
   return (
     <div>
       {/* Cards de características */}
-      <div className="space-y-6 mt-6">
+      <div className="mt-6">
         {features.map((feature, index) => (
           <FeatureCard
             key={index}

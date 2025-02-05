@@ -15,10 +15,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   title,
   description,
   image,
-  reference,
+  reference,  
 }) => {
   return (
-    <section className="flex flex-col md:flex-row justify-between md:justify-around rounded-lg py-10 md:py-20">
+    <section className="flex flex-col md:flex-row justify-between md:justify-around rounded-lg py-10 md:py-28">
       {/* Columna con el Icono, Título y Descripción */}
       <section className="flex flex-col justify-center sm:justify-start p-4 relative z-20">
         {/* Fondo naranja detrás del ícono */}
@@ -29,7 +29,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         <small className="mt-2">{reference}</small>
         <h3 className="text-4xl md:text-6xl mt-4 font-semibold text-white md:w-[500px]">{title}</h3>
         <article className="mt-4 sm:mt-0 flex-1">
-          <p className="text-zinc-400 px-2 md:px-0 md:text-center sm:text-left w-[300px] mt-4">
+          <p className="text-zinc-400 px-2 md:px-0 text-center sm:text-left w-[300px] mt-4">
             {description}
           </p>
         </article>

@@ -42,10 +42,18 @@ const Header = () => {
 
   return (
     <div>
-      <header className="max-w-7xl mx-auto py-6">
+      <header className="max-w-7xl mx-auto p-4">
         <nav className="flex items-center justify-between">
           <div className="font-bold text-zinc-400">
-            <Image src={"/logo/view-kanbab.svg"} alt={""} width={70} height={70} className="opacity-90" />
+            <Image
+              src={"/logo/view-kanbab.svg"}
+              alt={
+                "Una imagen de el logo estilo svg-icon estilo isometrico, en representacion de la marca de la Aplicación. Forma: Miniatura de tablero Kanban"
+              }
+              width={70}
+              height={70}
+              className="opacity-90 w-1/2 sm:w-1/2 md:w-16 md:h-16" // Se ajusta al 50% en móviles
+            />
           </div>
 
           <div className="flex items-center gap-4">
