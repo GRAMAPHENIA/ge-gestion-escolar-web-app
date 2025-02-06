@@ -7,7 +7,7 @@ const SignupPage = () => {
   return (
     <div className="w-full h-screen flex bg-[#292a2d] flex-col lg:flex-row">
       {/* Formulario ocupa 1/3 en pantallas grandes y 100% en móviles */}
-      <div className="w-full lg:w-[38%] flex justify-center items-center">
+      <div className="w-full lg:w-[40%] flex justify-center items-center">
         <SignupForm />
       </div>
       {/* Sección de características oculta en pantallas pequeñas */}

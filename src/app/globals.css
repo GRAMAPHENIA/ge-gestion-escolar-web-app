@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,7 +12,8 @@
   :root {
     --background: #212327;
     --foreground: #ededed;
-    --font-copernicus: "Copernicus", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-copernicus: "Copernicus", ui-serif, Georgia, Cambria,
+      "Times New Roman", Times, serif;
   }
 }
 
@@ -44,6 +46,14 @@ body {
   color: #ffffff;
 }
 
+input {
+  font-family: 'Fira Code', monospace;
+}
+
+::placeholder {
+  font-family: "Fira Code", monospace;
+}
+
 html.dark ::selection {
   background-color: #00ccff28;
   color: #000000;
@@ -57,9 +67,5 @@ html.dark ::selection {
   padding: 8px 12px !important;
 }
 
-.font-copernicus {
-  font-family: var(--font-copernicus);
-  font-feature-settings: "ss01" 0;
-}
 
 
