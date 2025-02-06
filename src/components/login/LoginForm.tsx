@@ -80,7 +80,7 @@ const LoginForm = () => {
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 backdrop-blur-xl border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
                 aria-label={
                   passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
                 }
@@ -103,7 +103,7 @@ const LoginForm = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md"
+            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20  text-orange-400 hover:text-orange-300 transition duration-100 rounded-md"
           >
             Iniciar Sesión
           </button>

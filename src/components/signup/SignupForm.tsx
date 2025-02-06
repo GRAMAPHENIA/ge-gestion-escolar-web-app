@@ -5,6 +5,15 @@ import { supabase } from "@/supabase/supabaseClient";
 import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 
+import { Merriweather } from "next/font/google";
+
+const merriweather = Merriweather({
+  weight: ["300", "400", "700", "900"], // Puedes elegir los pesos que necesites
+  subsets: ["latin"],
+  style: ["normal", "italic"], // Si necesitas cursiva
+  display: "swap",
+});
+
 const SignupForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,17 +25,17 @@ const SignupForm = () => {
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   // Verificar si el usuario ya está autenticado
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        if (session) {
-          router.push("/tablero"); // Redirige a una página segura si ya está logueado
-        }
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) {
+        router.push("/tablero"); // Redirige a una página segura si ya está logueado
       }
-    );
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -63,20 +72,27 @@ const SignupForm = () => {
       if (authResponse.user) {
         const { id: authId } = authResponse.user;
 
-        const { error: userError } = await supabase.from("users").insert([ 
-          { 
+        const { error: userError } = await supabase.from("users").insert([
+          {
             auth_id: authId,
             email,
-          } 
+          },
         ]);
 
         if (userError) {
-          console.error("Error al guardar en la tabla 'users':", userError.message);
-          setError("El usuario se creó, pero hubo un problema al guardar los datos adicionales.");
+          console.error(
+            "Error al guardar en la tabla 'users':",
+            userError.message
+          );
+          setError(
+            "El usuario se creó, pero hubo un problema al guardar los datos adicionales."
+          );
           return;
         }
 
-        setSuccess("Usuario creado correctamente. Por favor, verifica tu correo.");
+        setSuccess(
+          "Usuario creado correctamente. Por favor, verifica tu correo."
+        );
       }
     } catch (err) {
       console.error("Error desconocido:", err);
@@ -103,13 +119,17 @@ const SignupForm = () => {
         >
           <PiArrowLeft className="w-4 h-4" />
         </button>
-        <h1 className="text-3xl font-bold text-zinc-200">Empezá</h1>
-        <h2 className="text-zinc-500">Crea una nueva cuenta</h2>
+        <h1
+          className={`${merriweather.className} text-3xl font-bold text-white`}
+        >
+          Empezá
+        </h1>
+        <h2 className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}>Crea una nueva cuenta</h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-300"
+              className={`${merriweather.className} text-sm font-thin text-zinc-200`}
             >
               Correo Electrónico
             </label>
@@ -123,14 +143,11 @@ const SignupForm = () => {
               required
               aria-describedby="email-helper"
             />
-            <p id="email-helper" className="text-xs text-gray-500">
-              Necesitas un correo válido para crear una cuenta.
-            </p>
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-300"
+              className={`${merriweather.className} text-sm font-thin text-zinc-200`}
             >
               Contraseña
             </label>
@@ -151,8 +168,10 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 backdrop-blur-xl border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
+                aria-label={
+                  passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
               >
                 {passwordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -179,7 +198,7 @@ const SignupForm = () => {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-300"
+              className={`${merriweather.className} text-sm font-thin text-zinc-200`}
             >
               Confirmar Contraseña
             </label>
@@ -197,8 +216,12 @@ const SignupForm = () => {
               <button
                 type="button"
                 onClick={() => setConfirmPasswordVisible((prev) => !prev)}
-                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={confirmPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+                className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 backdrop-blur-xl border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
+                aria-label={
+                  confirmPasswordVisible
+                    ? "Ocultar contraseña"
+                    : "Mostrar contraseña"
+                }
               >
                 {confirmPasswordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -208,45 +231,38 @@ const SignupForm = () => {
               </button>
             </div>
           </div>
-          <div className="relative flex">
+          <div className="relative flex items-center">
             <input
               type="checkbox"
               id="terms"
               checked={termsAccepted}
               onChange={() => setTermsAccepted((prev) => !prev)}
-              className="appearance-none w-5 h-5 border border-l border-orange-600/70 rounded-sm bg-zinc-900/50 checked:bg-orange-500/50 checked:border-none mr-2"
+              className="appearance-none w-5 h-5 border border-orange-600/70 rounded-sm bg-zinc-900/50 checked:bg-orange-500/50 checked:border-none mr-2"
             />
             <label
               htmlFor="terms"
-              className="absolute p-1 top-0 left-0 w-5 h-5 flex items-center justify-center pointer-events-none"
+              className={`${merriweather.className} flex text-xs items-center space-x-1 text-zinc-300 cursor-pointer italic`}
             >
-              {termsAccepted && (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="2"
-                  stroke="white"
-                  className="w-4 h-4"
+              <span>
+                Acepto los{" "}
+                <a
+                  href="/terminos-y-condiciones"
+                  className="text-orange-400 hover:underline hover:text-orange-300"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              )}
+                  términos y condiciones
+                </a>{" "}
+                y la{" "}
+                <a
+                  href="/politica-de-privacidad"
+                  className="text-orange-400 hover:underline hover:text-orange-300"
+                >
+                  política de privacidad
+                </a>
+                .
+              </span>
             </label>
-            <p>
-              Acepta los{" "}
-              <a
-                href="/terminos-y-condiciones"
-                className="text-orange-400 hover:underline"
-              >
-                términos y condiciones.
-              </a>
-            </p>
           </div>
+
           {error && (
             <div className="flex justify-center items-center fixed bottom-8 left-0 w-full">
               <p className="px-4 py-2 text-left bg-rose-600/10 backdrop-blur-lg text-rose-400 rounded-md border border-rose-300/10">
@@ -264,11 +280,11 @@ const SignupForm = () => {
             Crear Cuenta
           </button>
         </form>
-        <p className="mt-4 text-sm text-center text-gray-400">
+        <p className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}>
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
-            className="text-zinc-400 hover:underline hover:text-zinc-300 underline underline-offset-1 decoration-orange-500"
+            className="text-orange-400 hover:underline hover:text-orange-300"
           >
             Inicia sesión aquí
           </a>

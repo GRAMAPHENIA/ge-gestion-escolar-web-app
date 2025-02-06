@@ -11,6 +11,7 @@
   :root {
     --background: #212327;
     --foreground: #ededed;
+    --font-copernicus: "Copernicus", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
   }
 }
 
@@ -49,10 +50,16 @@ html.dark ::selection {
 }
 
 .custom-tooltip {
-  background-color: #000000 !important; 
-  color: #ecf0f1 !important; 
-  font-size: 12px !important; 
+  background-color: #000000 !important;
+  color: #ecf0f1 !important;
+  font-size: 12px !important;
   border-radius: 8px !important;
   padding: 8px 12px !important;
 }
+
+.font-copernicus {
+  font-family: var(--font-copernicus);
+  font-feature-settings: "ss01" 0;
+}
+
 
