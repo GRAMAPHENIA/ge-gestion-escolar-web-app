@@ -124,7 +124,11 @@ const SignupForm = () => {
         >
           Empezá
         </h1>
-        <h2 className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}>Crea una nueva cuenta</h2>
+        <h2
+          className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}
+        >
+          Crea una nueva cuenta
+        </h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
           <div>
             <label
@@ -237,7 +241,8 @@ const SignupForm = () => {
               id="terms"
               checked={termsAccepted}
               onChange={() => setTermsAccepted((prev) => !prev)}
-              className="appearance-none w-5 h-5 border border-orange-600/70 rounded-sm bg-zinc-900/50 checked:bg-orange-500/50 checked:border-none mr-2"
+              className="appearance-none w-5 h-5 border border-orange-600/50 rounded-sm bg-zinc-900/50 checked:bg-orange-500/10 checked:border-orange-400 mr-2 relative 
+              before:absolute before:inset-0 before:flex before:items-center before:justify-center before:opacity-0 before:content-['✔'] before:text-orange-400 before:text-xs checked:before:opacity-100"
             />
             <label
               htmlFor="terms"
@@ -280,7 +285,9 @@ const SignupForm = () => {
             Crear Cuenta
           </button>
         </form>
-        <p className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}>
+        <p
+          className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}
+        >
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
