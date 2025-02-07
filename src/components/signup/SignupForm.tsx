@@ -32,6 +32,7 @@ const SignupForm = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -40,7 +41,7 @@ const SignupForm = () => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
-        router.push("/tablero");
+        router.push("/bienvenida"); // Redirige a la página de bienvenida
       }
     });
 
@@ -49,18 +50,32 @@ const SignupForm = () => {
     };
   }, [router]);
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setSuccess(null);
+    setIsLoading(true);
+
+    if (!validateEmail(email)) {
+      setError("Por favor, introduce un correo electrónico válido.");
+      setIsLoading(false);
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden.");
+      setIsLoading(false);
       return;
     }
 
     if (!termsAccepted) {
       setError("Debes aceptar los términos y condiciones.");
+      setIsLoading(false);
       return;
     }
 
@@ -73,6 +88,7 @@ const SignupForm = () => {
 
       if (authError) {
         setError("Hubo un error al crear tu cuenta: " + authError.message);
+        setIsLoading(false);
         return;
       }
 
@@ -92,14 +108,18 @@ const SignupForm = () => {
           setError(
             "El usuario se creó, pero hubo un problema al guardar los datos adicionales."
           );
+          setIsLoading(false);
           return;
         }
 
         setSuccess("Usuario creado correctamente. Por favor, verifica tu correo.");
+        setIsLoading(false);
+        router.push("/bienvenida"); // Redirige a la página de bienvenida
       }
     } catch (err) {
       console.error("Error desconocido:", err);
       setError("Hubo un problema inesperado. Intenta nuevamente.");
+      setIsLoading(false);
     }
   };
 
@@ -114,7 +134,7 @@ const SignupForm = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-stretch bg-[#292a2d]">
-      <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-20 h-screen">
+      <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-24 h-screen">
         <button
           onClick={() => router.push("/tablero")}
           className="absolute top-4 right-4 text-zinc-200 hover:text-orange-300 border border-zinc-700/50 rounded-full p-2 transition duration-100 bg-neutral-700/50"
@@ -261,9 +281,12 @@ const SignupForm = () => {
           )}
           <button
             type="submit"
-            className={`${merriweather.className} w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md`}
+            disabled={isLoading}
+            className={`${merriweather.className} w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md ${
+              isLoading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Crear Cuenta
+            {isLoading ? "Creando Cuenta..." : "Crear Cuenta"}
           </button>
         </form>
         <p className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}>

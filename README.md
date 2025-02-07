@@ -25,3 +25,5 @@ Web App
 `npm install @radix-ui/react-toast`
 
 `npm install tailwind-merge`
+
+`npm i @vercel/speed-insights`

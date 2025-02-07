@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -14,8 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GE",
-  description: "Creado y corregido por Arbor",
+  title: "Gestión Escolar",
+  description:
+    "Plataforma de gestión escolar que facilita la administración de instituciones educativas. Accede a un completo dashboard con herramientas como agenda, control de asistencia, gestión de calificaciones y más. Simplifica la organización y el seguimiento académico de alumnos y docentes.",
 };
 
 export default function RootLayout({
@@ -31,6 +34,7 @@ export default function RootLayout({
         {" "}
         <Toaster />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,4 +1,3 @@
-// LoginForm.tsx
 "use client";
 
 import { useState } from "react";
@@ -11,11 +10,13 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsLoading(true);
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -23,10 +24,16 @@ const LoginForm = () => {
     });
 
     if (error) {
-      setError("Correo o contraseña incorrectos.");
+      if (error.message === "Email not confirmed") {
+        setError("Por favor, confirma tu correo electrónico antes de iniciar sesión.");
+      } else {
+        setError("Correo o contraseña incorrectos.");
+      }
     } else {
       router.push("/tablero"); // Redirigir al dashboard
     }
+
+    setIsLoading(false);
   };
 
   return (
@@ -103,9 +110,10 @@ const LoginForm = () => {
           )}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20  text-orange-400 hover:text-orange-300 transition duration-100 rounded-md"
+            disabled={isLoading}
+            className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Iniciar Sesión
+            {isLoading ? "Iniciando Sesión..." : "Iniciar Sesión"}
           </button>
         </form>
         <p className="mt-4 text-sm text-center text-gray-400">
