@@ -30,10 +30,10 @@ const PoliticaDePrivacidad = () => {
         <p className="mb-4">
           En <strong>Gestión Escolar</strong>, accesible desde{' '}
           <a
-            href="https://gestionescolar.vercel.app"
+            href="https://gestionescolar.app"
             className="text-orange-400 underline hover:text-orange-300"
           >
-            https://gestionescolar.vercel.app
+            https://gestionescolar.app
           </a>
           , la privacidad de nuestros usuarios es una prioridad.
         </p>

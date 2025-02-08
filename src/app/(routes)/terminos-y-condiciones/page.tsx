@@ -31,10 +31,10 @@ const Page = () => {
           Bienvenido a <strong>Gestión Escolar</strong>. Al acceder y utilizar
           nuestro sitio web{' '}
           <a
-            href="https://gestionescolar.vercel.app"
+            href="https://gestionescolar.app"
             className="text-orange-400 underline hover:text-orange-300"
           >
-            https://gestionescolar.vercel.app
+            https://gestionescolar.app
           </a>
           , aceptas los siguientes términos y condiciones.
         </p>
