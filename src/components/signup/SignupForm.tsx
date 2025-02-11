@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabase } from "@/supabase/supabaseClient";
-import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { Merriweather } from "next/font/google";
-import { Fira_Code } from "next/font/google";
+import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
+import { Merriweather, Fira_Code } from "next/font/google";
+import toast, { Toaster } from "react-hot-toast";
 
 const merriweather = Merriweather({
   weight: ["300", "400", "700", "900"],
@@ -28,27 +26,11 @@ const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
-
-  useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session) {
-        router.push("/bienvenida"); // Redirige a la página de bienvenida
-      }
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, [router]);
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -57,68 +39,51 @@ const SignupForm = () => {
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
     setIsLoading(true);
 
+    // Validaciones del frontend
     if (!validateEmail(email)) {
-      setError("Por favor, introduce un correo electrónico válido.");
+      toast.error("Por favor, ingresa un correo válido.");
       setIsLoading(false);
       return;
     }
 
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden.");
+      toast.error("Las contraseñas no coinciden.");
       setIsLoading(false);
       return;
     }
 
     if (!termsAccepted) {
-      setError("Debes aceptar los términos y condiciones.");
+      toast.error("Debes aceptar los términos y condiciones.");
       setIsLoading(false);
       return;
     }
 
+    // Enviar datos al backend
     try {
-      const { data: authResponse, error: authError } =
-        await supabase.auth.signUp({
-          email,
-          password,
-        });
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      if (authError) {
-        setError("Hubo un error al crear tu cuenta: " + authError.message);
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.error || "Hubo un error al crear tu cuenta.");
         setIsLoading(false);
         return;
       }
 
-      if (authResponse.user) {
-        const { id: authId } = authResponse.user;
-
-        const { error: userError } = await supabase.from("users").insert([{
-          auth_id: authId,
-          email,
-        }]);
-
-        if (userError) {
-          console.error(
-            "Error al guardar en la tabla 'users':",
-            userError.message
-          );
-          setError(
-            "El usuario se creó, pero hubo un problema al guardar los datos adicionales."
-          );
-          setIsLoading(false);
-          return;
-        }
-
-        setSuccess("Usuario creado correctamente. Por favor, verifica tu correo.");
-        setIsLoading(false);
-        router.push("/bienvenida"); // Redirige a la página de bienvenida
-      }
+      toast.success("Usuario creado correctamente.");
+      setIsLoading(false);
+      router.push("/bienvenida");
     } catch (err) {
       console.error("Error desconocido:", err);
-      setError("Hubo un problema inesperado. Intenta nuevamente.");
+      toast.error("Hubo un problema inesperado. Intenta nuevamente.");
       setIsLoading(false);
     }
   };
@@ -134,6 +99,16 @@ const SignupForm = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-stretch bg-[#292a2d]">
+      <Toaster
+        toastOptions={{
+          style: {
+            padding: "16px",
+            color: "#fb923c",
+            background: "#ea580833",
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
+          },
+        }}
+      />
       <div className="flex flex-col justify-center p-6 bg-[#212327] px-10 lg:px-24 h-screen">
         <button
           onClick={() => router.push("/tablero")}
@@ -142,15 +117,23 @@ const SignupForm = () => {
         >
           <PiArrowLeft className="w-4 h-4" />
         </button>
-        <h1 className={`${merriweather.className} text-3xl font-bold text-orange-400`}>
+        <h1
+          className={`${merriweather.className} text-3xl font-bold text-orange-400`}
+        >
           Empezá
         </h1>
-        <h2 className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}>
+        <h2
+          className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}
+        >
           Crea una nueva cuenta
         </h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
+          {/* Campos del formulario */}
           <div>
-            <label htmlFor="email" className={`${firacode.className} text-sm font-thin text-zinc-200`}>
+            <label
+              htmlFor="email"
+              className={`${firacode.className} text-sm font-thin text-zinc-200`}
+            >
               Correo Electrónico
             </label>
             <input
@@ -161,11 +144,13 @@ const SignupForm = () => {
               className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
               placeholder="Ingresa tu correo"
               required
-              aria-describedby="email-helper"
             />
           </div>
           <div>
-            <label htmlFor="password" className={`${firacode.className} text-sm font-thin text-zinc-200`}>
+            <label
+              htmlFor="password"
+              className={`${firacode.className} text-sm font-thin text-zinc-200`}
+            >
               Contraseña
             </label>
             <div className="relative">
@@ -180,13 +165,14 @@ const SignupForm = () => {
                 className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
                 placeholder="Crea una contraseña"
                 required
-                aria-describedby="password-helper"
               />
               <button
                 type="button"
                 onClick={() => setPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 backdrop-blur-xl border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-label={
+                  passwordVisible ? "Ocultar contraseña" : "Mostrar contraseña"
+                }
               >
                 {passwordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -204,14 +190,16 @@ const SignupForm = () => {
                     ? "text-amber-400"
                     : "text-rose-400"
                 }`}
-                id="password-strength-helper"
               >
                 Contraseña: {getPasswordStrength()}
               </p>
             )}
           </div>
           <div>
-            <label htmlFor="confirmPassword" className={`${firacode.className} text-sm font-thin text-zinc-200`}>
+            <label
+              htmlFor="confirmPassword"
+              className={`${firacode.className} text-sm font-thin text-zinc-200`}
+            >
               Confirmar Contraseña
             </label>
             <div className="relative">
@@ -223,13 +211,16 @@ const SignupForm = () => {
                 className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
                 placeholder="Repite tu contraseña"
                 required
-                aria-describedby="confirm-password-helper"
               />
               <button
                 type="button"
                 onClick={() => setConfirmPasswordVisible((prev) => !prev)}
                 className="absolute right-0 top-0 h-full px-4 bg-zinc-900/50 backdrop-blur-xl border border-l border-orange-600/70 flex items-center justify-center text-gray-400 hover:text-orange-300 rounded-r-lg"
-                aria-label={confirmPasswordVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+                aria-label={
+                  confirmPasswordVisible
+                    ? "Ocultar contraseña"
+                    : "Mostrar contraseña"
+                }
               >
                 {confirmPasswordVisible ? (
                   <PiEyeClosed className="w-5 h-5" />
@@ -245,10 +236,12 @@ const SignupForm = () => {
               id="terms"
               checked={termsAccepted}
               onChange={() => setTermsAccepted((prev) => !prev)}
-              className="appearance-none w-6 h-6 border border-orange-600/50 rounded-sm bg-zinc-900/50 checked:bg-orange-500/10 checked:border-orange-400 mr-2 relative 
-              before:absolute before:inset-0 before:flex before:items-center before:justify-center before:opacity-0 before:content-['✔'] before:text-orange-400 before:text-xs checked:before:opacity-100"
+              className="appearance-none w-6 h-6 border border-orange-600/50 rounded-sm bg-zinc-900/50 checked:bg-orange-500/10 checked:border-orange-400 mr-2 relative before:absolute before:inset-0 before:flex before:items-center before:justify-center before:opacity-0 before:content-['✔'] before:text-orange-400 before:text-xs checked:before:opacity-100"
             />
-            <label htmlFor="terms" className={`${firacode.className} flex text-xs items-center space-x-1 text-zinc-300 cursor-pointer italic`}>
+            <label
+              htmlFor="terms"
+              className={`${firacode.className} flex text-xs items-center space-x-1 text-zinc-300 cursor-pointer italic`}
+            >
               <span>
                 Acepto los{" "}
                 <a
@@ -269,27 +262,22 @@ const SignupForm = () => {
             </label>
           </div>
 
-          {error && (
-            <div className="flex justify-center items-center fixed bottom-8 left-0 w-full">
-              <p className="px-4 py-2 text-left bg-rose-600/10 backdrop-blur-lg text-rose-400 rounded-md border border-rose-300/10">
-                {error}
-              </p>
-            </div>
-          )}
-          {success && (
-            <p className="text-green-500 text-sm text-center">{success}</p>
-          )}
+          {/* Botón de envío */}
           <button
             type="submit"
             disabled={isLoading}
-            className={`${merriweather.className} w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md ${
+            className={`${
+              merriweather.className
+            } w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md ${
               isLoading ? "opacity-50 cursor-not-allowed" : ""
             }`}
           >
             {isLoading ? "Creando Cuenta..." : "Crear Cuenta"}
           </button>
         </form>
-        <p className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}>
+        <p
+          className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}
+        >
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
