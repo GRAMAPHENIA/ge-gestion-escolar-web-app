@@ -3,16 +3,13 @@ import { supabase } from "@/supabase/supabaseClient";
 import { Institution } from "@/types/institutions/types";
 import { validateInstitution } from "@/types/institutions/validations";
 
-type Context = { params: { id?: string } }; // 
-
 /**
  * @description Actualiza una institución existente por su ID
  * @param request Request con los datos actualizados de la institución
- * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function PUT(request: NextRequest, context: Context) {
+export async function PUT(request: NextRequest) {
   try {
-    const id = context.params.id; // 
+    const { id } = request.nextUrl.pathname.match(/\/api\/institutions\/(.+)\/$/)!.groups!;
 
     if (!id) {
       return NextResponse.json({ error: "El ID es obligatorio." }, { status: 400 });
@@ -39,11 +36,10 @@ export async function PUT(request: NextRequest, context: Context) {
 /**
  * @description Elimina una institución por su ID
  * @param request Request con el ID en la URL
- * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function DELETE(request: NextRequest, context: Context) {
+export async function DELETE(request: NextRequest) {
   try {
-    const id = context.params.id;
+    const { id } = request.nextUrl.pathname.match(/\/api\/institutions\/(.+)\/$/)!.groups!;
 
     if (!id) {
       return NextResponse.json({ error: "El ID es obligatorio." }, { status: 400 });
