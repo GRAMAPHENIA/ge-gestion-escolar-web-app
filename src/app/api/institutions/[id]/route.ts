@@ -3,20 +3,24 @@ import { supabase } from "@/supabase/supabaseClient";
 import { Institution } from "@/types/institutions/types";
 import { validateInstitution } from "@/types/institutions/validations";
 
+type Context = { params: { id?: string } }; // 
+
 /**
  * @description Actualiza una institución existente por su ID
  * @param request Request con los datos actualizados de la institución
  * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: Record<string, string> } 
-) {
+export async function PUT(request: NextRequest, context: Context) {
   try {
-    const id = params.id; // Extraer el ID correctamente
+    const id = context.params.id; // 
+
+    if (!id) {
+      return NextResponse.json({ error: "El ID es obligatorio." }, { status: 400 });
+    }
+
     const body: Institution = await request.json();
 
-    if (!id || !validateInstitution(body)) {
+    if (!validateInstitution(body)) {
       return NextResponse.json({ error: "Datos inválidos." }, { status: 400 });
     }
 
@@ -28,8 +32,7 @@ export async function PUT(
 
     return NextResponse.json(data, { status: 200 });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
 
@@ -38,12 +41,9 @@ export async function PUT(
  * @param request Request con el ID en la URL
  * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Record<string, string> }  
-) {
+export async function DELETE(request: NextRequest, context: Context) {
   try {
-    const id = params.id;
+    const id = context.params.id;
 
     if (!id) {
       return NextResponse.json({ error: "El ID es obligatorio." }, { status: 400 });
@@ -57,7 +57,6 @@ export async function DELETE(
 
     return NextResponse.json({ message: "Institución eliminada correctamente." }, { status: 200 });
   } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Error desconocido";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
   }
 }
