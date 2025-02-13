@@ -7,11 +7,29 @@ import { supabase } from "@/supabase/supabaseClient";
 
 import Management from "@/components/Management/Management";
 import HeroSection from "@/components/HeroSection/HeroSection";
-import { LuMessageSquareQuote } from "react-icons/lu";
-import { BiSend } from "react-icons/bi";
-import { FaHands, FaUsers } from "react-icons/fa";
+// import { LuMessageSquareQuote } from "react-icons/lu";
+// import { BiSend } from "react-icons/bi";
+// import { FaHands, FaUsers } from "react-icons/fa";
 import FeaturesGrid from "@/components/Features/FeaturesGrid";
 import Header from "@/components/Header/Header";
+
+import { BiSend } from "react-icons/bi";
+import { Merriweather, Fira_Code } from "next/font/google";
+
+const merriweather = Merriweather({
+  weight: ["300", "400", "700", "900"],
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const firacode = Fira_Code({
+  weight: ["300", "400", "500", "600", "700"],
+  subsets: ["latin"],
+  style: ["normal"],
+  display: "swap",
+});
+
 
 const Home: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -71,7 +89,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* About Us Section */}
-      <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+      {/* <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
         <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
           ¿Quiénes Somos?
         </h3>
@@ -84,10 +102,10 @@ const Home: React.FC = () => {
             para educadores como para estudiantes.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Mission Section */}
-      <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+      {/* <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
         <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
           Nuestra Misión
         </h3>
@@ -100,10 +118,10 @@ const Home: React.FC = () => {
             seguimiento académico y la administración dentro de las escuelas.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Testimonials Section */}
-      <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
+      {/* <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
         <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 mb-6 text-center">
           ¿Quién Nos Recomienda?
         </h3>
@@ -115,40 +133,42 @@ const Home: React.FC = () => {
             disponible.
           </blockquote>
         </div>
-      </div>
+      </div> */}
 
       {/* Contact Section */}
-      <section className="max-w-7xl mx-auto mb-4" id="contact-form">
-        <div className="bg-[#212327] rounded-lg border border-zinc-800 p-8">
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-zinc-400 to-zinc-400 text-center mb-8">
-            ¿Listo para transformar tu institución?
-          </h2>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="Tu Nombre"
-              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-            />
-            <input
-              type="email"
-              placeholder="Tu Email"
-              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-            />
-            <textarea
-              placeholder="Tu Mensaje"
-              rows={4}
-              className="w-full px-4 py-3 bg-zinc-800 border border-zinc-700 rounded-md text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-500"
-            />
-            <button
-              type="submit"
-              className="w-full px-6 py-3 bg-zinc-500 text-white rounded-md hover:bg-zinc-600 transition-colors flex items-center justify-center gap-2"
-            >
-              <BiSend className="w-4 h-4" />
-              Enviar Mensaje
-            </button>
-          </form>
-        </div>
-      </section>
+      <section className="max-w-7xl mx-auto mb-20 lg:px-20" id="contact-form">
+      <div className="bg-[#292a2d] rounded-lg border border-zinc-700 p-8">
+        <h2
+          className={`${merriweather.className} text-3xl font-bold text-orange-400 text-center mb-8`}
+        >
+          ¿Listo para transformar tu organización?
+        </h2>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Tu Nombre"
+            className={`${firacode.className} w-full px-4 py-3 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0`}
+          />
+          <input
+            type="email"
+            placeholder="Tu Email"
+            className={`${firacode.className} w-full px-4 py-3 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0`}
+          />
+          <textarea
+            placeholder="Tu Mensaje"
+            rows={4}
+            className={`${firacode.className} w-full px-4 py-3 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0`}
+          />
+          <button
+            type="submit"
+            className={`${merriweather.className} w-full px-6 py-3 bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md flex items-center justify-center gap-2`}
+          >
+            <BiSend className="w-4 h-4" />
+            Enviar Mensaje
+          </button>
+        </form>
+      </div>
+    </section>
     </div>
   );
 };

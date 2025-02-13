@@ -1,12 +1,10 @@
-// HeroSection.tsx
 import React from "react";
-
 import { Merriweather } from "next/font/google";
 
 const merriweather = Merriweather({
-  weight: ["300", "400", "700", "900"], // Puedes elegir los pesos que necesites
+  weight: ["300", "400", "700", "900"],
   subsets: ["latin"],
-  style: ["normal", "italic"], // Si necesitas cursiva
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -24,29 +22,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section className="max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-5 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
       {/* Contenido del lado izquierdo */}
-      <div className="absolute flex flex-col justify-center text-center z-10 w-full md:w-1/2 md:text-left md:mb-0">
-        <p className="text-xl sm:text-2xl">
-          <small
-            className={`${merriweather.className} mt-4 text-2xl text-center text-gray-400`}
-          >
-            Gestión escolar
-          </small>
-        </p>
-        <h2
-          className={`${merriweather.className} my-10 text-7xl text-left text-zinc-200 `}
-        >
-          Organizate en minutos{" "}
+      <div className="relative md:absolute z-10 flex flex-col text-center md:text-left w-full md:w-3/4 lg:w-1/2">
+        <p className={`${merriweather.className} text-xl sm:text-2xl text-gray-400`}>Gestión escolar</p>
+        <h2 className={`${merriweather.className} my-6 text-4xl sm:text-5xl lg:text-6xl text-zinc-200`}>
+          Organízate en minutos {" "}
           <span className="bg-clip-text bg-gradient-to-r text-orange-400">
             Crecé sin límites
           </span>
         </h2>
-        <p
-          className={`${merriweather.className} mt-4 text-sm max-w-80 mb-10 text-left text-gray-400 italic`}
-        >
-          Optimiza las operaciones y mejora la experiencia educativa con nuestra
-          solución completa.
+        <p className={`${merriweather.className} text-lg sm:text-xl text-gray-400 italic mb-6 max-w-md mx-auto md:mx-0`}>
+          Optimiza las operaciones y mejora la experiencia educativa con nuestra solución completa.
         </p>
-        <div className="flex gap-4 flex-wrap justify-center md:justify-start">
+        <div className="flex flex-wrap gap-4 justify-center md:justify-start">
           {user ? (
             <button
               onClick={handleDashboardRedirect}
@@ -68,28 +55,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
       </div>
 
-      {/* Video de fondo para móviles */}
-      <div className="inset-0 -z-10 w-full h-full md:hidden">
-        <video
-          className="w-full h-full object-cover brightness-75 contrast-100 saturate-125"
-          src="/video-hero/video-hero.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          aria-hidden="true"
-          tabIndex={-1}
-        />
-        <div className="inset-0 bg-gradient-to-t from-[#303344aa] to-transparent"></div>
-      </div>
-
       {/* Luz y video en pantallas más grandes */}
       <div className="hidden md:flex relative w-full md:w-full justify-center items-center">
         {/* Luz de fondo */}
         <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl"></div>
 
-        {/* Card del lado derecho */}
-        <div className="relative translate-x-44 w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden ">
+        {/* Card del lado derecho con video */}
+        <div className="relative w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden">
           <video
             className="relative inset-0 w-full h-full object-cover brightness-80 rounded-3xl max-w-none"
             src="/video-hero/video-hero.mp4"

@@ -6,6 +6,7 @@ import { PiArrowLeft, PiEye, PiEyeClosed } from "react-icons/pi";
 import { Merriweather, Fira_Code } from "next/font/google";
 import toast, { Toaster } from "react-hot-toast";
 
+// Fuentes personalizadas
 const merriweather = Merriweather({
   weight: ["300", "400", "700", "900"],
   subsets: ["latin"],
@@ -32,11 +33,13 @@ const SignupForm = () => {
 
   const router = useRouter();
 
+  // Validar formato de correo electrónico
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
   };
 
+  // Manejar el registro del usuario
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -80,7 +83,7 @@ const SignupForm = () => {
 
       toast.success("Usuario creado correctamente.");
       setIsLoading(false);
-      router.push("/bienvenida");
+      router.push("/bienvenida"); // Redirigir a la página de bienvenida
     } catch (err) {
       console.error("Error desconocido:", err);
       toast.error("Hubo un problema inesperado. Intenta nuevamente.");
@@ -88,6 +91,7 @@ const SignupForm = () => {
     }
   };
 
+  // Calcular la fortaleza de la contraseña
   const getPasswordStrength = () => {
     if (password.length > 8 && /\d/.test(password) && /[A-Z]/.test(password)) {
       return "Fuerte";
@@ -105,7 +109,7 @@ const SignupForm = () => {
             padding: "16px",
             color: "#fb923c",
             background: "#ea580833",
-            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
+            boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
           },
         }}
       />
@@ -117,14 +121,10 @@ const SignupForm = () => {
         >
           <PiArrowLeft className="w-4 h-4" />
         </button>
-        <h1
-          className={`${merriweather.className} text-3xl font-bold text-orange-400`}
-        >
+        <h1 className={`${merriweather.className} text-3xl font-bold text-orange-400`}>
           Empezá
         </h1>
-        <h2
-          className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}
-        >
+        <h2 className={`${merriweather.className} text-sm font-thin text-zinc-400 italic`}>
           Crea una nueva cuenta
         </h2>
         <form onSubmit={handleSignup} className="space-y-6 mt-10">
@@ -230,7 +230,7 @@ const SignupForm = () => {
               </button>
             </div>
           </div>
-          <div className="relative flex items-center">
+          <div className="relative flex items-center w-full">
             <input
               type="checkbox"
               id="terms"
@@ -240,17 +240,17 @@ const SignupForm = () => {
             />
             <label
               htmlFor="terms"
-              className={`${firacode.className} flex text-xs items-center space-x-1 text-zinc-300 cursor-pointer italic`}
+              className={`${firacode.className} flex text-xs items-center space-x-1 text-zinc-300 cursor-pointer italic tracking-tighter`}
             >
               <span>
-                Acepto los{" "}
+                Acepto {" "}
                 <a
                   href="/terminos-y-condiciones"
                   className="text-orange-400 hover:underline hover:text-orange-300"
                 >
-                  términos y condiciones
+                  condiciones
                 </a>{" "}
-                y la{" "}
+                y {" "}
                 <a
                   href="/politica-de-privacidad"
                   className="text-orange-400 hover:underline hover:text-orange-300"
@@ -275,9 +275,7 @@ const SignupForm = () => {
             {isLoading ? "Creando Cuenta..." : "Crear Cuenta"}
           </button>
         </form>
-        <p
-          className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}
-        >
+        <p className={`${merriweather.className} mt-4 text-sm text-center text-gray-400`}>
           ¿Ya tienes una cuenta?{" "}
           <a
             href="/inicio-de-sesion"
