@@ -8,9 +8,12 @@ import { validateInstitution } from "@/types/institutions/validations";
  * @param request Request con los datos actualizados de la institución
  * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function PUT(request: NextRequest, context: { params: { id: string } }) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Record<string, string> } 
+) {
   try {
-    const { id } = context.params; // Extraer el ID correctamente
+    const id = params.id; // Extraer el ID correctamente
     const body: Institution = await request.json();
 
     if (!id || !validateInstitution(body)) {
@@ -35,9 +38,12 @@ export async function PUT(request: NextRequest, context: { params: { id: string 
  * @param request Request con el ID en la URL
  * @param context Objeto que contiene `params` con el ID de la institución
  */
-export async function DELETE(request: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Record<string, string> }  
+) {
   try {
-    const { id } = context.params;
+    const id = params.id;
 
     if (!id) {
       return NextResponse.json({ error: "El ID es obligatorio." }, { status: 400 });
