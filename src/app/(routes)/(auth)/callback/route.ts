@@ -42,5 +42,5 @@ export async function GET(request: Request) {
   }
 
   // Si no se pudo autenticar al usuario, lo redirige a una página de error
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}/auth-code-error`);
 }
