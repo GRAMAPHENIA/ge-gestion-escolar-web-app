@@ -67,4 +67,7 @@ html.dark ::selection {
   padding: 8px 12px !important;
 }
 
-
+.bg-radial-gradient {
+  background: radial-gradient(circle, transparent, black);
+  border-radius: 50%;
+}

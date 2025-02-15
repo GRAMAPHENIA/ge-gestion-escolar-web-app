@@ -22,11 +22,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   return (
     <section className="max-w-7xl mx-auto text-white mt-16 lg:py-0 sm:mt-5 flex flex-col md:flex-row items-center justify-between px-4 lg:px-0">
       {/* Contenido del lado izquierdo */}
-      <div className="relative md:absolute z-10 flex flex-col text-center md:text-left w-full md:w-3/4 lg:w-1/2">
+      <div className="relative md:absolute z-10 flex flex-col text-center md:text-left w-full md:w-3/4 lg:w-1/2 ml-20">
         <p className={`${merriweather.className} text-xl sm:text-2xl text-gray-400`}>Gestión escolar</p>
         <h2 className={`${merriweather.className} my-6 text-4xl sm:text-5xl lg:text-6xl text-zinc-200`}>
           Organízate en minutos {" "}
-          <span className="bg-clip-text bg-gradient-to-r text-orange-400">
+          <span className=" text-orange-400">
             Crecé sin límites
           </span>
         </h2>
@@ -56,14 +56,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Luz y video en pantallas más grandes */}
-      <div className="hidden md:flex relative w-full md:w-full justify-center items-center">
+      <div className="hidden md:flex relative w-full md:w-full justify-end items-center">
         {/* Luz de fondo */}
         <div className="absolute right-4 bottom-4 lg:right-10 lg:bottom-8 blur-[300px] w-[150px] h-[200px] sm:w-[200px] sm:h-[300px] lg:w-[300px] lg:h-[300px] bg-orange-400 rounded-3xl"></div>
 
         {/* Card del lado derecho con video */}
-        <div className="relative w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden">
+        <div className="flex relative w-full md:w-[600px] lg:w-[930px] h-auto sm:h-[400px] md:h-[450px] lg:h-[550px] rounded-3xl overflow-hidden">
           <video
-            className="relative inset-0 w-full h-full object-cover brightness-80 rounded-3xl max-w-none"
+            className="relative inset-0 w-full h-full object-cover brightness-80 rounded-3xl max-w-none border-2 border-orange-400/50"
             src="/video-hero/video-hero.mp4"
             autoPlay
             muted
