@@ -30,7 +30,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             Crecé sin límites
           </span>
         </h2>
-        <p className={`${merriweather.className} text-lg sm:text-xl text-gray-400 italic mb-6 max-w-md mx-auto md:mx-0`}>
+        <p className={`${merriweather.className} text-lg text-gray-400 font-thin italic mb-6 max-w-md mx-auto md:mx-0`}>
           Optimiza las operaciones y mejora la experiencia educativa con nuestra solución completa.
         </p>
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">

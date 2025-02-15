@@ -1,127 +1,63 @@
+"use client";
+
+import React from "react";
 import { Institution } from "@/types/institutions/types";
 import Image from "next/image";
-import { useState } from "react";
-import { Tooltip } from "react-tooltip";
-import clsx from "clsx"; // Importar clsx
+import { FiEdit, FiTrash } from "react-icons/fi";
 
-import "react-tooltip/dist/react-tooltip.css"; // Asegúrate de importar el CSS
-import { GoGear } from "react-icons/go";
-import { LuLightbulb, LuLightbulbOff, LuMail, LuPhone } from "react-icons/lu";
-
-interface InstitutionCardProps {
+type InstitutionCardProps = {
   institution: Institution;
   imageUrl: string | React.ReactNode;
-}
+  onEdit?: (institution: Institution) => void;
+  onDelete?: (institutionId: string) => void;
+};
 
-const InstitutionCard: React.FC<InstitutionCardProps> = ({
+const InstitutionCard = ({
   institution,
   imageUrl,
-}) => {
-  // Estado para manejar el color del círculo
-  const [color, setColor] = useState("teal-400");
-
-  // Función para cambiar el color al hacer clic
-  const handleColorChange = () => {
-    setColor(color === "teal-400" ? "cyan-400" : "teal-400"); // Cambia entre naranja y azul
-  };
-
-  // Definir filtro para la imagen dependiendo del color
-  const imageFilter = color === "cyan-400" ? "saturate(0.1)" : "saturate(1)";
+  onEdit,
+  onDelete,
+}: InstitutionCardProps) => {
+  const imagenValida =
+    typeof imageUrl === "string" &&
+    (imageUrl.startsWith("http") || imageUrl.startsWith("/"))
+      ? imageUrl
+      : "/file.svg";
 
   return (
-    <div className="border border-zinc-700/50 rounded-lg bg-orange-950/5 overflow-hidden">
-      <header className="flex justify-between items-center px-2 py-2  text-sm text-white">
-        {/* Círculo con efecto de glasmorfismo y un ícono dinámico */}
-        <div
-          onClick={handleColorChange}
-          className={clsx(
-            "relative flex items-center justify-center w-8 h-8 rounded-full cursor-pointer p-1 ",
-            "bg-zinc-500/5 border border-zinc-700/50",
-            {
-              "bg-emerald-400/10 border border-emerald-400/10":
-                color === "teal-400",
-              "bg-zinc-400": color === "zinc-400",
-            }
-          )}
-          data-tooltip-id="color-tooltip"
-          data-tooltip-content={
-            color === "cyan-400"
-              ? "Activar institución"
-              : "Desactivar institución"
-          }
-        >
-          {/* Icono dinámico según el estado */}
-          {color === "cyan-400" ? (
-            <LuLightbulbOff className="text-neutral-500 text-xl" /> // Ícono cuando está activado
-          ) : (
-            <LuLightbulb className="text-emerald-400 text-xl" /> // Ícono cuando está desactivado
-          )}
-
-          {/* Círculo desenfocado detrás del botón */}
-          <div
-            className={clsx(
-              "absolute w-4 h-4 bg-zinc-400 blur-[4px] rounded-full -z-10", // Cambiado a verde
-              { "bg-zinc-400": color === "zinc-400" }
-            )}
-          />
+    <div className="bg-zinc-800 p-4 rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-lg font-semibold">{institution.name}</h3>
+        <div className="flex gap-2">
+          <button
+            onClick={() => onEdit?.(institution)}
+            className="text-blue-500 hover:text-blue-400"
+          >
+            <FiEdit className="w-5 h-5" />
+          </button>
+          <button
+            onClick={() => onDelete?.(institution.id.toString())}
+            className="text-red-500 hover:text-red-400"
+          >
+            <FiTrash className="w-5 h-5" />
+          </button>
         </div>
-
-        <Tooltip
-          id="color-tooltip"
-          border="1px solid #434343"
-          place="top"
-          className="custom-tooltip"
-        />
-
-        <h2 className="flex justify-between-2">{institution.name}</h2>
-
-        {/* Tooltip para el ícono de configuración */}
-        <span
-          className="cursor-pointer text-zinc-500"
-          data-tooltip-id="config-tooltip"
-          data-tooltip-content="Configuración"
-        >
-          <GoGear className="text-xl" />
-        </span>
-        <Tooltip
-          id="config-tooltip"
-          border="1px solid #434343"
-          place="top"
-          className="custom-tooltip"
-        />
-      </header>
-
-      {/* Línea divisoria */}
-      <div className="border-b border-zinc-700/50 " />
-      <div className="w-full h-48">
-        {typeof imageUrl === "string" ? (
-          <Image
-            height={300}
-            width={300}
-            src={imageUrl}
-            alt={institution.image_url}
-            className="w-full h-full object-cover border-b border-zinc-700/50"
-            style={{ filter: imageFilter }} // Aplicar el filtro de saturación
-          />
-        ) : (
-          imageUrl
-        )}
       </div>
-
-      {/* Contenido de la tarjeta */}
-      <div className="mt-4 px-4">
-        <h3 className="text-xl font-semibold mb-2">{institution.name}</h3>
-        <p className="text-sm text-gray-400">
-          {institution.city} {institution.province}
-        </p>
-        <p className="flex items-baseline text-sm text-gray-400">
-          <LuPhone className="mr-2" /> {institution.phone_number}
-        </p>
-        <p className="flex items-baseline text-sm text-gray-400">
-          <LuMail className="mr-2" /> {institution.email}
-        </p>
-        <p className="mt-2 text-gray-300 text-sm">{institution.description}</p>
-      </div>
+      {typeof imageUrl === "string" ? (
+        <Image
+          src={imagenValida}
+          alt={institution.name}
+          width={200}
+          height={200}
+          className="w-full h-32 object-cover rounded-md"
+        />
+      ) : imageUrl instanceof File ? (
+        <p>Archivo de imagen cargado, pero no procesado.</p>
+      ) : (
+        imageUrl
+      )}
+      <p className="text-sm text-neutral-400 mt-2">{institution.email}</p>
+      <p className="text-sm text-neutral-400">{institution.phone_number}</p>
     </div>
   );
 };

@@ -1,38 +1,53 @@
-// InstitutionForm.tsx
+/**
+ * 📌 Ruta del archivo: src/components/InstitutionForm/InstitutionForm.tsx
+ * Este componente maneja la creación y edición de instituciones, incluyendo la subida de imágenes al bucket de Supabase.
+ */
+
+"use client";
 import { supabase } from "@/supabase/supabaseClient";
 import { Institution } from "@/types/institutions/types";
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import { FiUpload } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
-type InstitutionFormData = Omit<Institution, "id" | "created_at" | "image_url" | "website" | "description" | "is_active"> & {
-  image?: File;
+// Definimos el tipo para los datos del formulario, excluyendo campos que no se manejan directamente aquí
+type InstitutionFormData = Omit<
+  Institution,
+  "id" | "created_at" | "image_url" | "website" | "description" | "is_active"
+> & {
+  image?: File; // Campo opcional para manejar la imagen seleccionada por el usuario
+};
+
+// Props del componente: permite manejar eventos de creación y actualización de instituciones
+type InstitutionFormProps = {
+  onInstitutionCreated?: (institution: Institution) => void; // Callback cuando se crea una nueva institución
+  onInstitutionUpdated?: (institution: Institution) => void; // Callback cuando se actualiza una institución existente
+  institutionToEdit?: Institution | null; // Datos de la institución a editar (si aplica)
 };
 
 const InstitutionForm = ({
   onInstitutionCreated,
-}: {
-  onInstitutionCreated: (institution: Institution) => void;
-}) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  onInstitutionUpdated,
+  institutionToEdit,
+}: InstitutionFormProps) => {
+  const [loading, setLoading] = useState<boolean>(false); // Estado para manejar el estado de carga
   const [formData, setFormData] = useState<InstitutionFormData>({
-    name: "",
-    email: "",
-    phone_number: "",
-    address: "",
-    city: "",
-    province: "",
-    country: "",
-    image: undefined,
-    user_id: "",
+    name: institutionToEdit?.name || "",
+    email: institutionToEdit?.email || "",
+    phone_number: institutionToEdit?.phone_number || "",
+    address: institutionToEdit?.address || "",
+    city: institutionToEdit?.city || "",
+    province: institutionToEdit?.province || "",
+    country: institutionToEdit?.country || "",
+    image: undefined, // Imagen seleccionada por el usuario (opcional)
+    user_id: institutionToEdit?.user_id || "", // ID del usuario autenticado
   });
 
+  // Obtener el ID del usuario autenticado al cargar el componente
   useEffect(() => {
     const fetchUserId = async () => {
       const { data, error } = await supabase.auth.getUser();
       if (error) {
-        console.error("Error fetching user ID:", error.message);
+        console.error("Error al obtener el ID del usuario:", error.message);
         return;
       }
       setFormData((prev) => ({ ...prev, user_id: data?.user?.id || "" }));
@@ -40,20 +55,26 @@ const InstitutionForm = ({
     fetchUserId();
   }, []);
 
+  /**
+   * @description Maneja los cambios en los campos del formulario.
+   * Actualiza el estado `formData` según el campo modificado.
+   */
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, files } = e.target;
-
     if (type === "file" && files) {
-      setFormData((prev) => ({ ...prev, image: files[0] }));
+      setFormData((prev) => ({ ...prev, image: files[0] })); // Actualiza la imagen seleccionada
     } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value })); // Actualiza otros campos
     }
   };
 
+  /**
+   * @description Maneja el envío del formulario.
+   * Sube la imagen al bucket de Supabase (si se seleccionó una nueva) y guarda los datos en la base de datos.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
     try {
       if (!formData.user_id) {
         toast.error("El usuario no está autenticado.");
@@ -61,96 +82,87 @@ const InstitutionForm = ({
         return;
       }
 
-      // Verificar si ya existe una institución con el mismo nombre
-      const { data: existingInstitutions, error: fetchError } = await supabase
-        .from("institutions")
-        .select("name")
-        .eq("name", formData.name);
+      // Mantener la URL existente si no se selecciona una nueva imagen
+      let imageUrl: string | null = institutionToEdit?.image_url || null;
 
-      if (fetchError) {
-        throw new Error("Error al verificar duplicación.");
-      }
-
-      if (existingInstitutions && existingInstitutions.length > 0) {
-        toast.error("Ya existe una institución con ese nombre.");
-        setLoading(false);
-        return;
-      }
-
-      // Subir imagen si se seleccionó
-      let imageUrl: string | null = null;
+      // Subir la imagen al bucket de Supabase si se seleccionó una nueva
       if (formData.image) {
-        const allowedTypes = ["image/jpeg", "image/png"];
-        const maxFileSize = 5 * 1024 * 1024; // 5 MB
-
-        if (!allowedTypes.includes(formData.image.type)) {
-          toast.error(
-            "Solo se permiten imágenes JPEG o PNG. Tipo de archivo: " +
-              formData.image.type
-          );
-          setLoading(false);
-          return;
-        }
-
-        if (formData.image.size > maxFileSize) {
-          toast.error(
-            `La imagen no debe superar los 5 MB. Tamaño actual: ${(formData.image.size / (1024 * 1024)).toFixed(
-              2
-            )} MB`
-          );
-          setLoading(false);
-          return;
-        }
-
         const uniqueFileName = `${Date.now()}-${formData.image.name}`;
-
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from("institution-images")
           .upload(`images/${uniqueFileName}`, formData.image);
-
         if (uploadError) {
-          toast.error(uploadError.message || "Error al subir la imagen.");
-          setLoading(false);
-          return;
+          throw new Error(uploadError.message || "Error al subir la imagen.");
         }
-
-        imageUrl = uploadData?.path || null;
+        // Obtener la URL pública de la imagen subida
+        const { data: publicUrlData } = await supabase.storage
+          .from("institution-images")
+          .getPublicUrl(uploadData.path);
+        imageUrl = publicUrlData.publicUrl; // Actualizar la URL de la imagen
       }
 
-      // Insertar datos de la institución
-      const { data, error } = await supabase.from("institutions").insert([
-        {
-          name: formData.name,
-          email: formData.email,
-          phone_number: formData.phone_number,
-          address: formData.address,
-          city: formData.city,
-          province: formData.province,
-          country: formData.country,
-          image_url: imageUrl,
-          user_id: formData.user_id,
-        },
-      ]);
-
-      if (error) {
-        throw new Error("Error al agregar la institución.");
+      // Insertar o actualizar la institución en la base de datos
+      if (institutionToEdit) {
+        const { data, error } = await supabase
+          .from("institutions")
+          .update({
+            name: formData.name,
+            email: formData.email,
+            phone_number: formData.phone_number,
+            address: formData.address,
+            city: formData.city,
+            province: formData.province,
+            country: formData.country,
+            image_url: imageUrl, // Usar la nueva URL o mantener la existente
+          })
+          .eq("id", institutionToEdit.id)
+          .select();
+        if (error) {
+          throw new Error("Error al actualizar la institución.");
+        }
+        if (data) {
+          toast.success("Institución actualizada con éxito!");
+          onInstitutionUpdated?.(data[0]); // Devuelve la institución actualizada
+        }
+      } else {
+        const { data, error } = await supabase
+          .from("institutions")
+          .insert([
+            {
+              name: formData.name,
+              email: formData.email,
+              phone_number: formData.phone_number,
+              address: formData.address,
+              city: formData.city,
+              province: formData.province,
+              country: formData.country,
+              image_url: imageUrl, // Usar la URL de la imagen subida
+              user_id: formData.user_id,
+            },
+          ])
+          .select();
+        if (error) {
+          throw new Error("Error al agregar la institución.");
+        }
+        if (data) {
+          const newInstitution = data[0];
+          toast.success("Institución creada con éxito!");
+          onInstitutionCreated?.(newInstitution); // Notificar al padre sobre la creación
+        }
       }
 
-      if (data) {
-        toast.success("Institución creada con éxito!");
-        onInstitutionCreated(data[0]);
-        setFormData({
-          name: "",
-          email: "",
-          phone_number: "",
-          address: "",
-          city: "",
-          province: "",
-          country: "",
-          image: undefined,
-          user_id: formData.user_id,
-        });
-      }
+      // Limpiar el formulario después de enviar
+      setFormData({
+        name: "",
+        email: "",
+        phone_number: "",
+        address: "",
+        city: "",
+        province: "",
+        country: "",
+        image: undefined,
+        user_id: formData.user_id,
+      });
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err.message || "Hubo un error inesperado.");
@@ -163,79 +175,83 @@ const InstitutionForm = ({
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={formData.name || ""}
-          onChange={handleChange}
-          required
-          className="w-full p-2 mb-2 text-sm bg-[#404045] rounded-md text-zinc-400 placeholder:text-neutral-400/50"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email || ""}
-          onChange={handleChange}
-          required
-          className="w-full p-2 mb-2 text-sm bg-[#404045] rounded-md text-zinc-400 placeholder:text-neutral-400/50"
-        />
-        <input
-          type="tel"
-          name="phone_number"
-          placeholder="Teléfono"
-          value={formData.phone_number || ""}
-          onChange={handleChange}
-          required
-          className="w-full p-2 mb-2 text-sm bg-[#404045] rounded-md text-zinc-400 placeholder:text-neutral-400/50"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Dirección"
-          value={formData.address || ""}
-          onChange={handleChange}
-          required
-          className="w-full p-2 mb-2 text-sm bg-[#404045] rounded-md text-zinc-400 placeholder:text-neutral-400/50"
-        />
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {/* Campo para el nombre */}
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Nombre"
+        className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
+        required
+      />
+
+      {/* Campo para el correo electrónico */}
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        placeholder="Correo Electrónico"
+        className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
+        required
+      />
+
+      {/* Campo para el número de teléfono */}
+      <input
+        type="tel"
+        name="phone_number"
+        value={formData.phone_number}
+        onChange={handleChange}
+        placeholder="Número de Teléfono"
+        className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
+        required
+      />
+
+      {/* Campo para la dirección */}
+      <input
+        type="text"
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+        placeholder="Dirección"
+        className="mt-2 block w-full px-4 py-2 bg-white/5 text-zinc-200 placeholder:text-zinc-600 border border-gray-600 rounded-lg focus:ring-orange-500 focus:border-orange-500 transition focus:outline-none focus:ring-0"
+        required
+      />
+
+      {/* Sección para seleccionar una imagen */}
+      <div className="flex flex-col items-center space-y-4">
+        {/* Botón para seleccionar una imagen */}
         <label
-          htmlFor="file-upload"
-          className="flex items-center cursor-pointer p-2 mb-2 text-sm w-full bg-zinc-900/80 border border-zinc-700/50 rounded-md text-zinc-400 placeholder:text-zinc-600/70"
+          htmlFor="file-input"
+          className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition duration-200 flex items-center space-x-2 w-full cursor-pointer"
         >
-          <FiUpload className="w-5 h-5 text-zinc-400" />
-          <span className="ml-2 text-zinc-600 text-sm">Subir foto</span>
+          <span>
+            {institutionToEdit ? "Cambiar imagen" : "Seleccionar imagen"}
+          </span>
         </label>
+
+        {/* Input oculto para seleccionar archivos */}
         <input
-          id="file-upload"
+          id="file-input"
           type="file"
           name="image"
           onChange={handleChange}
           className="hidden"
         />
-
-        {formData.image && (
-          <div className="mt-2">
-            <Image
-              height={100}
-              width={100}
-              src={URL.createObjectURL(formData.image)}
-              alt="Miniatura"
-              className="w-full h-16 object-cover rounded-md border border-zinc-700"
-            />
-          </div>
-        )}
       </div>
 
+      {/* Botón de envío del formulario */}
       <button
         type="submit"
         disabled={loading}
-        className="bg-orange-600/20 hover:bg-orange-500/20 text-sm text-orange-400 hover:text-orange-300 transition duration-100 rounded-md px-4 py-2 mt-4 flex justify-center items-center"
+        className="w-full bg-orange-400/70 text-white p-2 rounded-md hover:bg-orange-400/80 transition duration-200"
       >
         {loading ? (
-          <span className="animate-pulse text-orange-400">Cargando...</span>
+          <span className="animate-pulse">Cargando...</span>
+        ) : institutionToEdit ? (
+          "Actualizar Institución"
         ) : (
           "Agregar Institución"
         )}
