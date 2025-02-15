@@ -89,7 +89,7 @@ const Dashboard = () => {
         <div className="flex flex-1 overflow-hidden">
           {/* Primer aside: Menú lateral */}
           <aside
-            className={`bg-[#212327] transition-all duration-100 ease-in-out z-30 absolute lg:relative flex flex-col justify-stretch overflow-hidden ${
+            className={`bg-[#212327] transition-all duration-100 ease-in-out z-30 absolute lg:relative flex flex-col justify-start overflow-hidden ${
               isAsideOpen ? "w-56" : "w-[53px]"
             }`}
             onMouseEnter={() => setIsAsideOpen(true)}
