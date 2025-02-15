@@ -25,7 +25,7 @@ const InstitutionCard = ({
       : "/file.svg";
 
   return (
-    <div className="bg-zinc-800 p-4 rounded-lg shadow-md">
+    <div className="bg-zinc-900/50 p-4 rounded-lg shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold">{institution.name}</h3>
         <div className="flex gap-2">

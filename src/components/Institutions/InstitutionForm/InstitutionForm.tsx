@@ -113,7 +113,8 @@ const InstitutionForm = ({
             city: formData.city,
             province: formData.province,
             country: formData.country,
-            image_url: imageUrl, // Usar la nueva URL o mantener la existente
+            image_url: imageUrl,
+            user_id: formData.user_id,
           })
           .eq("id", institutionToEdit.id)
           .select();
@@ -246,7 +247,7 @@ const InstitutionForm = ({
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-orange-400/70 text-white p-2 rounded-md hover:bg-orange-400/80 transition duration-200"
+        className="w-full px-4 py-2 text-center bg-orange-600/20 hover:bg-orange-500/20 text-orange-400 hover:text-orange-300 transition duration-100 rounded-md "
       >
         {loading ? (
           <span className="animate-pulse">Cargando...</span>

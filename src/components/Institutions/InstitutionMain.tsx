@@ -6,6 +6,7 @@ import { Institution } from "@/types/institutions/types";
 import SkeletonImage from "@/components/Esqueletons/SkeletonImage";
 import InstitutionForm from "./InstitutionForm/InstitutionForm";
 import toast from "react-hot-toast";
+import { supabase } from "@/supabase/supabaseClient";
 
 const InstitutionMain = () => {
   const [institutions, setInstitutions] = useState<Institution[]>([]);
@@ -19,12 +20,22 @@ const InstitutionMain = () => {
   const fetchInstitutions = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/institutions");
-      if (!response.ok) {
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        throw new Error("Error al obtener el usuario autenticado.");
+      }
+      const userId = userData?.user?.id;
+  
+      // Consulta las instituciones filtradas por el ID del usuario
+      const { data, error } = await supabase
+        .from("institutions")
+        .select("*")
+        .eq("user_id", userId); // Filtra por el ID del usuario autenticado
+  
+      if (error) {
         throw new Error("Error al cargar las instituciones.");
       }
-      const data = await response.json();
-      setInstitutions(data);
+      setInstitutions(data || []);
     } catch {
       setError("No se pudieron cargar las instituciones.");
     } finally {
