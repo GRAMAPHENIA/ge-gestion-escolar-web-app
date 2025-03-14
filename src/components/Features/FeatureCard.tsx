@@ -27,7 +27,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         {/* Ícono y texto */}
         <Icon className="w-20 h-20 p-4 rounded-xl text-orange-400 transition duration-300 transform bg-neutral-500/10 backdrop-blur-md z-10" />
         <small className="mt-2">{reference}</small>
-        <h3 className=" md:text-6xl mt-4 tracking-tight inline font-semibold from-orange-500 to-orange-200 text-4xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-b md:w-[500px]">
+        <h3 className=" md:text-6xl mt-4 tracking-tight inline font-semibold from-orange-500 to-orange-100 text-4xl lg:text-6xl bg-clip-text text-transparent bg-gradient-to-b md:w-[500px]">
           {title}
         </h3>
         <article className="mt-4 sm:mt-0 flex-1">

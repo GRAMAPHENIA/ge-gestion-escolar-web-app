@@ -89,7 +89,7 @@ const Dashboard = () => {
         <div className="flex flex-1 overflow-hidden">
           {/* Primer aside: Menú lateral */}
           <aside
-            className={`bg-[#212327] transition-all duration-100 ease-in-out z-30 absolute lg:relative flex flex-col justify-start overflow-hidden ${
+            className={`bg-[#1d1e20] transition-all duration-100 ease-in-out z-30 absolute lg:relative flex flex-col justify-start overflow-hidden ${
               isAsideOpen ? "w-56" : "w-[53px]"
             }`}
             onMouseEnter={() => setIsAsideOpen(true)}
@@ -164,15 +164,15 @@ const Dashboard = () => {
 
           {/* Segundo aside: Panel lateral derecho */}
           <aside
-            className={`transition-all duration-200 ml-12 bg-[#292a2d] ${
-              isSecondAsideOpen ? "w-1/5" : "w-10"
+            className={`transition-all duration-200 bg-[#1d1e20] ml-10 ${
+              isSecondAsideOpen ? "w-1/5" : "w-0"
             }`}
           >
-            <div className="relative flex items-center justify-start mt-4">
-              <div className="group relative pl-4">
+            <div className="relative flex items-center justify-start mt-3">
+              <div className="group relative pl-8">
                 <button
                   data-tooltip-id="panel-tooltip"
-                  className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 ml-3"
+                  className="flex justify-center items-center rounded text-zinc-400 hover:text-zinc-300 hover:bg-zinc-700 h-8 w-8 "
                   onClick={() => setIsSecondAsideOpen((prev) => !prev)}
                 >
                   {isSecondAsideOpen ? (
@@ -201,7 +201,7 @@ const Dashboard = () => {
           </aside>
 
           {/* Contenido principal */}
-          <main className="flex-1 bg-[#292a2d]  p-6 overflow-y-auto max-h-screen">
+          <main className="flex-1 bg-[#1d1e20] px-20 pt-4 overflow-y-auto max-h-screen">
             <MainContent selectedSection={selectedSection} />
           </main>
         </div>
