@@ -55,12 +55,14 @@ export async function POST(req: Request) {
     // Insertar el usuario en la tabla "users"
     const { error: dbError } = await supabase.from("users").insert([
       {
-        id: authData.user?.id,
+        id: authData.user?.id, // Asegúrate de usar el id del usuario autenticado
+        auth_id: authData.user?.id, // Usa el mismo id para auth_id
         email,
       },
     ]);
 
     if (dbError) {
+      console.error("Error al insertar en la base de datos:", dbError);
       return NextResponse.json(
         { error: "Error al guardar los datos del usuario" },
         { status: 500 }

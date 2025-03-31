@@ -27,7 +27,7 @@ const SignupForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false); 
   const [isPasswordTyped, setIsPasswordTyped] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
